@@ -1,0 +1,431 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Natropi</title>
+<style>
+    .nav-link {
+      color: #33c92d;
+    }
+    .brand-link {
+      color: #33c92d;
+    }
+
+    .user-panel .info .d-block {
+      color: #33c92d
+    }
+
+    ol li a {
+      color: #33c92d;
+    }
+
+    nav {
+        background-color: #181824; /* Set the background color of the whole page */
+    }
+
+    .nav-icon {
+        color: #33c92d; /* Set the color for elements with the nav-icon class */
+    }
+
+    .nav-item p {
+        color: #8e94a9; /* Set the color for <p> tags inside elements with the nav-item class */
+    }
+
+    aside {
+      background-color: #181824;
+    }
+
+    .logout {
+      color: #33c92d;
+    }
+
+    .content-header h1 {
+      color: #8e94a9 !important;
+    }
+
+    section .container-fluid .info-box {
+      background-color: #181824;
+    }
+  
+    .info-box-content {
+      color:#8e94a9;
+    }
+
+    section .container-fluid .card {
+      background-color: #181824;
+    }
+
+    section .container-fluid .card .card-title {
+      color: #8e94a9;
+    }
+
+    table thead tr th{
+      color: #8e94a9;
+    }
+
+    .main-footer {
+      background-color: #181824;
+    }
+
+    .list-group li {
+      color: #8e94a9;
+      background-color: #181824;
+    }
+
+    .list-group li input {
+      background-color: #111118;
+    }
+
+</style>
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
+<!-- Font Awesome -->
+<link href="../../plugins/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+<!-- Theme style -->
+<link href="../../dist/css/adminlte.min.css" rel="stylesheet"/>
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand">
+<!-- Left navbar links -->
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+</li>
+<li class="nav-item d-none d-sm-inline-block">
+<a class="nav-link" href="{% url '../../index2'%}">Home</a>
+</li>
+</ul>
+<!-- Right navbar links -->
+<ul class="navbar-nav ml-auto">
+<!-- Navbar Search -->
+<li class="nav-item">
+<a class="nav-link" data-widget="navbar-search" href="#" role="button">
+<i class="fas fa-search"></i>
+</a>
+<div class="navbar-search-block">
+<form class="form-inline">
+<div class="input-group input-group-sm">
+<input aria-label="Search" class="form-control form-control-navbar" placeholder="Search" type="search"/>
+<div class="input-group-append">
+<button class="btn btn-navbar" type="submit">
+<i class="fas fa-search"></i>
+</button>
+<button class="btn btn-navbar" data-widget="navbar-search" type="button">
+<i class="fas fa-times"></i>
+</button>
+</div>
+</div>
+</form>
+</div>
+</li>
+<!-- Notifications Dropdown Menu -->
+<li class="nav-item dropdown">
+<a class="nav-link" data-toggle="dropdown" href="#">
+<i class="far fa-bell"></i>
+<span class="badge badge-warning navbar-badge">15</span>
+</a>
+<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+<span class="dropdown-item dropdown-header">15 Notifications</span>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">
+<i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">
+<i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">
+<i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item dropdown-footer" href="#">See All Notifications</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-widget="fullscreen" href="#" role="button">
+<i class="fas fa-expand-arrows-alt"></i>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-slide="true" data-widget="control-sidebar" href="#" role="button">
+<i class="fas fa-th-large"></i>
+</a>
+</li>
+</ul>
+</nav>
+<!-- /.navbar -->
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar elevation-4">
+<!-- Brand Logo -->
+<a class="brand-link" href="{% url '../../index2'%}">
+<img alt="Natropi Logo" class="brand-image img-circle elevation-3" src="{% static '../../dist/img/logo.jpg'%}" style="opacity: .8"/>
+<span class="brand-text font-weight-light">Natropi</span>
+</a>
+<!-- Sidebar -->
+<div class="sidebar os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition os-host-overflow os-host-overflow-y"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible os-viewport-native-scrollbars-overlaid" style="overflow-y: scroll;"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+<!-- Sidebar user panel (optional) -->
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+<div class="image">
+<img alt="User Image" class="img-circle elevation-2" src="{% static '../../dist/img/user2-160x160.jpg'%}"/>
+</div>
+<div class="info">
+<a class="d-block" href="#">Alexander Pierce</a>
+</div>
+</div>
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+<ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false" data-widget="treeview" role="menu">
+<!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+<li class="nav-item menu-open">
+<a class="nav-link" href="#">
+<i class="nav-icon fas fa-tachometer-alt"></i>
+<p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+</p>
+</a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
+<a class="nav-link" href="{% url '../../index2'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>Dashboard</p>
+</a>
+</li>
+</ul>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/profile'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>
+                Profile
+              </p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#">
+<i class="nav-icon fas fa-hands-helping"></i>
+<p>
+                NP
+                <i class="fas fa-angle-left right"></i>
+</p>
+</a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
+<a class="nav-link" href="#">
+<i class="far fa-circle nav-icon"></i>
+<p>NP Portfolio</p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/strategy'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>NP Strategy</p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/auto_copy'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>Auto Copy</p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/trade_table'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>NP Trade</p>
+</a>
+</li>
+</ul>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#">
+<i class="nav-icon fas fa-wallet"></i>
+<p>
+                Wallet
+                <i class="right fas fa-angle-left"></i>
+</p>
+</a>
+<ul class="nav nav-treeview">
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/deposit'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>Deposit</p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/withdraw'%}">
+<i class="far fa-circle nav-icon"></i>
+<p> Withdraw</p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/transfer'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>Transfer</p>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="{% url '../examples/transaction'%}">
+<i class="far fa-circle nav-icon"></i>
+<p>Transaction</p>
+</a>
+</li>
+</ul>
+</li>
+<li class="nav-header">Exit</li>
+<li class="nav-item">
+<a class="nav-link" href="https://natropi.com/logout" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+<i class="nav-icon far fa-circle"></i>
+<p class="text">LogOut</p>
+</a>
+<form action="https://natropi.com/logout" class="d-none" id="logout-form" method="POST">
+<input name="_token" type="hidden" value="PTnuUXt2OYaN9gXNKivhUofv3AAhzEdpTNgOr8KO"/> </form>
+</li>
+</ul>
+</nav>
+<!-- /.sidebar-menu -->
+</div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 43.9474%; transform: translate(0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
+<!-- /.sidebar -->
+</aside>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="min-height: 377px; background-color: #111118;">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+<div class="col-sm-6">
+<h1>Trading</h1>
+</div>
+<div class="col-sm-6">
+<ol class="breadcrumb float-sm-right">
+<li class="breadcrumb-item"><a href="#">Home</a></li>
+<li class="breadcrumb-item active"><a href="https://natropi.com/trade_table">Trade History</a></li>
+</ol>
+</div>
+</div>
+</div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content" style="color:#8e94a9;">
+<div class="container-fluid">
+<form action="https://natropi.com/trade_add_form" enctype="multipart/form-data" method="post">
+<input name="_token" type="hidden" value="b5s294kWpJuim89C1En4tFd9yAFHBpAQI06hpwlV"/> <div class="row justify-content-md-center">
+<!-- left column -->
+<div class="col-md-6">
+<!-- general form elements -->
+<div class="card">
+<div class="card-header" style="background-color: #33c92d;">
+<h3 class="card-title">Open New Trade</h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+<h4 style="text-align:center; color:red"></h4>
+<div class="form-group">
+<label>Name:</label>
+<input class="form-control" id="name" name="name" type="text"/>
+</div>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group">
+<label>Minimum Amount($):</label>
+<input autocomplete="amount" class="form-control" id="amount" name="amount" type="number" value=""/>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group">
+<label for="start">Close date:</label>
+<input class="form-control" id="start" max="2030-12-31" min="2021-01-01" name="trip-start" type="date" value="2021-11-04"/>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6" style="width:100%;">
+<div class="form-group">
+<label>Protection Level:</label>
+<select class="form-control" id="protection_level" name="protection_level" style="width:100%;">
+<option selected="" value="">- Choose Level -</option>
+<option value="High">High</option>
+<option value="Medium">Medium</option>
+<option value="Low">Low</option>
+</select>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group" style="width:100%;">
+<label>Safety Mode:</label>
+<select class="form-control" id="safety_mode" name="safety_mode">
+<option selected="" value="On">On</option>
+<option value="Off">Off</option>
+</select>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group">
+<label>Trade Type:</label>
+<select class="form-control" id="trade_type" name="trade_type">
+<option value="Buy">Buy</option>
+<option value="Sell">Sell</option>
+</select>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group">
+<label>Minimum Investment:</label>
+<input class="form-control" disabled="" id="min_invest" name="" type="text" value="$100"/>
+<input class="" id="min_invest" name="min_invest" type="hidden" value="100"/>
+</div>
+</div>
+</div>
+</div>
+<input class="btn btn-success btn-block" name="addfund" type="submit" value="Open Trade"/>
+</div>
+</div>
+<div class="row">
+</div>
+<!-- /.row -->
+</div></form><!-- /.container-fluid -->
+</div></section>
+<!-- /.content -->
+</div>
+<script>
+$(function () {
+bsCustomFileInput.init();
+});
+</script>
+<!-- /.content-wrapper -->
+<!-- /.content-wrapper -->
+<footer class="main-footer" style="position: fixed; left: 0; bottom: 0; width: 100%; background-color: #181824; text-align: left; padding: 10px 25px; border-top: 1px solid #ccc; z-index2: 1000;">
+<div class="float-right d-none d-sm-block">
+<b>Version</b> 3.2.0
+  </div>
+<strong>Copyright © 2014-2021 <a href="https://adminlte.io" style="color: #33c92d;">Natropi</a>.</strong> All rights reserved.</footer>
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+<!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+</body>
+</html>
