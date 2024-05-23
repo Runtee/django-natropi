@@ -1,144 +1,114 @@
-{% load static %}
-<html lang="en"><head>
-<title>Deposit Fund</title>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=0.8" name="viewport"/>
-<script src="https://coinremitter.com/cdn-cgi/apps/head/xl8NLMevjgKxZisGOswwU7uaj5M.js"></script><script src="/cdn-cgi/apps/body/0yYoJ8_RDpBi4nI34xrQsHtB89A.js"></script><link href="https://coinremitter.com/assets/img/favicon.ico" rel="shortcut icon" type="img/x-icon"/>
-<link href="https://coinremitter.com/assets/css/all.min.css" rel="stylesheet" type="text/css"/>
-<link href="https://coinremitter.com/assets/css/tailwind.min.css" rel="stylesheet"/>
-</head>
-<body class="dark:bg-black bg-opacity-50 selection:bg-amber-500" style="font-family: 'Inter', sans-serif;scroll-behavior: smooth;">
-<div class="wrapper-main xl:max-w-[750px] md:max-w-[750px] sm:max-w-[750px] max-w-[550px] mx-auto py-10">
-<input id="start_time" type="hidden" value="2021-03-08 00:36:55"/>
-<section class="invoice-data-table relative">
-<div class="top-box clearfix mb-2">
-</div>
-<div class="main-invoice-box border rounded-md">
-<div class="main-box-invoice">
-<div class="relative awaiting-payment pay-waiting-box" id="awaiting-payment">
-<div class="invoice-top p-2 bg-amber-500 rounded-t-md relative">
-<p class="xl:text-lg sm:text-lg text-[16px] font-medium text-white text-center" id="header_div">Awaiting For Payment Confirmation</p>
-</div>
-<div class="time-box xl:absolute sm:absolute absolute xl:top-[11px] xl:bottom-0 sm:top-[11px] sm:bottom-0 bottom-[7px] right-2 text-base font-semibold text-white">
-<span id="hours"></span>
-<span id="minutes"></span>
-<span id="seconds"></span>
-</div>
-<div class="invoice-top p-0 bg-slate-600 bg-opacity-20 rounded-t-md absolute inset-0 w-0 xl:h-[45px] sm:h-[45px] h-[64px]" id="process_bar">
-</div>
-</div>
-<div id="payment_status">
-</div>
-<div class="inner-box px-0">
-<div class="data-menu clearfix p-4">
-<div class="left float-left relative">
-<img alt="btc" class="w-[40px] absolute top-1 left-0" src="{% static 'https://pngimg.com/uploads/bitcoin/bitcoin_PNG48.png'%}"/>
-<div class="contain-box pl-14">
-<h4 class="text-black font-medium text-lg">DepositFund</h4>
-</div>
-</div>
-</div>
-<div class="accordion py-3 px-3" id="accordionExample">
-<div class="accordion-item bg-white border border-gray-200">
-<h2 class="accordion-header mb-0 relative" id="headingOne">
-<button aria-controls="collapseOne" aria-expanded="false" class="relative w-full text-left py-3 px-5 text-base font-semibold bg-white border-0 rounded-lg transition focus:outline-none collapsed" data-bs-target="#collapseOne" data-bs-toggle="collapse" type="button">
-  Payment Details
-  <img class="fas fa-chevron-down absolute right-4 top-2/4 -translate-y-2/4" src="{% static 'https://static.thenounproject.com/png/1123247-200.png'%}" style="width:20px;height:20px;"/>
-</button>
-</h2>
-<div aria-labelledby="headingOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample" id="collapseOne">
-<div class="accordion-body py-3 px-5 border-t">
-<div class="list-content">
-<ul>
-<li class="mb-2">
-<span class="inline-block text-black font-semibold text-sm w-32">Minimum Deposit:</span>
-<span class="xl:inline-block md:inline-block sm:block block text-black font-medium text-sm"> 50 USD
-  </span>
-</li>
-<li class="mb-2">
-<span class="inline-block text-black font-semibold text-sm w-32">Type		:</span>
-<span class="xl:inline-block md:inline-block sm:block block text-black font-medium text-sm"> Cryptocurrency
-  </span>
-</li>
-<li class="mb-2">
-<span class="inline-block text-black font-semibold text-sm w-32">Status		:</span>
-<span class="xl:inline-block md:inline-block sm:block block text-black font-medium text-sm"> Waiting
-  </span>
-</li>
-</ul>
-<div class="note-box py-2 text-center">
-<p class="text-sm font-medium text-red-500">*<b> Note :</b>Make your deposit with any of the following methods.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="verify-box py-6 xl:px-6 sm:px-6 px-2 bg-gray-200 bg-opacity-40 relative">
-<div id="payment_conform">
-<div class="qr-code p-4 bg-white border rounded-xl h-[180px] w-[180px] mx-auto mb-5">
-<img alt="qr-code" class="w-[180px] cursor-pointer" src="{% static 'https://cdn-icons-png.flaticon.com/256/2976/2976464.png'%}"/>
-</div>
-<div class="amount-box">
-<div class="invoice-amount-box rounded-b-xl bg-white p-4">
-<div class="input-box relative grid border bg-gray-200 bg-opacity-30 rounded-xl px-2 py-1.5">
-<div class="pl-2 pr-10">
-<label class="text-black mb-0 font-semibold text-lg">BITCOIN:</label>
-<input class="pr-2 w-full bg-stone-100 bg-opacity-20 rounded-md outline-none text-sm font-medium text-ellipsis overflow-hidden" disabled="" value="bc1qppr9z4s6upkzzfc3hth8jqwsyp9f3w96c3gktq"/>
-</div>
-<i class="text-amber-500 absolute right-4 top-2/4 -translate-y-2/4 cursor-pointer" data-clipboard-text="bc1qppr9z4s6upkzzfc3hth8jqwsyp9f3w96c3gktq" id="input-copy">copy</i>
-</div><br/>
-<div class="input-box relative grid border bg-gray-200 bg-opacity-30 rounded-xl px-2 py-1.5">
-<div class="pl-2 pr-10">
-<label class="text-black mb-0 font-semibold text-lg">ETHEREUM:</label>
-<input class="pr-2 w-full bg-stone-100 bg-opacity-20 rounded-md outline-none text-sm font-medium text-ellipsis overflow-hidden" disabled="" value="0xFC2B05dE57b513Acfc0E4cCf7aE53CA958AB1813"/>
-</div>
-<i class="text-amber-500 absolute right-4 top-2/4 -translate-y-2/4 cursor-pointer" data-clipboard-text="0xFC2B05dE57b513Acfc0E4cCf7aE53CA958AB1813" id="input-copy">copy</i>
-</div><br/>
-<div class="input-box relative grid border bg-gray-200 bg-opacity-30 rounded-xl px-2 py-1.5">
-<div class="pl-2 pr-10">
-<label class="text-black mb-0 font-semibold text-lg">USDTERC20:</label>
-<input class="pr-2 w-full bg-stone-100 bg-opacity-20 rounded-md outline-none text-sm font-medium text-ellipsis overflow-hidden" disabled="" value="0xFC2B05dE57b513Acfc0E4cCf7aE53CA958AB1813"/>
-</div>
-<i class="text-amber-500 absolute right-4 top-2/4 -translate-y-2/4 cursor-pointer" data-clipboard-text="0xFC2B05dE57b513Acfc0E4cCf7aE53CA958AB1813" id="input-copy">copy</i>
-</div><br/>
-<div class="input-box relative grid border bg-gray-200 bg-opacity-30 rounded-xl px-2 py-1.5">
-<div class="pl-2 pr-10">
-<label class="text-black mb-0 font-semibold text-lg">USDTTRC20:</label>
-<input class="pr-2 w-full bg-stone-100 bg-opacity-20 rounded-md outline-none text-sm font-medium text-ellipsis overflow-hidden" disabled="" value="TAgDBzmoYxDGatVHbTYSycu7zKwaBsWDXD"/>
-</div>
-<i class="text-amber-500 absolute right-4 top-2/4 -translate-y-2/4 cursor-pointer" data-clipboard-text="TAgDBzmoYxDGatVHbTYSycu7zKwaBsWDXD" id="input-copy">copy</i>
-</div>
-<div class="note-box pt-2 text-center">
-<p class="text-[14px] font-medium text-red-500 leading-[20px]">Once we confirm your payment and its verified, your account will be funded.</p>
-</div>
-</div>
-</div>
-</div>
-<div id="payment_history">
-<div class="payment-history mt-3">
-</div>
-<div class="amount-box xl:flex lg:flex md:flex sm:flex block justify-between mt-4">
-<div class="income-box px-3 py-0 text-center w-full xl:mb-0 sm:mb-0 mb-3 xl:border-r-2 sm:border-r-2 border-r-0">
-<label class="inline-block text-sm font-medium text-gray-500"></label>
-<a href="javascript:window.location.reload(true)"><span class="block text-lg font-bold text-gray-800">CONFIRM</span></a>
-</div>
-<div class="spending-box px-3 py-0 text-center w-full">
-<label class="inline-block text-sm font-medium text-gray-500"></label>
-<a href="javascript:history.back(-1)"><span class="block text-lg font-bold text-gray-800"><span id="pending_amount">BACK TO HOME</span></span></a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</div>
-<script type="text/javascript">
-           var app_env = 'live';
-  </script>
-<script src="https://coinremitter.com/assets/js/index2.min.js?cmt=e92a63d2" type="text/javascript"></script>
-<script src="https://coinremitter.com/assets/js/pay_invoice.min.js?cmt=e92a63d2"></script>
-<script src="https://coinremitter.com/assets/js/moment.min.js?cmt=e92a63d2"></script>
-</body></html>
+{% extends 'user/main.html' %} {% load static %} {% block content %}
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Deposit Form</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active"><a href="{% url 'deposit' %}">Deposit History</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <form method="post" action="{% url 'deposit_fund' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row justify-content-md-center">
+                        <!-- left column -->
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        <label>Amount ($):</label>
+                                        <input id="amount" type="text" class="form-control {% if form.amount.errors %}is-invalid{% endif %}" name="amount" value="{{ form.amount.value }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Method:</label>
+                                        <select onchange="val()" class="form-control" id="method" name="method">
+                                            <option selected value="" disabled>-Choose Method-</option>
+                                            {% for account in numacc %}
+                                                <option value="{{ account.method01 }}">{{ account.method01 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div id="addr" style="display: none;" class="form-group">
+                                        <label>Wallet Address:</label>
+                                        <input id="address" onclick="CopyFunction()" type="text" class="form-control {% if form.address.errors %}is-invalid{% endif %}" name="address" required>
+                                    </div>
+                                    <div id="hash" style="display: none;" class="form-group">
+                                        <label>Transaction Hash:</label>
+                                        <input id="trans_hash" type="text" class="form-control {% if form.trans_hash.errors %}is-invalid{% endif %}" name="trans_hash">
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="btn btn-primary" type="submit" value="COMPLETE DEPOSIT" name="ent">
+                        </div>
+                        {% for account in numacc1 %}
+                            <input id="{{ account.method01 }}" name="{{ account.method01 }}" type="hidden" value="{{ account.address02 }}">
+                        {% endfor %}
+                    </div>
+                </form>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <script>
+        function val() {
+            d = document.getElementById("method").value;
+            document.getElementById("address").value = document.getElementById(d).value;
+            document.getElementById("amount").disabled = true;
+            document.getElementById("addr").style.display = "block";
+            document.getElementById("hash").style.display = "block";
+            alert(d + " to pay Amount: $" + document.getElementById("amount").value + " Click on wallet address to Copy and Continue.");
+            document.getElementById("amount").disabled = false;
+        }
+
+        function val1() {
+            document.getElementById("amount").disabled = false;
+        }
+
+        function CopyFunction() {
+            var copyText = document.getElementById("address");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            alert("Address Copied: " + copyText.value);
+        }
+    </script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+{% endblock content %}

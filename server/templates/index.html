@@ -1,0 +1,782 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<!-- Mirrored from apexa-html-demo.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 May 2024 16:24:51 GMT -->
+<!-- Added by HTTrack --><meta content="text/html;charset=utf-8" http-equiv="content-type"/><!-- /Added by HTTrack -->
+<head>
+	<meta charset="utf-8"/>
+	<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+	<title>Natropi</title>
+	<meta content="Natropi" name="description"/>
+	<meta content="width=device-width, initial-scale=1" name="viewport"/>
+	<link href="{% static 'assets/img/logo/logo.jpg'%}" rel="shortcut icon" type="image/x-icon"/>
+	<!-- Place favicon.ico in the root directory -->
+	<!-- CSS here -->
+	<link href="{% static 'assets/css/bootstrap.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/animate.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/magnific-popup.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/fontawesome-all.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/flaticon.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/odometer.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/swiper-bundle.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/aos.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/default.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/main.css'%}" rel="stylesheet"/>
+</head>
+<body>
+<!--Preloader-->
+<div id="preloader">
+<div class="loader" id="loader">
+<div class="loader-container">
+<div class="loader-icon"><img alt="Preloader" src="{% static 'assets/img/logo/logo.jpg'%}"/></div>
+</div>
+</div>
+</div>
+<!--Preloader-end -->
+<!-- Scroll-top -->
+<button class="scroll__top scroll-to-target" data-target="html">
+<i class="fas fa-angle-up"></i>
+</button>
+<!-- Scroll-top-end-->
+<!-- header-area -->
+<header class="transparent-header">
+<div class="tg-header__area" id="sticky-header">
+<div class="container custom-container">
+<div class="row">
+<div class="col-12">
+<div class="tgmenu__wrap">
+<nav class="tgmenu__nav">
+<div class="logo">
+<a href="{% url 'index'%}"><img alt="Logo" src="{% static 'assets/img/logo/logo.jpg'%}"/></a>
+                                    Natropi
+                                </div>
+<div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
+<ul class="navigation">
+<li class="active"><a href="#">Home</a>
+</li>
+<li class=""><a href="{% url 'about_3'%}">OUR PHD TEAM</a>
+</li>
+<li class=""><a href="{% url 'get_started'%}">GET STARTED</a>
+</li>
+<li class=""><a href="{% url 'api'%}">API</a>
+</li>
+<li class=""><a href="#">TESTIMONIALS</a>
+</li>
+<li class=""><a href="{% url 'faq'%}">FAQ</a>
+</li>
+<li><a href="{% url 'contact'%}">CONTACT US</a></li>
+</ul>
+</div>
+<div class="tgmenu__action d-none d-md-block">
+<ul class="list-wrap">
+<li class="header-btn"><a class="btn" href="{% url 'login'%}">SIGN IN</a></li>
+<li class="header-btn"><a class="btn" href="{% url 'register'%}">SIGN UP</a></li>
+</ul>
+</div>
+<div class="mobile-nav-toggler">
+<svg fill="none" viewbox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2C4 3.10457 3.10457 4 2 4C0.895431 4 0 3.10457 0 2Z" fill="currentcolor"></path>
+<path d="M0 9C0 7.89543 0.895431 7 2 7C3.10457 7 4 7.89543 4 9C4 10.1046 3.10457 11 2 11C0.895431 11 0 10.1046 0 9Z" fill="currentcolor"></path>
+<path d="M0 16C0 14.8954 0.895431 14 2 14C3.10457 14 4 14.8954 4 16C4 17.1046 3.10457 18 2 18C0.895431 18 0 17.1046 0 16Z" fill="currentcolor"></path>
+<path d="M7 2C7 0.895431 7.89543 0 9 0C10.1046 0 11 0.895431 11 2C11 3.10457 10.1046 4 9 4C7.89543 4 7 3.10457 7 2Z" fill="currentcolor"></path>
+<path d="M7 9C7 7.89543 7.89543 7 9 7C10.1046 7 11 7.89543 11 9C11 10.1046 10.1046 11 9 11C7.89543 11 7 10.1046 7 9Z" fill="currentcolor"></path>
+<path d="M7 16C7 14.8954 7.89543 14 9 14C10.1046 14 11 14.8954 11 16C11 17.1046 10.1046 18 9 18C7.89543 18 7 17.1046 7 16Z" fill="currentcolor"></path>
+<path d="M14 2C14 0.895431 14.8954 0 16 0C17.1046 0 18 0.895431 18 2C18 3.10457 17.1046 4 16 4C14.8954 4 14 3.10457 14 2Z" fill="currentcolor"></path>
+<path d="M14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9Z" fill="currentcolor"></path>
+<path d="M14 16C14 14.8954 14.8954 14 16 14C17.1046 14 18 14.8954 18 16C18 17.1046 17.1046 18 16 18C14.8954 18 14 17.1046 14 16Z" fill="currentcolor"></path>
+</svg>
+</div>
+</nav>
+</div>
+<!-- Mobile Menu  -->
+<div class="tgmobile__menu">
+<nav class="tgmobile__menu-box">
+<div class="close-btn"><i class="fas fa-times"></i></div>
+<div class="nav-logo">
+<a href="{% url 'index'%}"><img alt="Logo" src="{% static 'assets/img/logo/logo.JPG'%}"/></a>
+</div>
+<div class="tgmobile__search">
+<form action="#">
+<input placeholder="Search here..." type="text"/>
+<button><i class="fas fa-search"></i></button>
+</form>
+</div>
+<div class="tgmobile__menu-outer">
+<!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+</div>
+<div class="tgmobile__menu-bottom">
+<div class="contact-info">
+<ul class="list-wrap">
+<li><a href="mailto:info@apexa.com">info@apexa.com</a></li>
+<li><a href="tel:0123456789">+123 888 9999</a></li>
+</ul>
+</div>
+<div class="social-links">
+<ul class="list-wrap">
+<li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-youtube"></i></a></li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+<div class="tgmobile__menu-backdrop"></div>
+<!-- End Mobile Menu -->
+</div>
+</div>
+</div>
+</div>
+<!-- header-search -->
+<div class="search__popup">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="search__wrapper">
+<div class="search__close">
+<button class="search-close-btn" type="button">
+<svg fill="none" height="18" viewbox="0 0 18 18" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 1L1 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+<path d="M1 1L17 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</button>
+</div>
+<div class="search__form">
+<form action="#">
+<div class="search__input">
+<input class="search-input-field" placeholder="Type keywords here" type="text"/>
+<span class="search-focus-border"></span>
+<button>
+<svg fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.55 18.1C14.272 18.1 18.1 14.272 18.1 9.55C18.1 4.82797 14.272 1 9.55 1C4.82797 1 1 4.82797 1 9.55C1 14.272 4.82797 18.1 9.55 18.1Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+<path d="M19.0002 19.0002L17.2002 17.2002" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="search-popup-overlay"></div>
+<!-- header-search-end -->
+<!-- offCanvas-menu -->
+<div class="offCanvas__info">
+<div class="offCanvas__close-icon menu-close">
+<button><i class="far fa-window-close"></i></button>
+</div>
+<div class="offCanvas__logo mb-30">
+<a href="{% url 'index'%}"><img alt="Logo" src="{% static 'assets/img/logo/logo.png'%}"/></a>
+</div>
+<div class="offCanvas__side-info mb-30">
+<div class="contact-list mb-30">
+<h4>Office Address</h4>
+<p>123/A, Miranda City Likaoli <br/> Prikano, Dope</p>
+</div>
+<div class="contact-list mb-30">
+<h4>Phone Number</h4>
+<p>+0989 7876 9865 9</p>
+<p>+(090) 8765 86543 85</p>
+</div>
+<div class="contact-list mb-30">
+<h4>Email Address</h4>
+<p>info@example.com</p>
+<p>example.mail@hum.com</p>
+</div>
+</div>
+<div class="offCanvas__social-icon mt-30">
+<a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+<a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+<a href="javascript:void(0)"><i class="fab fa-google-plus-g"></i></a>
+<a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
+</div>
+</div>
+<div class="offCanvas__overly"></div>
+<!-- offCanvas-menu-end -->
+</header>
+<!-- header-area-end -->
+<!-- main-area -->
+<main class="fix">
+<!-- banner-area -->
+<section class="banner-area banner-bg" data-background="assets/img/banner/he.png">
+<div class="container">
+<div class="row">
+<div class="col-lg-6">
+<div class="banner-content" style="border: 2px solid white; border-radius: 40px; padding-top: 17px; padding-bottom: 17px; padding-right: 24px; padding-left: 24px; background-color: white; box-shadow: 1px 2px 2px 2px #44549b;">
+<h1 class="" data-aos="fade-up" data-aos-delay="200" style="word-spacing: 4px; line-height: 1.4;">Natropi - Discover global opportunities across multiple asset classes with investments. </h1>
+<p data-aos="fade-up" data-aos-delay="400">Robo Investing, Farmland, Brent Oil, Artificial Intelligence and more— all from a single account powered by blockchain and AI Technology. Discover the power of earning in an increasing  ecosystem.</p>
+<a class="btn" data-aos="fade-up" data-aos-delay="600" href="{% url 'about'%}">Read More</a>
+</div>
+</div>
+</div>
+<div class="banner-social">
+<h5 class="title">Follow us</h5>
+<ul class="list-wrap">
+<li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-pinterest-p"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a></li>
+</ul>
+</div>
+<div class="banner-scroll">
+<a href="#about">Scroll Down <span><i class="fas fa-arrow-right"></i></span></a>
+</div>
+</div>
+</section>
+<section class="about-area pt-120 pb-120" id="about">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6">
+<div class="about-img-wrap">
+<div class="mask-img-wrap">
+<img alt="" src="{% static 'assets/img/images/about_img01.jpg'%}"/>
+</div>
+<div class="shape">
+<img alt="" src="{% static 'assets/img/images/about_shape01.png'%}"/>
+</div>
+<div class="experience-year">
+<div class="icon">
+<i class="flaticon-trophy"></i>
+</div>
+<div class="content">
+<h6 class="circle rotateme">-Natropi-  investments</h6>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="about-content">
+<div class="section-title mb-35 tg-heading-subheading animation-style3">
+<span class="sub-title">Simply Know About</span>
+<h2 class="title tg-element-title">WHY CHOOSE Natropi</h2>
+</div>
+<div class="about-list">
+<ul class="list-wrap">
+<li>
+<div class="icon">
+<img src="{% static 'assets/img/images/icon-d.png'%}"/>
+</div>
+<div class="content">
+<h4 class="title">Experienced Support</h4>
+<p>With trained and experienced support staffs, all your queries are just one click away from getting answered. Our support team provides 24/5 support and assistance to customers.</p>
+</div>
+</li>
+<li>
+<div class="icon" style="padding-top: 12px;">
+<img src="{% static 'assets/img/images/icon-f.png'%}"/>
+</div>
+<div class="content">
+<h4 class="title">Seamless Experience</h4>
+<p>Earning has never been this easy. Whether you are making payments or making payouts or you are simply checking up on your investments, navigating the platform is seamless and easy.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="about-bottom">
+<div class="author-wrap">
+<a class="btn btn-two" href="{% url 'about'%}" style="margin-left: 12px;">Read More</a>
+</div>
+</div>
+<div class="about-shape-wrap">
+<img alt="" src="{% static 'assets/img/images/about_shape03.png'%}"/>
+<img alt="" class="ribbonRotate" src="{% static 'assets/img/images/about_shape04.png'%}"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="about-left-shape">
+<img alt="" src="{% static 'assets/img/images/about_shape02.png'%}"/>
+</div>
+</section>
+<!-- about-area-end -->
+<!-- services-area -->
+<section class="services-area services-bg" data-background="assets/img/bg/services_bg.jpg">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-xl-6 col-lg-8">
+<div class="section-title text-center mb-40 tg-heading-subheading animation-style3">
+<h2 class="title tg-element-title">What Our Client Think About Us</h2>
+</div>
+</div>
+</div>
+<div class="row justify-content-center gutter-24">
+<div class="col-lg-4 col-md-6">
+<div class="testimonial__item-two">
+<div class="testimonial__avatar">
+<img alt="" src="{% static 'assets/img/images/testi_avatar01.png'%}"/>
+</div>
+<div class="testimonial__info-two">
+<h2 class="title">Milla Isreal</h2>
+</div>
+<div class="testimonial__rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star" style="color: #f7921a;"></i>
+</div>
+<p>I’m  so grateful for benefiting from a platform like this.
+                                Thanks for buting smile on my Face</p>
+<div class="icon">
+<img alt="" src="{% static 'assets/img/icon/quote.svg'%}"/>
+</div>
+</div>
+</div>
+<div class="col-lg-4 col-md-6">
+<div class="testimonial__item-two">
+<div class="testimonial__avatar">
+<img alt="" src="{% static 'assets/img/images/testi_avatar02.png'%}"/>
+</div>
+<div class="testimonial__info-two">
+<h2 class="title">Phillip Howes</h2>
+</div>
+<div class="testimonial__rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star" style="color: #f7921a;"></i>
+</div>
+<p>Very simple and secure method to make a bit of interest to your natropi investement capital portfolio.</p>
+<div class="icon">
+<img alt="" src="{% static 'assets/img/icon/quote.svg'%}"/>
+</div>
+</div>
+</div>
+<div class="col-lg-4 col-md-6">
+<div class="testimonial__item-two">
+<div class="testimonial__avatar">
+<img alt="" src="{% static 'assets/img/images/testi_avatar03.png'%}"/>
+</div>
+<div class="testimonial__info-two">
+<h2 class="title">Anna Oliver</h2>
+</div>
+<div class="testimonial__rating">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star" style="color: #f7921a;"></i>
+</div>
+<p>Easy to use, risk-free investment platform that increases ones earning potential.</p>
+<div class="icon">
+<img alt="" src="{% static 'assets/img/icon/quote.svg'%}"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- services-area-end -->
+<!-- choose-area -->
+<section class="choose-area">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 order-0 order-lg-2">
+<div class="choose-img-wrap">
+<img alt="" src="{% static 'assets/img/images/choose_img01.jpg'%}"/>
+<img alt="" data-parallax='{"x" : 50 }' src="{% static 'assets/img/images/choose_img02.jpg'%}"/>
+<img alt="" class="alltuchtopdown" src="{% static 'assets/img/images/choose_img_shape.png'%}"/>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="choose-content">
+<div class="section-title white-title mb-30 tg-heading-subheading animation-style3">
+<h2 class="title tg-element-title">WHY WE ARE THE BEST</h2>
+</div>
+<p>Natropi is one of the leading private investment firms providing asset management services on the internet. We offer professional investment solutions for all investors' needs. When we started, our mission is to build a community. A place you join as an individual, ‘me’, but where you become part of a greater ‘we ‘. A place of financial fulfilment, where economic growth is built. <br/>
+                                Online brokers, FinTechs, portfolio managers, digital advisors take advantage of leveraging Trading API to automate trade submissions, reporting, trade allocations and track order statuses, positions and account balances.
+                <br/>
+                Natropi offers multi-asset trading functionality and is seamlessly integrated and easily configurable to fit into pre-existing environment. Leverage years of trading technology experience and choose Grinhold CFDs Stock trading API to launch new online investing products or enhance existing offerings.</p>
+<div class="choose-list">
+<ul class="list-wrap">
+<li>
+<div class="icon">
+<img src="{% static 'assets/img/images/icon-e.png'%}"/>
+</div>
+<div class="content">
+<h4 class="title">100% Secure Platform</h4>
+<p>Using state-of-the art servers, we have guarded our servers with high-end SSL technology and the latest DDoS Guard to protect against attacks.</p>
+</div>
+</li>
+<li>
+<div class="icon">
+<img src="{% static 'assets/img/images/icon-g.png'%}"/> </div>
+<div class="content">
+<h4 class="title">Multiple Payment Methods</h4>
+<p>With an array of payment methods provided by the platform, you get multiple options to make payments and receive payouts.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="choose-shape-wrap">
+<img alt="" data-aos="fade-right" data-aos-delay="400" src="{% static 'assets/img/images/choose_shape01.png'%}"/>
+<img alt="" data-aos="fade-left" data-aos-delay="400" src="{% static 'assets/img/images/choose_shape02.png'%}"/>
+</div>
+</section>
+<!-- choose-area-end -->
+<!-- counter-area -->
+<section class="counter-area">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-xl-3 col-lg-4 col-sm-6">
+<div class="counter-item">
+<div class="icon">
+<i class="flaticon-trophy"></i>
+</div>
+<div class="content">
+<h2 class="count"><span class=""></span>$127M+</h2>
+<p>Total Withdrawals</p>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-sm-6">
+<div class="counter-item">
+<div class="icon">
+<i class="flaticon-happy"></i>
+</div>
+<div class="content">
+<h2 class="count"><span class="odometer" data-count="35"></span>K</h2>
+<p>Members</p>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-sm-6">
+<div class="counter-item">
+<div class="icon">
+<i class="flaticon-china"></i>
+</div>
+<div class="content">
+<h2 class="count"><span class="odometer" data-count="9"></span>k</h2>
+<p>Visitors Online</p>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-sm-6">
+<div class="counter-item">
+<div class="icon">
+<i class="flaticon-time"></i>
+</div>
+<div class="content">
+<h2 class="count"><span class=""></span>$425M+</h2>
+<p>Total Deposit</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="counter-shape-wrap">
+<img alt="" data-aos="fade-right" data-aos-delay="400" src="{% static 'assets/img/images/counter_shape01.png'%}"/>
+<img alt="" data-parallax='{"x" : 100 , "y" : -100 }' src="{% static 'assets/img/images/counter_shape02.png'%}"/>
+<img alt="" data-aos="fade-left" data-aos-delay="400" src="{% static 'assets/img/images/counter_shape03.png'%}"/>
+</div>
+</section>
+<!-- counter-area-end -->
+<!-- project-area -->
+<section class="services__area-two">
+<div class="container">
+<div class="row">
+<div class="col-lg-6">
+<div class="section-title white-title mb-50 tg-heading-subheading animation-style3">
+<h2 class="title tg-element-title">Four Easy Steps To Start Earning</h2>
+</div>
+</div>
+</div>
+<div class="row justify-content-center gutter-24">
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="services__item-two">
+<div class="services__icon-two">
+<img src="{% static 'assets/img/images/icon-a.png'%}"/>
+</div>
+<div class="services__content-two">
+<h2 class="title"><a href="{% url 'services_details'%}">Create an Account
+                                </a></h2>
+<p>
+                                    Creating an account is a free and painless process. Complete the registration form and get one step closer to earning.</p>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="services__item-two">
+<div class="services__icon-two">
+<img src="{% static 'assets/img/images/icon-e.png'%}"/>
+</div>
+<div class="services__content-two">
+<h2 class="title"><a href="{% url 'services_details'%}">Get Verified</a></h2>
+<p>Once we have verified your details and you have passed our screening process, your account will be activated and provisioned for trading.</p>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="services__item-two">
+<div class="services__icon-two">
+<img src="{% static 'assets/img/images/icon-b.png'%}"/>
+</div>
+<div class="services__content-two">
+<h2 class="title"><a href="{% url 'services_details'%}">Create New Deposit</a></h2>
+<p>Continue to make deposits on a range of Natropi Portfolio available on your account - as provided by the platform.</p>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="services__item-two">
+<div class="services__icon-two">
+<img src="{% static 'assets/img/images/icon-c.png'%}"/>
+</div>
+<div class="services__content-two">
+<h2 class="title"><a href="{% url 'services_details'%}">Start Earning</a></h2>
+<p>Start earning with a return on investment by the percentage of the Natropi Portfolio you made investments on.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="project-shape-wrap">
+<img alt="" class="alltuchtopdown" src="{% static 'assets/img/project/project_shape01.png'%}"/>
+<img alt="" class="rotateme" src="{% static 'assets/img/project/project_shape02.png'%}"/>
+</div>
+</section><br>
+<!-- banner-area-end -->
+<!-- brand-area -->
+<div class="brand-area" style="background-color: rgb(22, 22, 114);">
+<div class="container">
+<div class="" style="text-align: center; margin-bottom: 20px;">
+<h4 class="animated" data-animate="fadeInUp" data-delay=".0" style="display: inline-block;  color: white; font-family: 'Arial', sans-serif;">
+                        Supported payment methods
+                    </h4>
+</div>
+<div class="swiper-container brand-active">
+<div class="swiper-wrapper">
+<div class="swiper-slide">
+<div class="brand-item">
+<img alt="" src="{% static 'assets/img/brand/blockchain1.png'%}"/>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="brand-item">
+<img alt="" src="{% static 'assets/img/brand/bittrex2.png'%}"/>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="brand-item">
+<img alt="" src="{% static 'assets/img/brand/coinbase3.png'%}"/>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="brand-item">
+<img alt="" src="{% static 'assets/img/brand/bitfinex5.png'%}"/>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="brand-item">
+<img alt="" src="{% static 'assets/img/brand/hitbtc6.png'%}"/>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="brand-item">
+<img alt="" src="{% static 'assets/img/brand/bitcoin-accepted-here.svg'%}"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- brand-area -->
+<!-- about-area -->
+<!-- START CODE Attention! Do not modify this code; --><script>var fm = "EUR";var to = "USD";var tz = "timezone";var sz = "1x1";var lg = "en";var st = "info";var lr = "0";var rd = "0";</script><a href="https://currencyrate.today/converter-widget" title="Currency Converter"><script src="http://currencyrate.today/converter"></script></a><div style="font-size:.8em;"></div><!-- Attention! Do not modify this code; END CODE -->
+<!-- START CODE Attention! Do not modify this code; --><script>var fm = "EUR";var to = "USD";var tz = "timezone";var sz = "1x1";var lg = "en";var st = "info";var lr = "0";var rd = "0";</script><a href="https://currencyrate.today/converter-widget" title="Currency Converter"><script src="http://currencyrate.today/converter"></script></a><div style="font-size:.8em;"><a href="https://currencyrate.today/">Currency Converter</a></div><!-- Attention! Do not modify this code; END CODE -->
+<!-- Cryptocurrency Price Widget --><script>!function(){var e=document.getElementsByTagName("script"),t=e[e.length-1],n=document.createElement("script");function r(){var e=crCryptocoinPriceWidget.init({base:"USD,EUR,CNY,GBP",items:"BTC,ETH,LTC,XMR,DASH",backgroundColor:"FFFFFF",streaming:"1",rounded:"1",boxShadow:"1",border:"1"});t.parentNode.insertBefore(e,t)}n.src="../co-in.io/widget/pricelist721e.js?items=BTC%2CETH%2CLTC%2CXMR%2CDASH",n.async=!0,n.readyState?n.onreadystatechange=function(){"loaded"!=n.readyState&&"complete"!=n.readyState||(n.onreadystatechange=null,r())}:n.onload=function(){r()},t.parentNode.insertBefore(n,null)}();</script><a href="https://currencyrate.today/"></a><!-- /Cryptocurrency Price Widget -->
+<!-- testimonial-area -->
+<section class="testimonial-area">
+<div class="container">
+<div class="row align-items-center justify-content-center">
+<h2 style="text-align: center;">Current Market Values</h2>
+<h6>
+The asset management is a very volatile market. Constant monitoring of it's fluctuations and critical understanding of the underlying implications is crucial to making profitable trades. Asset management is the practice of increasing total wealth over time by acquiring, maintaining, and trading investments that have the potential to grow in value.The investments may include stocks, bonds, real estate, commodities, alternative investments, and mutual funds, among the better-known choices. To become a part of this profitable venture click the get started button below.</h6>
+</div>
+</div>
+<div class="tradingview-widget-container__widget" style="margin: 0 auto; "></div>
+<div class="tradingview-widget-copyright" style="width:100%; "><a href="#" rel="noopener" target="_blank"><span class="blue-text">Market Data</span></a></div>
+<div style="width: 90%; height: 450px; text-align: center;"><style>
+	.tradingview-widget-copyright {
+		font-size: 13px !important;
+		line-height: 32px !important;
+		text-align: center !important;
+		vertical-align: middle !important;
+		font-family: 'Trebuchet MS', Arial, sans-serif !important;
+		color: #9db2bd !important;
+	}
+
+	.tradingview-widget-copyright .blue-text {
+		color: #2196f3 !important;
+	}
+
+	.tradingview-widget-copyright a {
+		text-decoration: none !important;
+		color: #9db2bd !important;
+	}
+
+	.tradingview-widget-copyright a:visited {
+		color: #9db2bd !important;
+	}
+
+	.tradingview-widget-copyright a:hover .blue-text {
+		color: #38acdb !important;
+	}
+
+	.tradingview-widget-copyright a:active .blue-text {
+		color: #299dcd !important;
+	}
+
+	.tradingview-widget-copyright a:visited .blue-text {
+		color: #2196f3 !important;
+	}
+    </style><iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://s.tradingview.com/embed-widget/market-quotes/?locale=en#%7B%22width%22%3A%2290%25%22%2C%22height%22%3A450%2C%22symbolsGroups%22%3A%5B%7B%22name%22%3A%22Indices%22%2C%22originalName%22%3A%22Indices%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22OANDA%3ASPX500USD%22%2C%22displayName%22%3A%22S%26P%20500%22%7D%2C%7B%22name%22%3A%22OANDA%3ANAS100USD%22%2C%22displayName%22%3A%22Nasdaq%20100%22%7D%2C%7B%22name%22%3A%22FOREXCOM%3ADJI%22%2C%22displayName%22%3A%22Dow%2030%22%7D%2C%7B%22name%22%3A%22INDEX%3ANKY%22%2C%22displayName%22%3A%22Nikkei%20225%22%7D%2C%7B%22name%22%3A%22INDEX%3ADEU30%22%2C%22displayName%22%3A%22DAX%20Index%22%7D%2C%7B%22name%22%3A%22OANDA%3AUK100GBP%22%2C%22displayName%22%3A%22FTSE%20100%22%7D%5D%7D%2C%7B%22name%22%3A%22Commodities%22%2C%22originalName%22%3A%22Commodities%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22CME_MINI%3AES1!%22%2C%22displayName%22%3A%22E-Mini%20S%26P%22%7D%2C%7B%22name%22%3A%22CME%3A6E1!%22%2C%22displayName%22%3A%22Euro%22%7D%2C%7B%22name%22%3A%22COMEX%3AGC1!%22%2C%22displayName%22%3A%22Gold%22%7D%2C%7B%22name%22%3A%22NYMEX%3ACL1!%22%2C%22displayName%22%3A%22Crude%20Oil%22%7D%2C%7B%22name%22%3A%22NYMEX%3ANG1!%22%2C%22displayName%22%3A%22Natural%20Gas%22%7D%2C%7B%22name%22%3A%22CBOT%3AZC1!%22%2C%22displayName%22%3A%22Corn%22%7D%5D%7D%2C%7B%22name%22%3A%22Bonds%22%2C%22originalName%22%3A%22Bonds%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22CME%3AGE1!%22%2C%22displayName%22%3A%22Eurodollar%22%7D%2C%7B%22name%22%3A%22CBOT%3AZB1!%22%2C%22displayName%22%3A%22T-Bond%22%7D%2C%7B%22name%22%3A%22CBOT%3AUB1!%22%2C%22displayName%22%3A%22Ultra%20T-Bond%22%7D%2C%7B%22name%22%3A%22EUREX%3AFGBL1!%22%2C%22displayName%22%3A%22Euro%20Bund%22%7D%2C%7B%22name%22%3A%22EUREX%3AFBTP1!%22%2C%22displayName%22%3A%22Euro%20BTP%22%7D%2C%7B%22name%22%3A%22EUREX%3AFGBM1!%22%2C%22displayName%22%3A%22Euro%20BOBL%22%7D%5D%7D%2C%7B%22name%22%3A%22Forex%22%2C%22originalName%22%3A%22Forex%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22FX%3AEURUSD%22%7D%2C%7B%22name%22%3A%22FX%3AGBPUSD%22%7D%2C%7B%22name%22%3A%22FX%3AUSDJPY%22%7D%2C%7B%22name%22%3A%22FX%3AUSDCHF%22%7D%2C%7B%22name%22%3A%22FX%3AAUDUSD%22%7D%2C%7B%22name%22%3A%22FX%3AUSDCAD%22%7D%5D%7D%5D%2C%22utm_source%22%3A%22tradegofxsignals.com%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22market-quotes%22%7D" style="box-sizing: border-box; height: calc(418px); width: 90%;"></iframe></div>
+
+</section>
+<!-- testimonial-area-end -->
+<!-- blog-post-area -->
+<!-- blog-post-area-end -->
+<!-- call-back-area -->
+<section class="call-back-area">
+<div class="container" style="color: aliceblue;">
+<p style="color: aliceblue;">By using this website, you understand the information being presented is provided for informational purposes only and agree to our Terms of Use and Privacy Policy. Natropi relies on information from various sources believed to be reliable, including clients and third parties, but cannot guarantee the accuracy and completeness of that information.</p>
+<p style="color: aliceblue;">Nothing in this communication should be construed as an offer, recommendation, or solicitation to buy or sell any security. Additionally, Natropi Advisers do not provide tax advice and investors are encouraged to consult with their personal tax advisors.</p>
+<p style="color: aliceblue;">Natropi Software LLC (“Natropi”) provides a financial planning service tool designed to aid Natropi clients in preparing for their financial futures by allowing them to personalize their assumptions for their financial planning goals.</p>
+<p style="color: aliceblue;">All investing involves risk, including the possible loss of money you invest, and past performance does not guarantee future performance. Historical returns, expected returns, and probability projections are provided for informational and illustrative purposes, and may not reflect actual future performance.</p>
+</div>
+</section>
+<!-- call-back-area-end -->
+</br></main>
+<!-- main-area-end -->
+<!-- footer-area -->
+<footer>
+<div class="footer-area">
+<div class="footer-top">
+<div class="container">
+<div class="row">
+<div class="col-xl-3 col-lg-4 col-md-6">
+<div class="footer-widget">
+<div class="fw-logo mb-25">
+<a href="{% url 'index'%}"><img alt="" src="{% static 'assets/img/logo/logo.jpg'%}"/></a><span>Natropi</span>
+</div>
+<div class="footer-content">
+<p> Discover the power of earning in an increasing ecosystem.</p>
+<div class="footer-social">
+<ul class="list-wrap">
+<li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
+<li><a href="javascript:void(0)"><i class="fab fa-youtube"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+<div class="footer-widget">
+<h4 class="fw-title">Information</h4>
+<div class="footer-info-list">
+<ul class="list-wrap">
+<li>
+<div class="icon">
+<i class="flaticon-phone-call"></i>
+</div>
+<div class="content">
+<a href="tel:0123456789">+123 888 9999</a>
+</div>
+</li>
+<li>
+<div class="icon">
+<i class="flaticon-envelope"></i>
+</div>
+<div class="content">
+<a href="mailto:info@apexa.com">info@apexa.com</a>
+</div>
+</li>
+<li>
+<div class="icon">
+<i class="flaticon-pin"></i>
+</div>
+<div class="content">
+<p>Sydney Harbour Bridge Circular City of Sydney, Australia.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+<div class="footer-widget">
+<h4 class="fw-title">Top Links</h4>
+<div class="footer-link-list">
+<ul class="list-wrap">
+<li><a href="{% url 'about'%}">Get Started</a></li>
+<li><a href="{% url 'contact'%}">API</a></li>
+<li><a href="{% url 'contact'%}">NP Strategy</a></li>
+<li><a href="{% url 'contact'%}">NP Trade</a></li>
+<li><a href="{% url 'contact'%}">FAQ</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-5">
+<div class="copyright-text">
+<p>Copyright © <a href="{% url 'index'%}">Natropi</a> | All Right Reserved</p>
+<p>Support Terms &amp; Conditions Privacy Policy.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer-shape">
+<img alt="" data-aos="fade-right" data-aos-delay="400" src="{% static 'assets/img/images/footer_shape01.png'%}"/>
+<img alt="" data-aos="fade-left" data-aos-delay="400" src="{% static 'assets/img/images/footer_shape02.png'%}"/>
+<img alt="" data-parallax='{"x" : 100 , "y" : -100 }' src="{% static 'assets/img/images/footer_shape03.png'%}"/>
+</div>
+</div>
+</div></footer>
+<!-- footer-area-end -->
+<!-- JS here -->
+<script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js'%}"></script>
+<script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.odometer.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.appear.js'%}"></script>
+<script src="{% static 'assets/js/gsap.js'%}"></script>
+<script src="{% static 'assets/js/ScrollTrigger.js'%}"></script>
+<script src="{% static 'assets/js/SplitText.js'%}"></script>
+<script src="{% static 'assets/js/gsap-animation.js'%}"></script>
+<script src="{% static 'assets/js/jquery.parallaxScroll.min.js'%}"></script>
+<script src="{% static 'assets/js/swiper-bundle.js'%}"></script>
+<script src="{% static 'assets/js/ajax-form.js'%}"></script>
+<script src="{% static 'assets/js/wow.min.js'%}"></script>
+<script src="{% static 'assets/js/aos.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
+<script>
+        const text = document.querySelector('.circle');
+        text.innerHTML = text.textContent.replace(/\S/g, "<span>$&</span>");
+        const element = document.querySelectorAll('.circle span');
+        for (let i = 0; i < element.length; i++) {
+            element[i].style.transform = "rotate(" + i * 17 + "deg)"
+        }
+    </script>
+</body>
+<!-- Mirrored from apexa-html-demo.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 May 2024 16:27:41 GMT -->
+</html>
