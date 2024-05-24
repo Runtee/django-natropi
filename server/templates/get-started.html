@@ -10,19 +10,19 @@
 <title>Natropi</title>
 <meta content="Natropi" name="description"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="assets/img/logo/logo.jpg" rel="shortcut icon" type="image/x-icon"/>
-<!-- Place favicon.ico in the root directory -->
-<!-- CSS here -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="assets/css/animate.min.css" rel="stylesheet"/>
-<link href="assets/css/magnific-popup.css" rel="stylesheet"/>
-<link href="assets/css/fontawesome-all.min.css" rel="stylesheet"/>
-<link href="assets/css/flaticon.css" rel="stylesheet"/>
-<link href="assets/css/odometer.css" rel="stylesheet"/>
-<link href="assets/css/swiper-bundle.css" rel="stylesheet"/>
-<link href="assets/css/aos.css" rel="stylesheet"/>
-<link href="assets/css/default.css" rel="stylesheet"/>
-<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="{% static 'assets/img/logo/logo.jpg'%}" rel="shortcut icon" type="image/x-icon"/>
+	<!-- Place favicon.ico in the root directory -->
+	<!-- CSS here -->
+	<link href="{% static 'assets/css/bootstrap.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/animate.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/magnific-popup.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/fontawesome-all.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/flaticon.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/odometer.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/swiper-bundle.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/aos.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/default.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/main.css'%}" rel="stylesheet"/>
 </head>
 <body>
 <!--Preloader-->
@@ -53,11 +53,11 @@
                                 </div>
 <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
 <ul class="navigation">
-<li class="active"><a href="{% url 'index'%}">Home</a>
+<li class=""><a href="{% url 'index'%}">Home</a>
 </li>
 <li class=""><a href="{% url 'about_3'%}">OUR PHD TEAM</a>
 </li>
-<li class=""><a href="#">GET STARTED</a>
+<li class="active"><a href="#">GET STARTED</a>
 </li>
 <li class=""><a href="{% url 'api'%}">API</a>
 </li>
@@ -203,7 +203,7 @@
 <!-- main-area -->
 <main class="fix">
 <!-- breadcrumb-area -->
-<section class="breadcrumb__area breadcrumb__bg" data-background="assets/img/bg/breadcrumb_bg.jpg">
+<section class="breadcrumb__area breadcrumb__bg" data-background="{% static 'assets/img/bg/breadcrumb_bg.jpg' %}">
 <div class="container">
 <div class="row">
 <div class="col-lg-6">
@@ -249,7 +249,7 @@
 <img src="{% static 'assets/img/images/icon-a.png'%}"/>
 </div>
 <div class="services__content-two">
-<h2 class="title"><a href="{% url 'services_details'%}">Create an Account
+<h2 class="title"><a href="{% url 'register'%}">Create an Account
                             </a></h2>
 <p>
                                 Creating an account is a free and painless process. Complete the registration form and get one step closer to earning.</p>
@@ -262,7 +262,7 @@
 <img src="{% static 'assets/img/images/icon-b.png'%}"/>
 </div>
 <div class="services__content-two">
-<h2 class="title"><a href="{% url 'services_details'%}">Create New Deposit</a></h2>
+<h2 class="title"><a href="{% url 'login'%}">Create New Deposit</a></h2>
 <p>Continue to make deposits on a range of Natropi Portfolio available on your account - as provided by the platform.</p>
 </div>
 </div>
@@ -273,7 +273,7 @@
 <img src="{% static 'assets/img/images/icon-c.png'%}"/>
 </div>
 <div class="services__content-two">
-<h2 class="title"><a href="{% url 'services_details'%}">Start Earning</a></h2>
+<h2 class="title"><a href="{% url 'login'%}">Start Earning</a></h2>
 <p>Start earning with a return on investment by the percentage of the Natropi Portfolio you made investments on.</p>
 </div>
 </div>
@@ -440,21 +440,21 @@
 </div></footer>
 <!-- footer-area-end -->
 <!-- JS here -->
-<script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script src="assets/js/jquery.odometer.min.js"></script>
-<script src="assets/js/jquery.appear.js"></script>
-<script src="assets/js/gsap.js"></script>
-<script src="assets/js/ScrollTrigger.js"></script>
-<script src="assets/js/SplitText.js"></script>
-<script src="assets/js/gsap-animation.js"></script>
-<script src="assets/js/jquery.parallaxScroll.min.js"></script>
-<script src="assets/js/swiper-bundle.js"></script>
-<script src="assets/js/ajax-form.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script src="assets/js/aos.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js'%}"></script>
+<script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.odometer.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.appear.js'%}"></script>
+<script src="{% static 'assets/js/gsap.js'%}"></script>
+<script src="{% static 'assets/js/ScrollTrigger.js'%}"></script>
+<script src="{% static 'assets/js/SplitText.js'%}"></script>
+<script src="{% static 'assets/js/gsap-animation.js'%}"></script>
+<script src="{% static 'assets/js/jquery.parallaxScroll.min.js'%}"></script>
+<script src="{% static 'assets/js/swiper-bundle.js'%}"></script>
+<script src="{% static 'assets/js/ajax-form.js'%}"></script>
+<script src="{% static 'assets/js/wow.min.js'%}"></script>
+<script src="{% static 'assets/js/aos.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
 </body>
 <!-- Mirrored from apexa-html-demo.netlify.app/about-3 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 May 2024 16:32:09 GMT -->
 </html>

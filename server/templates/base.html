@@ -53,11 +53,11 @@
                                 </div>
 <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
 <ul class="navigation">
-<li class="active"><a href="{% url 'index'%}">Home</a>
+<li class=""><a href="{% url 'index'%}">Home</a>
 </li>
 <li class=""><a href="{% url 'about_3'%}">OUR PHD TEAM</a>
 </li>
-<li class=""><a href="#">GET STARTED</a>
+<li class=""><a href="{% url 'get_started' %}">GET STARTED</a>
 </li>
 <li class=""><a href="{% url 'api'%}">API</a>
 </li>
@@ -203,7 +203,7 @@
 <!-- main-area -->
 <main class="fix">
 <!-- breadcrumb-area -->
-<section class="breadcrumb__area breadcrumb__bg" data-background="assets/img/bg/breadcrumb_bg.jpg">
+<section class="breadcrumb__area breadcrumb__bg" data-background="{% static 'assets/img/bg/breadcrumb_bg.jpg' %}">
 <div class="container">
 <div class="row">
 <div class="col-lg-6">
@@ -212,7 +212,7 @@
 <nav aria-label="breadcrumb">
 <ol class="breadcrumb">
 <li class="breadcrumb-item"><a href="{% url 'index'%}">Home</a></li>
-<li aria-current="page" class="breadcrumb-item active">{% block head_title %}{% endblock %}</li>
+<li aria-current="page" class="breadcrumb-item active">{% block extra_title %}{% endblock %}</li>
 </ol>
 </nav>
 </div>
