@@ -27,7 +27,7 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Redirect to the home page after successful login
+                return redirect('index')  
             else:
                 form.add_error(None, 'Invalid email or password')
 
