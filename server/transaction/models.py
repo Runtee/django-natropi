@@ -1,5 +1,5 @@
 from django.db import models
-from userprofile.models import Profile
+from accounts.models import CustomUser as User
 # Create your models here.
 
 class Transaction(models.Model):
@@ -12,7 +12,7 @@ class Transaction(models.Model):
         ('penalty','Penalty'),
     )
     
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     verified = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     usdt_amount = models.DecimalField(max_digits=20,decimal_places=5,blank=True,null=True)
@@ -22,5 +22,5 @@ class Transaction(models.Model):
     class Meta:
         ordering = ['-created']
     def __str__(self):
-        return f'{self.profile.user.username} - {self.get_transaction_type_display()}'
+        return f'{self.user.email} - {self.get_transaction_type_display()}'
 

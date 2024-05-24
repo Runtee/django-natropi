@@ -5,7 +5,7 @@ from django.utils.html import format_html
 
 @admin.register(Kyc)
 class KycAdmin(admin.ModelAdmin):
-    list_display = ('profile','first_name', 'last_name','country', 'phone','ids_type', 'address','proof_of_address', 'created', 'verification_status')
+    list_display = ('user','first_name', 'last_name','country', 'phone','ids_type', 'address','proof_of_address', 'created', 'verification_status')
     readonly_fields = ('verified',)
 
     def verification_status(self, obj):
@@ -20,5 +20,5 @@ class KycAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj and obj.verified:
-            return ['profile','first_name', 'last_name','country', 'phone','ids_type', 'address','proof_of_address', 'created','verified', 'verification_status']
+            return ['user','first_name', 'last_name','country', 'phone','ids_type', 'address','proof_of_address', 'created','verified', 'verification_status']
         return ['verified']

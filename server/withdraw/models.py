@@ -1,5 +1,5 @@
 from django.db import models
-from userprofile.models import Profile
+from accounts.models import CustomUser as User
 # Create your models here.
 
 class Withdrawal(models.Model):
@@ -11,7 +11,7 @@ class Withdrawal(models.Model):
         ('ETH','ETHERUM'),
     )
      
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='withdrawal')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='withdrawal')
     created = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=20,decimal_places=5,blank=True,null=True)
     wallet_type  = models.CharField(choices=WALLETTYPECHOICES,max_length=10,blank=True,null=True)
@@ -23,19 +23,19 @@ class Withdrawal(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return f'{self.profile.user.get_username} was withdrawn {self.usdt_amount} in {self.wallet_address}'
+        return f'{self.user.get_username} was withdrawn {self.usdt_amount} in {self.wallet_address}'
     
     def save(self, *args, **kwargs):
         if self.verified == True:
-            self.profile.available_balance -=  float(self.usdt_amount)
+            self.user.main -=  float(self.usdt_amount)
             action = f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified'
-            self.profile.notification_set.create(profile=self.profile,action='Verified',description=f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} have been verified')
-            self.profile.transaction_set.create(profile=self.profile, transaction_type='withdrawal', usdt_amount=self.usdt_amount, description=action,verified=True)
-            self.profile.save() 
+            self.user.notification_set.create(user=self.user,action='Verified',description=f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} have been verified')
+            self.user.transaction_set.create(user=self.user, transaction_type='withdrawal', usdt_amount=self.usdt_amount, description=action,verified=True)
+            self.user.save() 
         return super().save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
         if self.verified == True:
-            self.profile.available_balance +=  float(self.usdt_amount)
-            self.profile.save()  
+            self.user.main +=  float(self.usdt_amount)
+            self.user.save()  
         return super().delete(*args, **kwargs)

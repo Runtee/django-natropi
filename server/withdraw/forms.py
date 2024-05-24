@@ -5,7 +5,7 @@ class WithdrawalForm(forms.ModelForm):
     class Meta:
         model = Withdrawal
         fields = '__all__'
-        exclude=['profile']
+        exclude=['user']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

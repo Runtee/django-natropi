@@ -5,7 +5,7 @@ from django.utils.html import format_html
 
 @admin.register(Deposit)
 class DepositAdmin(admin.ModelAdmin):
-    list_display = ('profile', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount', 'verification_status')
+    list_display = ('user', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount', 'verification_status')
     readonly_fields = ('verified',)
 
     def verification_status(self, obj):
@@ -20,7 +20,7 @@ class DepositAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if obj and obj.verified:
-            return ['verified', 'profile', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount']
+            return ['verified', 'user', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount']
         return ['verified']
 
     # def get_actions(self, request):
@@ -38,7 +38,7 @@ class DepositAdmin(admin.ModelAdmin):
 
 # @admin.register(Deposit)
 # class DepositAdmin(admin.ModelAdmin):
-#     list_display = ('profile', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount', 'verified', 'verify_transaction')
+#     list_display = ('user', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount', 'verified', 'verify_transaction')
 #     readonly_fields = ('verified',)
 
 #     def verify_transaction(self, obj):
@@ -58,7 +58,7 @@ class DepositAdmin(admin.ModelAdmin):
 
 #     def get_readonly_fields(self, request, obj=None):
 #         if obj and obj.verified:
-#             return ['verified', 'profile', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount']
+#             return ['verified', 'user', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount']
 #         return ['verified']
 
 #     def get_actions(self, request):

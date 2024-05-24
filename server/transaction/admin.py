@@ -4,5 +4,5 @@ from .models import Transaction
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ('profile', 'usdt_amount', 'transaction_type', 'description','created',  'verified')
-    readonly_fields = ('profile', 'usdt_amount', 'transaction_type', 'description','created',  'verified')
+    list_display = ('user', 'usdt_amount', 'transaction_type', 'description','created',  'verified')
+    readonly_fields = ('user', 'usdt_amount', 'transaction_type', 'description','created',  'verified')

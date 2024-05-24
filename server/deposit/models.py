@@ -1,6 +1,8 @@
 from typing import Iterable, Optional
 from django.db import models
-from userprofile.models import Profile
+# from django.contrib.auth import get_user_model
+from accounts.models import CustomUser as User
+# User = get_user_model()
 import threading
 from utils import send_email
 #smail
@@ -15,7 +17,7 @@ class Deposit(models.Model):
         ('ETH','ETHERUM'),
     )
         
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='deposits')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='deposits')
     created = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=20,decimal_places=5,blank=True,null=True)
     wallet_type  = models.CharField(choices=WALLETTYPECHOICES,max_length=10,blank=True,null=True)
@@ -27,17 +29,17 @@ class Deposit(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return f'{self.profile.user.get_username()} deposited {self.usdt_amount} in {self.wallet_address}'
+        return f'{self.user.email()} deposited {self.usdt_amount} in {self.wallet_address}'
     
     def save(self, *args, **kwargs):
         if self.verified == True:
-            self.profile.available_balance +=  float(self.usdt_amount)
+            self.user.main +=  float(self.usdt_amount)
             action = f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified'
-            self.profile.notification_set.create(profile=self.profile,action='Verified',description=f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} have been verified')
-            self.profile.transaction_set.create(profile=self.profile, transaction_type='deposit', usdt_amount=self.usdt_amount, description=action,verified=True)
-            self.profile.save()
+            self.user.notification_set.create(user=self.user,action='Verified',description=f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} have been verified')
+            self.user.transaction_set.create(user=self.user, transaction_type='deposit', usdt_amount=self.usdt_amount, description=action,verified=True)
+            self.user.save()
             try:
-                email_thread = threading.Thread(target=send_email,args=('Deposit Verified',f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified',self.profile.user.email))
+                email_thread = threading.Thread(target=send_email,args=('Deposit Verified',f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified',self.user.email))
                 email_thread.start()
             except Exception as e:
                 print(e)
@@ -47,7 +49,7 @@ class Deposit(models.Model):
     
     def delete(self, *args, **kwargs):
         if self.verified == True:
-            if float(self.profile.available_balance) > float(self.usdt_amount):
-                self.profile.available_balance -=  float(self.usdt_amount)
-                self.profile.save()  
+            if float(self.user.main) > float(self.usdt_amount):
+                self.user.main -=  float(self.usdt_amount)
+                self.user.save()  
         return super().delete(*args, **kwargs)

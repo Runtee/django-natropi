@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from utils import  can_access_dashboard
-from django.contrib.auth import get_user_model
-User = get_user_model()
-from userprofile.models import Profile
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+from accounts.models import CustomUser as User
+# from userprofile.models import Profile
 from .models import Deposit
-from userprofile.decorators import check_profile_exists
+# from userprofile.decorators import check_profile_exists
 from walletaddress.models import WalletAddress
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -17,19 +18,16 @@ from notification.models import Notification
 # Create your views here.
 
 
-
-
 @login_required(login_url='/accounts/login')
-@check_profile_exists
 def user_deposit(request):
-    profile = Profile.objects.get(user=request.user)
-    deposits = Deposit.objects.filter(profile=profile).order_by('-created')[:5]
+    user = request.user
+    deposits = Deposit.objects.filter(user=user).order_by('-created')[:5]
     wallet, _ =WalletAddress.objects.get_or_create(pk=1)
     
     context = {
         'wallet':wallet,
         'deposits': deposits,
-        'profile':profile, 
+        'user':user, 
     }
  
 
@@ -40,17 +38,17 @@ def user_deposit(request):
         usdt_amount = request.POST['usdt_amount']
         
         print(wallet_type)
-        deposit = Deposit.objects.create(profile=profile,amount=amount,wallet_type=wallet_type,wallet_address=wallet_address,usdt_amount=usdt_amount)
+        deposit = Deposit.objects.create(user=user,amount=amount,wallet_type=wallet_type,wallet_address=wallet_address,usdt_amount=usdt_amount)
         deposit.save()
         print(deposit.wallet_type)
         action = f'Your deposit of {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address} is pending'
-        notification = Notification.objects.create(profile=profile, action='Deposit Pending', description=action)
+        notification = Notification.objects.create(user=user, action='Deposit Pending', description=action)
         notification.save()
-        transaction = Transaction.objects.create(profile=profile, transaction_type='deposit', usdt_amount=usdt_amount, description=action)
+        transaction = Transaction.objects.create(user=user, transaction_type='deposit', usdt_amount=usdt_amount, description=action)
         transaction.save()
         website = Website.objects.get(pk=1)
         try:
-            email_thread = threading.Thread(target=send_email,args=('Deposit Requested',f'{profile.user.username} has deposited {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address}', settings.RECIPIENT_ADDRESS)        )
+            email_thread = threading.Thread(target=send_email,args=('Deposit Requested',f'{user.username} has deposited {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address}', settings.RECIPIENT_ADDRESS)        )
             email_subject = "Deposit Requested"
             email_body = f"Dear {request.user.username},\n\nWe acknowledge your deposit request of {amount} {wallet_type} into the wallet address {wallet_address}. Please note that your request is currently pending processing. Our team will review and complete the deposit as soon as possible.\n\nThank you for choosing {(website.name).capitalize()}.\n\nBest regards,\nThe {(website.name).capitalize()} Team"
             email_thread2 = threading.Thread(target=send_email, args=(email_subject, email_body, request.user.email))
@@ -69,7 +67,7 @@ def verify(request,id):
         deposit.verified = True
         deposit.save()
         try:
-            email_thread2 = threading.Thread(target=send_email,args=('Deposit Approved', f'Your deposit of {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address} has been', deposit.profile.user.email))
+            email_thread2 = threading.Thread(target=send_email,args=('Deposit Approved', f'Your deposit of {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address} has been', deposit.user.email))
             email_thread2.start()
         except Exception as e:
             print(e)
@@ -113,10 +111,9 @@ def delete_deposit(request,id):
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @login_required(login_url='/accounts/login')
-@check_profile_exists
 def user_deposit_completed(request):
-    profile = Profile.objects.get(user=request.user)
-    deposits = Deposit.objects.filter(profile=profile,verified=True)
+    user=request.user
+    deposits = Deposit.objects.filter(user=user,verified=True)
     
     
     context = {
@@ -125,10 +122,10 @@ def user_deposit_completed(request):
     return render(request,'user/completeddeposit.html',context)
 
 @login_required(login_url='/accounts/login')
-@check_profile_exists
+
 def user_deposit_pending(request):
-    profile = Profile.objects.get(user=request.user)
-    deposits = Deposit.objects.filter(profile=profile,verified=False)
+    user = request.user
+    deposits = Deposit.objects.filter(user=user,verified=False)
     
     
     context = {
