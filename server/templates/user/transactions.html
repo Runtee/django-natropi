@@ -1,0 +1,85 @@
+{% extends 'user/main.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="min-height: 97px; background-color: #111118;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Transactions Table</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Transactions Tables</li>
+          </ol>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card" style="color: #8e94a9;">
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                  <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Message</th>
+                    <th>Amount(s)</th>
+                    <th>Status</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tbody>
+
+                      {% if transactions %}
+                      {% for transaction in transactions %}
+                        <tr class="odd" style="color: #8e94a9;">
+                          <td class="dtr-control sorting_1" tabindex="0">{{ transaction.created }}</td>
+                          <td>{{ transaction.description }}</td>
+                          <td>{{ transaction.usdt_amount|floatformat:2 }}</td>
+                          <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              {% if transaction.verified %}
+                              <button type="button" class="btn btn-xs btn-success">Success</button>
+                              {% else %}
+                              <button type="button" class="btn btn-xs btn-warning">Pending</button>
+                              {% endif %}
+                            </div>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr class="odd">
+                        <td class="dataTables_empty" colspan="4" valign="top">You have not made any transaction</td>
+                      </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+{% endblock content %}

@@ -21,7 +21,7 @@ def user_transaction(request):
         'transactions':transactions,
         
     }
-    return render(request,'user/transaction.html',context)
+    return render(request,'user/transactions.html',context)
 
 @login_required(login_url='/accounts/login')
 @can_access_dashboard
