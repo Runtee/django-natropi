@@ -10,29 +10,29 @@
 <title>Natropi</title>
 <meta content="Natropi" name="description"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<link href="assets/img/logo/logo.jpg" rel="shortcut icon" type="image/x-icon"/>
-<!-- Place favicon.ico in the root directory -->
-<!-- CSS here -->
-<link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="assets/css/animate.min.css" rel="stylesheet"/>
-<link href="assets/css/magnific-popup.css" rel="stylesheet"/>
-<link href="assets/css/fontawesome-all.min.css" rel="stylesheet"/>
-<link href="assets/css/flaticon.css" rel="stylesheet"/>
-<link href="assets/css/odometer.css" rel="stylesheet"/>
-<link href="assets/css/swiper-bundle.css" rel="stylesheet"/>
-<link href="assets/css/aos.css" rel="stylesheet"/>
-<link href="assets/css/default.css" rel="stylesheet"/>
-<link href="assets/css/main.css" rel="stylesheet"/>
+<link href="{% static 'assets/img/logo/logo.jpg'%}" rel="shortcut icon" type="image/x-icon"/>
+	<!-- Place favicon.ico in the root directory -->
+	<!-- CSS here -->
+	<link href="{% static 'assets/css/bootstrap.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/animate.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/magnific-popup.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/fontawesome-all.min.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/flaticon.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/odometer.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/swiper-bundle.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/aos.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/default.css'%}" rel="stylesheet"/>
+	<link href="{% static 'assets/css/main.css'%}" rel="stylesheet"/>
 </head>
 <body>
 <!--Preloader-->
-<div id="preloader">
+{% comment %} <div id="preloader">
 <div class="loader" id="loader">
 <div class="loader-container">
 <div class="loader-icon"><img alt="Preloader" src="{% static 'assets/img/logo/logo.jpg'%}"/></div>
 </div>
 </div>
-</div>
+</div> {% endcomment %}
 <!--Preloader-end -->
 <!-- Scroll-top -->
 <button class="scroll__top scroll-to-target" data-target="html">
@@ -229,7 +229,7 @@
 </section>
 <!-- breadcrumb-area-end -->
 <!-- services-area -->
-<section class="services__area-six services__bg-six" data-background="assets/img/bg/h3_services_bg.jpg">
+<section class="services__area-six services__bg-six" data-background="{% static 'assets/img/bg/h3_services_bg.jpg' %}">
 <div class="container">
 <div class="row align-items-center">
 <div class="col-lg-6">
@@ -470,21 +470,21 @@
 </div></footer>
 <!-- footer-area-end -->
 <!-- JS here -->
-<script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
-<script src="assets/js/jquery.odometer.min.js"></script>
-<script src="assets/js/jquery.appear.js"></script>
-<script src="assets/js/gsap.js"></script>
-<script src="assets/js/ScrollTrigger.js"></script>
-<script src="assets/js/SplitText.js"></script>
-<script src="assets/js/gsap-animation.js"></script>
-<script src="assets/js/jquery.parallaxScroll.min.js"></script>
-<script src="assets/js/swiper-bundle.js"></script>
-<script src="assets/js/ajax-form.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script src="assets/js/aos.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js'%}"></script>
+<script src="{% static 'assets/js/bootstrap.bundle.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.odometer.min.js'%}"></script>
+<script src="{% static 'assets/js/jquery.appear.js'%}"></script>
+<script src="{% static 'assets/js/gsap.js'%}"></script>
+<script src="{% static 'assets/js/ScrollTrigger.js'%}"></script>
+<script src="{% static 'assets/js/SplitText.js'%}"></script>
+<script src="{% static 'assets/js/gsap-animation.js'%}"></script>
+<script src="{% static 'assets/js/jquery.parallaxScroll.min.js'%}"></script>
+<script src="{% static 'assets/js/swiper-bundle.js'%}"></script>
+<script src="{% static 'assets/js/ajax-form.js'%}"></script>
+<script src="{% static 'assets/js/wow.min.js'%}"></script>
+<script src="{% static 'assets/js/aos.js'%}"></script>
+<script src="{% static 'assets/js/main.js'%}"></script>
 </body>
 <!-- Mirrored from apexa-html-demo.netlify.app/services-4 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 May 2024 16:32:21 GMT -->
 </html>

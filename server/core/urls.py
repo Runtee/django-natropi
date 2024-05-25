@@ -10,7 +10,7 @@ urlpatterns = [
     path('get_started/', views.get_started, name='get_started'),
 
     # URL pattern for index
-    path('index/', views.index, name='index'),
+    path('', views.index, name='index'),
 
     # URL pattern for about_3
     path('about/', views.about_3, name='about_3'),
@@ -19,10 +19,10 @@ urlpatterns = [
     path('faq/', views.faq, name='faq'),
 
     # URL pattern for login
-    path('login/', views.login, name='login'),
+    # path('login/', views.login, name='login'),
 
     # URL pattern for register
-    path('register/', views.register, name='register'),
+    # path('register/', views.register, name='register'),
 
     # URL pattern for forgot_password
     path('forgot_password/', views.forgot_password, name='forgot_password'),
