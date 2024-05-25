@@ -29,7 +29,7 @@ class Deposit(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return f'{self.user.email()} deposited {self.usdt_amount} in {self.wallet_address}'
+        return f'{self.user.email} deposited {self.usdt_amount} in {self.wallet_address}'
     
     def save(self, *args, **kwargs):
         if self.verified == True:
@@ -39,7 +39,7 @@ class Deposit(models.Model):
             self.user.transaction_set.create(user=self.user, transaction_type='deposit', usdt_amount=self.usdt_amount, description=action,verified=True)
             self.user.save()
             try:
-                email_thread = threading.Thread(target=send_email,args=('Deposit Verified',f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified',self.user.email))
+                email_thread = threading.Thread(target=send_email,args=('Deposit Verified',f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} has been verified',self.user.email))
                 email_thread.start()
             except Exception as e:
                 print(e)

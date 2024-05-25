@@ -34,14 +34,24 @@ class CustomUserCreationForm(forms.ModelForm):
 
 
 class CustomUserChangeForm(forms.ModelForm):
-    """A form for updating existing custom users. Includes all fields but readonly for password."""
+    """A form for updating existing custom users. Includes all fields but makes password read-only."""
 
     class Meta:
         model = CustomUser
-        fields = ('__all__')
-        widgets = {'password': forms.PasswordInput(attrs={'readonly': True})}
+        fields = '__all__'
+        widgets = {
+            'password': forms.PasswordInput(attrs={'readonly': 'readonly'})
+        }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ensure the password field is read-only
+        self.fields['password'].disabled = True
 
+    def clean_password(self):
+        # Return the initial value of the password, ensuring it is not changed
+        return self.initial["password"]
+    
 class CustomUserAdmin(BaseUserAdmin):
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm

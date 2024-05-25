@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'walletaddress',
     'transaction',
     'notification',
+    'referral',
 ]
 
 MIDDLEWARE = [

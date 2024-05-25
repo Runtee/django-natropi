@@ -39,7 +39,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Main Balance:</span>
               <span class="info-box-number">
-                                      $0
+                                      ${{user.main}}
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -54,7 +54,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Portfolio Balance:</span>
               <span class="info-box-number">
-                                  $0
+                                  ${{user.portfolio}}
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -73,7 +73,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Strategy Balance:</span>
               <span class="info-box-number">
-                                  $0
+                                  ${{user.strategy}}
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -88,7 +88,7 @@
             <div class="info-box-content">
               <span class="info-box-text">Trade Balance:</span>
               <span class="info-box-number">
-                                  $0
+                                  ${{user.trade}}
               </span>
             </div>
             <!-- /.info-box-content -->
@@ -125,7 +125,7 @@
                 <div class="col-md-12">
                   
 <!-- TradingView Widget BEGIN -->
-<div class="tradingview-widget-container">
+<!-- <div class="tradingview-widget-container">
   <div id="tradingview_91d21"><div id="tradingview_f84f4-wrapper" style="position: relative; box-sizing: content-box; margin: 0px auto !important; padding: 0px !important; font-family: -apple-system, BlinkMacSystemFont, &quot;Trebuchet MS&quot;, Roboto, Ubuntu, sans-serif; width: 100%; height: 350px;"><iframe title="advanced chart TradingView widget" lang="en" id="tradingview_f84f4" style="width: 100%; height: 100%; margin: 0px !important; padding: 0px !important;" frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen="true" src="https://s.tradingview.com/widgetembed/?hideideas=1&amp;overrides=%7B%7D&amp;enabled_features=%5B%5D&amp;disabled_features=%5B%5D&amp;locale=en#%7B%22symbol%22%3A%22NASDAQ%3AAAPL%22%2C%22frameElementId%22%3A%22tradingview_f84f4%22%2C%22interval%22%3A%22D%22%2C%22allow_symbol_change%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22studies%22%3A%22%5B%5D%22%2C%22theme%22%3A%22light%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUTC%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_source%22%3A%22natropi.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22NASDAQ%3AAAPL%22%2C%22page-uri%22%3A%22natropi.com%2Fhome%22%7D"></iframe></div></div>
   <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
   <script type="text/javascript">
@@ -146,7 +146,7 @@
 }
   );
   </script>
-</div>
+</div> -->
 <!-- TradingView Widget END -->
 <!-- TradingView Widget END -->
 
@@ -214,7 +214,30 @@
                   </tr>
                   </thead>
                   <tbody>
-                    
+                    <tbody>
+
+                      {% if transactions %}
+                      {% for transaction in transactions %}
+                        <tr class="odd" style="color: #8e94a9;">
+                          <td class="dtr-control sorting_1" tabindex="0">{{ transaction.created }}</td>
+                          <td>{{ transaction.description }}</td>
+                          <td>{{ transaction.usdt_amount|floatformat:2 }}</td>
+                          <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              {% if transaction.verified %}
+                              <button type="button" class="btn btn-xs btn-success">Success</button>
+                              {% else %}
+                              <button type="button" class="btn btn-xs btn-warning">Pending</button>
+                              {% endif %}
+                            </div>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    {% else %}
+                      <tr class="odd">
+                        <td class="dataTables_empty" colspan="4" valign="top">You have not made any transaction</td>
+                      </tr>
+                    {% endif %}
                   </tbody>
                 </table>
               </div>
