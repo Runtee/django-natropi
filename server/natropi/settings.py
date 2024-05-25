@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'walletaddress',
     'transaction',
     'notification',
+    'referral',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST='smtppro.zoho.com'
+# EMAIL_HOST_PASSWORD='Sweet!finance01'
+# EMAIL_HOST_USER='info@optimumfinance.org'
+# EMAIL_PORT=465
+# EMAIL_USE_TLS=True
+# DEFAULT_FROM_EMAIL = 'info@optimumfinance.org'
+
+DEFAULT_FROM_EMAIL='contact@nanocodes.com.ng'
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL=True
+EMAIL_HOST='smtppro.zoho.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='info@nanocodes.com.ng'
+EMAIL_HOST_PASSWORD='Clara1995unn_zoho_info'
+EMAIL_USE_TLS=True
