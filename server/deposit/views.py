@@ -61,6 +61,14 @@ def user_deposit(request):
         
     return render(request,'user/deposit.html',context)
 
+@login_required(login_url='/accounts/login')
+def user_deposit_form(request):
+    wallet, _ =WalletAddress.objects.get_or_create(pk=1)
+    
+    context = {
+        'wallet':wallet,}
+    return render(request,'user/deposit_form.html',context)
+
 def verify(request,id):
     deposit = Deposit.objects.get(id=id)
     if deposit.verified == False:

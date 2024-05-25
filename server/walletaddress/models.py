@@ -12,3 +12,16 @@ class WalletAddress(models.Model):
     
     def __str__(self):
         return str(self.id)
+    
+
+class Acct(models.Model):
+    method = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    acct_name = models.CharField(max_length=255, blank=True, null=True)
+    status = models.CharField(max_length=255, default='1')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.method

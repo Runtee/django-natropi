@@ -2,7 +2,7 @@
 
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="min-height: 97px; background-color: #111118;">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -21,16 +21,16 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="color: #8e94a9;">
             <div class="container-fluid">
-                <form method="post" action="{% url 'deposit_fund' %}" enctype="multipart/form-data">
+                <form method="post" action="{% url 'deposit' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="row justify-content-md-center">
                         <!-- left column -->
                         <div class="col-md-6">
                             <!-- general form elements -->
                             <div class="card card-primary">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color: #33c92d;">
                                     <h3 class="card-title"></h3>
                                 </div>
                                 <!-- /.card-header -->
@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input class="btn btn-primary" type="submit" value="COMPLETE DEPOSIT" name="ent">
+                            <input class="btn btn-success"  type="submit" value="COMPLETE DEPOSIT" name="ent">
                         </div>
                         {% for account in numacc1 %}
                             <input id="{{ account.method01 }}" name="{{ account.method01 }}" type="hidden" value="{{ account.address02 }}">

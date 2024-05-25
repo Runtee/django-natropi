@@ -152,7 +152,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 #     date = models.CharField(max_length=255)
 #     amount = models.BigIntegerField()
 #     portfolioadd_id = models.CharField(max_length=255)
-#     status = models.CharField(max_length=255, default='1')
+#     staamounttus = models.CharField(max_length=255, default='1')
 #     created_at = models.DateTimeField(auto_now_add=True)
 #     updated_at = models.DateTimeField(auto_now=True)
 

@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-        path('',views.user_deposit, name='user_deposit'),
+        path('',views.user_deposit, name='deposit'),
+        path('form',views.user_deposit_form, name='user_deposit_form'),
         path('user/deposit/completed',views.user_deposit_completed, name='user_deposit_completed'),
         path('user/deposit/pending',views.user_deposit_pending, name='user_deposit_pending'),
         path('verify/<int:id>', views.verify, name="verify_transaction"),
