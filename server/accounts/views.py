@@ -1,6 +1,8 @@
+import uuid
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import RegistrationForm, LoginForm
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from .forms import *
 from .models import CustomUser
 from django.urls import reverse_lazy
 from django.contrib.auth.tokens import default_token_generator
@@ -25,7 +27,8 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
+            user.is_active = False  # Deactivate the user until email is verified
+            user.verification_token = str(uuid.uuid4())  # Generate a unique token
             user.save()
 
             # Get the current site
@@ -65,6 +68,23 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return redirect('index')
+    else:
+        return render(request, 'register.html')
+
+
 def login_view(request):
     form = LoginForm(request.POST or None)
     if request.method == 'POST':
@@ -82,3 +102,22 @@ def login_view(request):
         'form': form,
     }
     return render(request, 'login.html', context)
+
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'forgot-password.html'
+    email_template_name = 'password_reset_email.html'
+    subject_template_name = 'password_reset_subject.txt'
+    success_url = reverse_lazy('password_reset_done')
+    form_class = CustomPasswordResetForm
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'password_reset_confirm.html'
+    success_url = reverse_lazy('password_reset_complete')
+    form_class = CustomSetPasswordForm
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'password_reset_complete.html'
