@@ -1,25 +1,70 @@
 from django import forms
 from .models import CustomUser
 from django_countries.fields import CountryField
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
 
 class RegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    country = CountryField(blank_label='(select country)').formfield()
-    phone_number = forms.CharField(max_length=15)
-    terms = forms.BooleanField(required=True, error_messages={'required': 'You must agree to the terms and conditions to register'})
-
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control account',
+        'placeholder': 'Confirm Password'
+    }))
+    # referral_code = forms.CharField(widget= forms.TextInput(attrs={
+    #             'class': 'form-control account',
+    #             'placeholder': 'Referral Code'
+    #         }), required=False)
+    terms = forms.BooleanField()
 
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        fields = ['first_name', 'last_name', 'username', 'email', 'country', 'phone', 'password',]
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'First Name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'Last Name'
+            }),
+            'username': forms.TextInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'Username'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'Email Address',
+                'maxlength': '320',
+                'required': True,
+                'id': 'id_email'
+            }),
+            'country': forms.TextInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'Country'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'Phone'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'form-control account',
+                'placeholder': 'Password'
+            }),
+        }
 
-    def clean_confirm_password(self):
-        password = self.cleaned_data.get('password')
-        confirm_password = self.cleaned_data.get('confirm_password')
-        if password != confirm_password:
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("Passwords do not match")
-        return confirm_password
+
+        return cleaned_data
 
 
 class LoginForm(forms.Form):

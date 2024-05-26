@@ -213,47 +213,60 @@
                 <h3>Register</h3>
                 <p>Create an account today and start using our platform</p>
                 <div class="form-login">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
                             {{ form.non_field_errors }}
+                        </div>
+                        <div class="form-group">
                             {{ form.first_name.errors }}
-                            {{ form.first_name.label_tag }} {{ form.first_name }}
+                     {{ form.first_name }}
                         </div>
                         <div class="form-group">
                             {{ form.last_name.errors }}
-                            {{ form.last_name.label_tag }} {{ form.last_name }}
+                            {{ form.last_name }}
                         </div>
                         <div class="form-group">
                             {{ form.username.errors }}
-                            {{ form.username.label_tag }} {{ form.username }}
+                            {{ form.username }}
                         </div>
                         <div class="form-group">
                             {{ form.email.errors }}
-                            {{ form.email.label_tag }} {{ form.email }}
+                            {{ form.email }}
                         </div>
                         <div class="form-group">
                             {{ form.country.errors }}
-                            {{ form.country.label_tag }} {{ form.country }}
+                            {{ form.country }}
                         </div>
                         <div class="form-group">
                             {{ form.phone.errors }}
-                            {{ form.phone.label_tag }} {{ form.phone }}
+                             {{ form.phone }}
                         </div>
                         <div class="form-group">
                             {{ form.password.errors }}
-                            {{ form.password.label_tag }} {{ form.password }}
+                             {{ form.password }}
                         </div>
                         <div class="form-group">
                             {{ form.confirm_password.errors }}
-                            {{ form.confirm_password.label_tag }} {{ form.confirm_password }}
+                            {{ form.confirm_password }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.referral_code.errors }}
+                             {{ form.referral_code }}
                         </div>
 
                         <div class="box-forgot-pass">
-                        <label>
-                            {{ form.terms.errors }}
-                             <span>{{ form.terms }} I have read and agree to the Terms &amp; Conditions and the Privacy Policy of this website.</span>
-                        </label>
+                            <label>
+                                {{ form.terms.errors }}
+                                <span>{{ form.terms }} I have read and agree to the Terms &amp; Conditions and the Privacy Policy of this website.</span>
+                            </label>
                         </div>
                         <div class="form-group">
                             <input class="btn btn-login" type="submit" value="Sign up now"/>
@@ -265,6 +278,7 @@
         </div>
     </div>
 </section>
+
 <!-- about-area-end -->
 </main>
 <!-- main-area-end -->

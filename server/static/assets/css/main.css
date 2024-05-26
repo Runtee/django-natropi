@@ -14607,9 +14607,21 @@ blockquote p {
   h2 {
     font-size: 30px; 
   }
+  h2 {
+    font-size: 28px; 
+  }
   .register__area-one {
     padding: 30px 0px 20px 0px;
 
   }
 
+    .text-48-bold {
+      font-size: 32px;
+      line-height: 50px;
+    }
+  
+    .section-title .title {
+      font-size: 28px;
+    }
 }
+
