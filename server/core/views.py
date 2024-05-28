@@ -3,11 +3,11 @@ from django.shortcuts import render
 
 
 def about(request):
-    # try:
-    #     site = Website.objects.get(pk=1)
-    # except Website.DoesNotExist:
-    #     site = Website.objects.create(pk=1)
-    #     site.save()
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
     context = {
         'site': "site",
     }
