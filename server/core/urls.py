@@ -5,6 +5,7 @@ from django.urls import path
 urlpatterns = [
 
     path('dashboard/', views.about, name='dashboard'),
+    path('dashboard/', views.about, name='about'),
 
     # URL pattern for get_started
     path('get_started/', views.get_started, name='get_started'),

@@ -221,6 +221,13 @@
                 <h3>Sign in</h3>
                 <p>Sign in with your email and password</p>
                 <div class="form-login">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     <form method="post">
                         {% csrf_token %}
                         <div class="form-group">
@@ -284,24 +291,24 @@
 <i class="flaticon-phone-call"></i>
 </div>
 <div class="content">
-<a href="tel:0123456789">+123 888 9999</a>
-</div>
-</li>
-<li>
-<div class="icon">
-<i class="flaticon-envelope"></i>
-</div>
-<div class="content">
-<a href="mailto:info@apexa.com">info@apexa.com</a>
-</div>
-</li>
-<li>
-<div class="icon">
-<i class="flaticon-pin"></i>
-</div>
-<div class="content">
-<p>Sydney Harbour Bridge Circular City of Sydney, Australia.</p>
-</div>
+    <a href="tel:{{ site.phone_number }}">{{ site.phone_number }}</a>
+    </div>
+    </li>
+    <li>
+    <div class="icon">
+    <i class="flaticon-envelope"></i>
+    </div>
+    <div class="content">
+    <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
+    </li>
+    <li>
+    <div class="icon">
+    <i class="flaticon-pin"></i>
+    </div>
+    <div class="content">
+    <p>{{ site.address }}</p>
+    </div>
 </li>
 </ul>
 </div>

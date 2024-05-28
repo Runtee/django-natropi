@@ -33,7 +33,6 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False  # Deactivate the user until email is verified
             user.password = make_password(form.cleaned_data['password'])
             user.save()
 
@@ -88,7 +87,7 @@ def activate(request, uidb64, token):
         user = None
 
     if user is not None and default_token_generator.check_token(user, token):
-        user.is_active = True
+        user.email_verified = True
         user.save()
         login(request, user)
         return render(request, 'other/activation_successful.html')
@@ -108,6 +107,7 @@ def send_activation_email(user, request):
     })
     to_email = user.email
     email = EmailMultiAlternatives(mail_subject, message, to=[to_email])
+    email.attach_alternative(message, "text/html")
     email.send()
 
 
@@ -117,26 +117,37 @@ def login_view(request):
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=email, password=password)
+            
+            # Fetch the user from CustomUser model
+            try:
+                user = CustomUser.objects.get(email=email)
+            except CustomUser.DoesNotExist:
+                user = None
+            
             if user is not None:
-                print('User is not none')
-                if user.is_active:
-                    login(request, user)
-                    print("Successfully logged in")
-                    return render(request, 'index.html')
+                user = authenticate(request, username=email, password=password)
+                if user is not None:
+                    print('User is not none')
+                    if user.email_verified:
+                        login(request, user)
+                        print("Successfully logged in")
+                        return render(request, 'index.html')
+                    else:
+                        # Resend activation email
+                        send_activation_email(user, request)
+                        messages.error(request, 'Your account is not activated. We have resent the activation email. Please check your inbox.')
+                        return render(request, 'login.html', {'form': form})
                 else:
-                    # Resend activation email
-                    send_activation_email(user, request)
-                    messages.error(request, 'Your account is not activated. We have resent the activation email. Please check your inbox.')
-                    return render(request, 'login.html')  
-                print("Error: No user")
+                    print("Error: Invalid password")
+                    form.add_error(None, 'Invalid email or password')
+            else:
+                print("Error: User does not exist")
                 form.add_error(None, 'Invalid email or password')
     else:
         form = LoginForm()
 
     context = {'form': form}
     return render(request, 'login.html', context)
-
 
 def custom_password_reset(request):
     if request.method == 'POST':

@@ -120,3 +120,4 @@ def api(request):
         'site': site,
     }
     return render(request, 'api.html', context)
+
