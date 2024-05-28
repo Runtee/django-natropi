@@ -175,6 +175,8 @@ def custom_password_reset(request):
                 email_message.send()
 
             return render(request, 'other/password_reset_done.html') 
+        else:
+            print(form.errors)
     else:
         form = CustomPasswordResetForm()
     return render(request, 'forgot-password.html', {'form': form})
