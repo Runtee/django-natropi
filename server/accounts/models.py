@@ -58,6 +58,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(auto_now=True)
     email_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=100, blank=True, null=True)
+    referral = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='users_user')
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
