@@ -130,8 +130,11 @@ def custom_password_reset(request):
                     'user': user,
                     'reset_url': reset_url,
                 })
+                print(subject, message,settings.DEFAULT_FROM_EMAIL, [email])
                 send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
             return render(request, 'other/password_reset_done.html') 
+        else:
+            print(form.errors)
     else:
         form = CustomPasswordResetForm()
     return render(request, 'forgot-password.html', {'form': form})
