@@ -61,18 +61,31 @@
 </li>
 <li class=""><a href="{% url 'api'%}">API</a>
 </li>
-<li class=""><a href="#">TESTIMONIALS</a>
-</li>
+
 <li class=""><a href="{% url 'faq'%}">FAQ</a>
 </li>
 <li class="active"><a href="{% url 'contact'%}">CONTACT US</a></li>
 </ul>
 </div>
 <div class="tgmenu__action d-none d-md-block">
-<ul class="list-wrap">
-<li class="header-btn"><a class="btn" href="{% url 'login'%}">SIGN IN</a></li>
-<li class="header-btn"><a class="btn" href="{% url 'register'%}">SIGN UP</a></li>
-</ul>
+	<ul class="list-wrap">
+		<!-- Google Translate Widget -->
+		<li class="header-btn">
+			<div id="google_translate_element"></div>
+			<script type="text/javascript">
+				function googleTranslateElementInit() {
+					new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+				}
+			</script>
+			<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+		</li>
+		{% if user.is_authenticated %}
+        <li class="header-btn"><a class="btn" href="{% url 'dashboard' %}">dashboard</a></li>
+        {% else %}
+        <li class="header-btn"><a class="btn" href="{% url 'login'%}">SIGN IN</a></li>
+        <li class="header-btn"><a class="btn" href="{% url 'register'%}">SIGN UP</a></li>
+		{% endif %}
+	</ul>
 </div>
 <div class="mobile-nav-toggler">
 <svg fill="none" viewbox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -359,7 +372,7 @@
 <h4 class="fw-title">Top Links</h4>
 <div class="footer-link-list">
 <ul class="list-wrap">
-<li><a href="{% url 'about'%}">Get Started</a></li>
+<li><a href="{% url 'dashboard'%}">Get Started</a></li>
 <li><a href="{% url 'contact'%}">API</a></li>
 <li><a href="{% url 'contact'%}">NP Strategy</a></li>
 <li><a href="{% url 'contact'%}">NP Trade</a></li>

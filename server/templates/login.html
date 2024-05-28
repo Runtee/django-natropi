@@ -40,40 +40,46 @@
 </button>
 <!-- Scroll-top-end-->
 <!-- header-area -->
-<header class="header-border-bottom">
-<div class="tg-header__area" id="sticky-header">
-<div class="container custom-container">
-<div class="row">
-<div class="col-12">
-<div class="tgmenu__wrap">
-<nav class="tgmenu__nav">
-<div class="logo">
-<a href="{% url 'index'%}"><img alt="Logo" src="{% static 'assets/img/logo/logo.jpg'%}"/></a>
-                                    Natropi
-                                </div>
-<div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
-<ul class="navigation">
-<li class=""><a href="{% url 'index'%}">Home</a>
-</li>
-<li class=""><a href="{% url 'about_3'%}">OUR PHD TEAM</a>
-</li>
-<li class=""><a href="{% url 'get_started'%}">GET STARTED</a>
-</li>
-<li class=""><a href="{% url 'api'%}">API</a>
-</li>
-<li class=""><a href="#">TESTIMONIALS</a>
-</li>
-<li class=""><a href="{% url 'faq'%}">FAQ</a>
-</li>
-<li><a href="{% url 'contact'%}">CONTACT US</a></li>
-</ul>
-</div>
-<div class="tgmenu__action d-none d-md-block">
-<ul class="list-wrap">
-<li class="header-btn"><a class="btn" href="#">SIGN IN</a></li>
-<li class="header-btn"><a class="btn" href="{% url 'register'%}">SIGN UP</a></li>
-</ul>
-</div>
+<header class="transparent-header">
+    <div class="tg-header__area" id="sticky-header">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="tgmenu__wrap">
+                        <nav class="tgmenu__nav">
+                            <div class="logo">
+                                <a href="{% url 'index'%}">
+                                    <img alt="Logo" src="{% static 'assets/img/logo/logo.jpg'%}"/>
+                                </a>
+                                Natropi
+                            </div>
+                            <div class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex">
+                                <ul class="navigation">
+                                    <li class="active"><a href="#">Home</a></li>
+                                    <li><a href="{% url 'about_3'%}">OUR PHD TEAM</a></li>
+                                    <li><a href="{% url 'get_started'%}">GET STARTED</a></li>
+                                    <li><a href="{% url 'api'%}">API</a></li>
+                                    <li><a href="{% url 'faq'%}">FAQ</a></li>
+                                    <li><a href="{% url 'contact'%}">CONTACT US</a></li>
+                                </ul>
+                            </div>
+                            <div class="tgmenu__action d-none d-md-block">
+                                <ul class="list-wrap">
+                                    <!-- Google Translate Widget -->
+                                    <li class="header-btn">
+                                        <div id="google_translate_element"></div>
+                                        <script type="text/javascript">
+                                            function googleTranslateElementInit() {
+                                                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                                            }
+                                        </script>
+                                        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                                    </li>
+                                    <li class="header-btn"><a class="btn" href="{% url 'login'%}">SIGN IN</a></li>
+                                    <li class="header-btn"><a class="btn" href="{% url 'register'%}">SIGN UP</a></li>
+                                </ul>
+                            </div>
+
 <div class="mobile-nav-toggler">
 <svg fill="none" viewbox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
 <path d="M0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2C4 3.10457 3.10457 4 2 4C0.895431 4 0 3.10457 0 2Z" fill="currentcolor"></path>
@@ -228,7 +234,7 @@
                             <label>
                                 {{ form.remember_me }} Remember me
                             </label>
-                            <a href="{% url 'forgot_password' %}">Forgot Password ?</a>
+                            <a href="{% url 'password_reset' %}">Forgot Password ?</a>
                         </div>
                         <div class="form-group">
                             <input class="btn btn-login" type="submit" value="Sign In"/>
@@ -306,7 +312,7 @@
 <h4 class="fw-title">Top Links</h4>
 <div class="footer-link-list">
 <ul class="list-wrap">
-<li><a href="{% url 'about'%}">Get Started</a></li>
+<li><a href="{% url 'dashboard'%}">Get Started</a></li>
 <li><a href="{% url 'contact'%}">API</a></li>
 <li><a href="{% url 'contact'%}">NP Strategy</a></li>
 <li><a href="{% url 'contact'%}">NP Trade</a></li>

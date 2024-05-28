@@ -4,7 +4,7 @@ from django.urls import path
 # URL pattern for about
 urlpatterns = [
 
-    path('dashboard/', views.about, name='about'),
+    path('dashboard/', views.about, name='dashboard'),
 
     # URL pattern for get_started
     path('get_started/', views.get_started, name='get_started'),
