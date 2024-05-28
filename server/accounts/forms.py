@@ -99,17 +99,9 @@ class CustomPasswordResetForm(forms.Form):
 class CustomSetPasswordForm(SetPasswordForm):
     new_password1 = forms.CharField(
         label="New password",
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'New Password',
-            'type': 'password',
-        }),
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'New password'}),
     )
     new_password2 = forms.CharField(
         label="Confirm new password",
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirm New Password',
-            'type': 'password',
-        }),
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm new password'}),
     )
