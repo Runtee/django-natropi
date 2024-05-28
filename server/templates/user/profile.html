@@ -2,181 +2,201 @@
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="min-height: 167px; background-color: #111118;">
-<!-- Content Header (Page header) -->
-<section class="content-header">
-<div class="container-fluid">
-<div class="row mb-2">
-<div class="col-sm-6">
-<h1>Profile</h1>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Profile</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">User Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <h4 style="text-align:center;"></h4>
+            <form action="{% url 'profile' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Profile Image -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img alt="User profile picture" class="profile-user-img img-fluid img-circle"
+                                        src="{% static '../../dist/img/user4-128x128.jpg' %}" />
+                                </div>
+                                <input id="image1" name="image1" type="hidden" value="" />
+                                <h3 class="profile-username text-center" style="color: #8e94a9;">{{ user.username }}
+                                </h3>
+                                <p class="text-muted text-center">{{ user.email }}</p>
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <label for=""><b>Select Image</b></label>
+                                        {{ profile_form.image }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Profile Info -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="first_name">First Name</label>
+                                                {{ profile_form.first_name }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="last_name">Last Name</label>
+                                                {{ profile_form.last_name }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="phone">Phone</label>
+                                                {{ profile_form.phone }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="dob">Date of Birth</label>
+                                                {{ profile_form.dob }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="address1">Address 1</label>
+                                                {{ profile_form.address1 }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="address2">Address 2</label>
+                                                {{ profile_form.address2 }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="country">Country</label>
+                                                {{ profile_form.country }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="state">State</label>
+                                                {{ profile_form.state }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="city">City</label>
+                                                {{ profile_form.city }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="bit_wallet">Bitcoin Wallet</label>
+                                                {{ profile_form.bit_wallet }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Payment Info -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="ussdc_wallet">USSDC Wallet</label>
+                                                {{ profile_form.ussdc_wallet }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="paypal_address">Paypal Address</label>
+                                                {{ profile_form.paypal_address }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="bank_name">Bank Name</label>
+                                                {{ profile_form.bank_name }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="account_no">Account No:</label>
+                                                {{ profile_form.account_no }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="bank_address">Bank Address</label>
+                                                {{ profile_form.bank_address }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="sort_code">Sort Code</label>
+                                                {{ profile_form.sort_code }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Password Change -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <label for="old_password">Old Password</label>
+                                        {{ password_form.old_password }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <label for="new_password1">New Password</label>
+                                        {{ password_form.new_password1 }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <label for="new_password2">Confirm New Password</label>
+                                        {{ password_form.new_password2 }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <input class="btn btn-primary" name="login" type="submit" value="Update" />
+                </div>
+            </form>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
 </div>
-<div class="col-sm-6">
-<ol class="breadcrumb float-sm-right">
-<li class="breadcrumb-item"><a href="#">Home</a></li>
-<li class="breadcrumb-item active">User Profile</li>
-</ol>
-</div>
-</div>
-</div><!-- /.container-fluid -->
-</section>
-<!-- Main content -->
-<section class="content">
-<div class="container-fluid">
-<h4 style="text-align:center;"></h4>
-<form action="https://natropi.com/profile" enctype="multipart/form-data" method="post">
-<input name="_token" type="hidden" value="PTnuUXt2OYaN9gXNKivhUofv3AAhzEdpTNgOr8KO"/> <div class="row">
-<div class="col-md-4">
-<!-- Profile Image -->
-<div class="card card-primary card-outline">
-<div class="card-body box-profile">
-<div class="text-center">
-<img alt="User profile picture" class="profile-user-img img-fluid img-circle" src="{% static '../../dist/img/user4-128x128.jpg'%}"/>
-</div>
-<input id="image1" name="image1" type="hidden" value=""/>
-<h3 class="profile-username text-center" style="color: #8e94a9;">Nina Mcintire</h3>
-<p class="text-muted text-center">ninamcintire@outlook.com</p>
-<ul class="list-group list-group-unbordered mb-3">
-<li class="list-group-item">
-<label for=""><b>Select Image</b></label>
-<input class="btn btn-sm" id="image" name="image" style=" max-width: 100%;" type="file" value=""/>
-</li>
-<li class="list-group-item">
-<label for="exampleInputName">Password</label>
-<input aria-describedby="passHelp" class="form-control" id="password" name="password" placeholder="password" type="password" value=""/>
-</li>
-<li class="list-group-item">
-<label for="exampleInputName">Retype Password</label>
-<input aria-describedby="passHelp" class="form-control" id="password1" name="password1" placeholder="password" type="password" value=""/>
-</li>
-</ul>
-</div>
-<!-- /.card-body -->
-</div>
-</div>
-<div class="col-md-4">
-<!-- Profile Image -->
-<div class="card card-primary card-outline">
-<div class="card-body box-profile">
-<ul class="list-group list-group-unbordered mb-3">
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">First Name</label>
-<input aria-describedby="passHelp" class="form-control" id="first_name" name="first_name" placeholder="password" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Last Name</label>
-<input aria-describedby="passHelp" class="form-control" id="last_name" name="last_name" placeholder="password" type="text" value=""/>
-</div>
-</div>
-</li>
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">Phone</label>
-<input aria-describedby="phone" class="form-control" id="phone" name="phone" placeholder="phone" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Date of Birth</label>
-<input class="form-control" id="start" max="2030-12-31" min="1902-01-01" name="trip-start" type="date" value=""/>
-</div>
-</div>
-</li>
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">Address 1</label>
-<input aria-describedby="passHelp" class="form-control" id="address1" name="address1" placeholder="Enter your address" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Address 2</label>
-<input aria-describedby="passHelp" class="form-control" id="address2" name="address2" placeholder="Enter your second address" type="text" value=""/>
-</div>
-</div>
-</li>
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">Country</label>
-<input aria-describedby="passHelp" class="form-control" id="country" name="country" placeholder="Enter your address" type="text" value="Nigeria"/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">State</label>
-<input aria-describedby="passHelp" class="form-control" id="state" name="state" placeholder="Enter your second address" type="text" value=""/>
-</div>
-</div>
-</li>
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">City</label>
-<input aria-describedby="passHelp" class="form-control" id="city" name="city" placeholder="Enter your address" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Bitcoin Wallet</label>
-<input aria-describedby="passHelp" class="form-control" id="bit_wallet" name="bit_wallet" placeholder="Enter your second address" type="text" value=""/>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<!-- /.card-body -->
-</div>
-</div>
-<div class="col-md-4">
-<!-- Profile Image -->
-<div class="card card-primary card-outline">
-<div class="card-body box-profile">
-<ul class="list-group list-group-unbordered mb-3">
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">USSDC Wallet</label>
-<input aria-describedby="passHelp" class="form-control" id="ussdc_wallet" name="ussdc_wallet" placeholder="Enter your USSDC Wallet" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Paypal Address</label>
-<input aria-describedby="passHelp" class="form-control" id="paypal_address" name="paypal_address" placeholder="Enter your paypal address" type="text" value=""/>
-</div>
-</div>
-</li>
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">Bank Name</label>
-<input aria-describedby="passHelp" class="form-control" id="bank_name" name="bank_name" placeholder="Enter your Bank Name" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Account No:</label>
-<input aria-describedby="passHelp" class="form-control" id="account_no" name="account_no" placeholder="Enter your Account No" type="text" value=""/>
-</div>
-</div>
-</li>
-<li class="list-group-item">
-<div class="row">
-<div class="col-md-6">
-<label for="exampleInputName">Bank Address</label>
-<input aria-describedby="passHelp" class="form-control" id="bank_address" name="bank_address" placeholder="Enter your bank address" type="text" value=""/>
-</div>
-<div class="col-md-6">
-<label for="exampleInputName">Sort Code</label>
-<input aria-describedby="passHelp" class="form-control" id="sort_code" name="sort_code" placeholder="Enter your bank sort code" type="text" value=""/>
-</div>
-</div>
-</li>
-</ul>
-</div>
-<!-- /.card-body -->
-</div>
-</div>
-</div>
-<div class="row">
-<input class="btn btn-primary" name="login" type="submit" value="Update"/>
-</div>
-</form>
-<!-- /.row -->
-</div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-</div>
+
 <!-- /.content-wrapper -->
 {% endblock content %}

@@ -51,7 +51,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     portfolio = models.BigIntegerField(default=0)
     strategy = models.BigIntegerField(default=0)
     trade = models.BigIntegerField(default=0)
-    image = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(blank=True, null=True)
     status = models.CharField(max_length=255, default='1')
     remember_token = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
