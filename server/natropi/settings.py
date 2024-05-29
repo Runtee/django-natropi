@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'transaction',
     'notification',
     'referral',
+    'user',
 ]
 
 MIDDLEWARE = [

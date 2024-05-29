@@ -26,16 +26,14 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
-                        <!-- Profile Image -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
                                     <img alt="User profile picture" class="profile-user-img img-fluid img-circle"
-                                        src="{% static '../../dist/img/user4-128x128.jpg' %}" />
+                                        src="{{ user.profile.image.url }}" />
                                 </div>
                                 <input id="image1" name="image1" type="hidden" value="" />
-                                <h3 class="profile-username text-center" style="color: #8e94a9;">{{ user.username }}
-                                </h3>
+                                <h3 class="profile-username text-center" style="color: #8e94a9;">{{ user.username }}</h3>
                                 <p class="text-muted text-center">{{ user.email }}</p>
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
@@ -44,11 +42,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <!-- Profile Info -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <ul class="list-group list-group-unbordered mb-3">
@@ -56,11 +52,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="first_name">First Name</label>
-                                                {{ profile_form.first_name }}
+                                                {{ user_form.first_name }}
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="last_name">Last Name</label>
-                                                {{ profile_form.last_name }}
+                                                {{ user_form.last_name }}
                                             </div>
                                         </div>
                                     </li>
@@ -68,7 +64,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="phone">Phone</label>
-                                                {{ profile_form.phone }}
+                                                {{ user_form.phone }}
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="dob">Date of Birth</label>
@@ -92,7 +88,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="country">Country</label>
-                                                {{ profile_form.country }}
+                                                {{ user_form.country }}
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="state">State</label>
@@ -114,11 +110,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <!-- Payment Info -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <ul class="list-group list-group-unbordered mb-3">
@@ -160,13 +154,11 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <!-- Password Change -->
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <ul class="list-group list-group-unbordered mb-3">
@@ -184,7 +176,6 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
                 </div>
@@ -192,9 +183,9 @@
                     <input class="btn btn-primary" name="login" type="submit" value="Update" />
                 </div>
             </form>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
+    
     <!-- /.content -->
 </div>
 
