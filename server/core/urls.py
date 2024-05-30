@@ -34,4 +34,7 @@ urlpatterns = [
 
     # URL pattern for api
     path('api/', views.api, name='api'),
+
+    # URL pattern for change_password
+    path('change_password/', views.change_password, name='change_password'),
 ]

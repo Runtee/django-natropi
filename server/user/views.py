@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from .forms import ProfileForm, CustomUserForm, CustomPasswordChangeForm
 from .models import Profile
+from django.contrib import messages
 from accounts.models import CustomUser
 
 User = get_user_model()
@@ -83,19 +84,32 @@ def update_profile(request):
         # Save the updated profile
         profile.save()
 
-         # Password change handling
-        new_password = request.POST.get('new_password', '')
-        confirm_password = request.POST.get('confirm_password', '')
-
-        if new_password and new_password == confirm_password:
-            request.user.set_password(new_password)
-            request.user.save()
-            update_session_auth_hash(request, request.user)  # Keep the user logged in
-        else:
-            # Handle password change errors
-            pass
-
         return redirect('dashboard')  # Redirect to dashboard page after successful update
 
     # If not a POST request, render the form template
     return render(request, 'user/profile.html')
+
+
+@login_required
+def change_password(request):
+    errors = {}
+
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if not request.user.check_password(old_password):
+            errors['old_password'] = 'Old password is incorrect.'
+        
+        if new_password != confirm_password:
+            errors['password_mismatch'] = 'New password and confirm password do not match.'
+        
+        if not errors:
+            request.user.set_password(new_password)
+            request.user.save()
+            update_session_auth_hash(request, request.user)  # Keeps the user logged in after password change
+            messages.success(request, 'Your password has been updated successfully.')
+            return redirect('dashboard')  # Redirect to a success page
+
+    return render(request, 'user/new-password.html', {'errors': errors})

@@ -121,3 +121,14 @@ def api(request):
     }
     return render(request, 'api.html', context)
 
+
+def change_password(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/new-password.html', context)
