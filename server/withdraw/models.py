@@ -1,6 +1,13 @@
 from django.db import models
 from accounts.models import CustomUser
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from decimal import Decimal
+from django.conf import settings
+
 
 # Create your models here.
 
@@ -69,3 +76,23 @@ class WithdrawalsMade(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.amount} - {self.status}"
+    
+    
+@receiver(post_save, sender=Withdrawal)
+def send_withdrawal_email(sender, instance, created, **kwargs):
+    if created:
+        # Send email for withdrawal received
+        subject = 'Withdrawal Received - Pending Processing'
+        html_message = None
+        plain_message = f"Dear {instance.user.username},\n\nYour withdrawal of ${instance.amount} via {instance.wallet_type} has been received and is pending processing.\n\nThank you."
+        send_mail(subject, plain_message, settings.DEFAULT_FROM_EMAIL, [instance.user.email], html_message=html_message)
+
+# Signal handler for sending email when withdrawal is verified
+@receiver(post_save, sender=Withdrawal)
+def send_withdrawal_verified_email(sender, instance, created, **kwargs):
+    if not created and instance.status == 'verified':
+        # Send email for withdrawal verified
+        subject = 'Withdrawal Verified'
+        html_message = None
+        plain_message = f"Dear {instance.user.username},\n\nYour withdrawal of ${instance.amount} via {instance.wallet_type} has been Verified.\n\nThank you."
+        send_mail(subject, plain_message, settings.DEFAULT_FROM_EMAIL, [instance.user.email], html_message=html_message)

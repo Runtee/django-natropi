@@ -24,4 +24,17 @@ class WithdrawalAdmin(admin.ModelAdmin):
         return ['verified']
     
 admin.site.register(Account)
-admin.site.register(WithdrawalsMade)
+
+
+
+@admin.register(WithdrawalsMade)
+class WithdrawalsMadeAdmin(admin.ModelAdmin):
+    list_display = ['user', 'wallet_type', 'amount', 'method', 'date', 'is_verified']
+    list_filter = ['is_verified', 'date']
+    search_fields = ['user__username', 'wallet_type']
+    actions = ['mark_as_verified']
+
+    def mark_as_verified(self, request, queryset):
+        queryset.update(is_verified=True)
+        self.message_user(request, "Selected withdrawals have been marked as verified.")
+    mark_as_verified.short_description = "Mark selected withdrawals as verified"

@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 from utils import  can_access_dashboard
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.db.models.signals import post_save
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Withdrawal
 from decimal import Decimal
 from notification.models import Notification
@@ -12,6 +15,9 @@ from transaction.models import Transaction
 import threading
 from utils import send_email
 #smail
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from website.models import Website
 from .models import Account, WithdrawalsMade
 from django.conf import settings
@@ -182,7 +188,7 @@ def withdraw_view(request):
                 setattr(user_account, wallet_balance_field, current_balance - amount)
                 user_account.save()
 
-                WithdrawalsMade.objects.create(
+                withdrawal = WithdrawalsMade.objects.create(
                     user=user,
                     wallet_type=wallet,
                     amount=amount,
@@ -191,6 +197,20 @@ def withdraw_view(request):
                 )
 
                 messages.success(request, 'Withdrawal request sent. Withdrawal is pending.')
+
+                # Send email notification
+                subject = 'Withdrawal Request Received'
+                context = {'withdrawal': withdrawal}
+                plain_message = f"Dear {user.username},\n\nYour withdrawal of ${withdrawal.amount} via {withdrawal.wallet_type} Wallet has been received and is pending processing.\n\nThank you." 
+                html_message = None
+
+                send_mail(
+                    subject,
+                    strip_tags(plain_message),
+                    settings.DEFAULT_FROM_EMAIL,  # Replace with your email
+                    [user.email],
+                    html_message=html_message,
+                )
             else:
                 errors['balance'] = f"Amount greater than {wallet} balance."
 
