@@ -3,6 +3,9 @@ from django.dispatch.dispatcher import receiver
 from django.conf import settings
 from accounts.models import CustomUser
 import threading
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Profile
 from utils import send_email
 #smail
 
@@ -56,3 +59,14 @@ def user_signed_up_(request, user, **kwargs):
             print(e)
     except Exception as e:
         print(e)
+
+
+@receiver(post_save, sender=CustomUser)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    else:
+        if hasattr(instance, 'profile'):
+            instance.profile.save()
+        else:
+            Profile.objects.create(user=instance)

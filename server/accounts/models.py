@@ -45,6 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     paypal_address = models.CharField(max_length=255, blank=True, null=True)
     bank_name = models.CharField(max_length=255, blank=True, null=True)
     account_no = models.CharField(max_length=255, blank=True, null=True)
+    postal_code = models.CharField(max_length=255, blank=True, null=True)
     bank_address = models.CharField(max_length=255, blank=True, null=True)
     sort_code = models.CharField(max_length=255, blank=True, null=True)
     main = models.BigIntegerField(default=0)

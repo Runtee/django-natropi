@@ -2,15 +2,24 @@ from django.shortcuts import render,redirect
 from utils import  can_access_dashboard
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from django.db.models.signals import post_save
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Withdrawal
+from decimal import Decimal
 from notification.models import Notification
 from django.contrib import messages
+from user.models import Profile
 from django.contrib.auth.decorators import login_required
 from transaction.models import Transaction
 import threading
 from utils import send_email
 #smail
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from website.models import Website
+from .models import Account, WithdrawalsMade
 from django.conf import settings
 
 @login_required(login_url='/accounts/login')
@@ -86,7 +95,7 @@ def dashboard_withdraw(request):
     context = {
         'withdraws':withdraws,
     }
-    return render(request,'dashboard/withdraw.html',context)
+    return render(request,'user/withdraw.html',context)
 
 @login_required(login_url='/accounts/login')
 @can_access_dashboard
@@ -96,7 +105,7 @@ def dashboard_withdraw_completed(request):
     context = {
         'withdraws':withdraws,
     }
-    return render(request,'dashboard/withdraw2.html',context)
+    return render(request,'user/withdraw2.html',context)
 
 @login_required(login_url='/accounts/login')
 @can_access_dashboard
@@ -106,7 +115,7 @@ def dashboard_withdraw_pending(request):
     context = {
         'withdraws':withdraws,
     }
-    return render(request,'dashboard/withdraw3.html',context)
+    return render(request,'user/withdraw3.html',context)
 
 @login_required(login_url='/accounts/login')
 @can_access_dashboard
@@ -136,3 +145,80 @@ def user_withdraw_pending(request):
         'withdraws':withdraws,
     }
     return render(request,'user/pendingwithdraw.html',context)
+
+
+@login_required
+def withdraw_view(request):
+    user = request.user
+    user_profile = user.profile
+    user_account = Account.objects.get(user=user)
+    errors = {}
+
+    if request.method == "POST":
+        wallet = request.POST.get('wallet')
+        method = request.POST.get('method')
+
+        try:
+            amount = Decimal(request.POST.get('amount'))
+        except:
+            errors['amount'] = 'Invalid amount entered.'
+            return render(request, 'user/withdraw.html', {
+                'profile': user_profile,
+                'account': user_account,
+                'errors': errors,
+            })
+
+        if method == "bit_wallet":
+            if not user_profile.bit_wallet:
+                errors['method'] = 'Bitcoin wallet does not exist.'
+        elif method == "ussdc_wallet":
+            if not user_profile.ussdc_wallet:
+                errors['method'] = 'USSD wallet does not exist.'
+        elif method == "bank":
+            if not (user_profile.bank_name and user_profile.account_no):
+                errors['method'] = 'Bank details do not exist.'
+        else:
+            errors['method'] = 'Invalid withdrawal method selected.'
+
+        if not errors:
+            wallet_balance_field = f"{wallet}_balance"
+            current_balance = getattr(user_account, wallet_balance_field, Decimal('0.00'))
+
+            if current_balance >= amount:
+                setattr(user_account, wallet_balance_field, current_balance - amount)
+                user_account.save()
+
+                withdrawal = WithdrawalsMade.objects.create(
+                    user=user,
+                    wallet_type=wallet,
+                    amount=amount,
+                    method=method,
+                    message=f"Withdraw Fund via {wallet.capitalize()} Wallet"
+                )
+
+                messages.success(request, 'Withdrawal request sent. Withdrawal is pending.')
+
+                # Send email notification
+                subject = 'Withdrawal Request Received'
+                context = {'withdrawal': withdrawal}
+                plain_message = f"Dear {user.username},\n\nYour withdrawal of ${withdrawal.amount} via {withdrawal.wallet_type} Wallet has been received and is pending processing.\n\nThank you." 
+                html_message = None
+
+                send_mail(
+                    subject,
+                    strip_tags(plain_message),
+                    settings.DEFAULT_FROM_EMAIL,  # Replace with your email
+                    [user.email],
+                    html_message=html_message,
+                )
+            else:
+                errors['balance'] = f"Amount greater than {wallet} balance."
+
+    withdrawals = WithdrawalsMade.objects.filter(user=user).order_by('-date')
+
+    return render(request, 'user/withdraw.html', {
+        'profile': user_profile,
+        'account': user_account,
+        'errors': errors,
+        'withdrawals': withdrawals,
+    })
