@@ -7,7 +7,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.html import strip_tags
-from .models import Account, WithdrawalsMade
+from .models import WithdrawalsMade
 from django.conf import settings
 
 

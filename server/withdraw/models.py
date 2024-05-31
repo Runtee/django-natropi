@@ -1,18 +1,7 @@
 from django.db import models
 from accounts.models import CustomUser
 
-# Create your models here.
-
-class Account(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    main_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    portfolio_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    strategy_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    trade_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
-    def __str__(self):
-        return self.user.username
-    
+# Create your models here.    
 
 class WithdrawalsMade(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
