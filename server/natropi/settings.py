@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'notification',
     'referral',
     'user',
+    'portfolio',
+    
 ]
 
 MIDDLEWARE = [
