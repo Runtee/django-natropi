@@ -20,11 +20,6 @@ urlpatterns = [
     # URL pattern for faq
     path('faq/', views.faq, name='faq'),
 
-    # URL pattern for login
-    # path('login/', views.login, name='login'),
-
-    # URL pattern for register
-    # path('register/', views.register, name='register'),
 
     # URL pattern for forgot_password
     path('forgot_password/', views.forgot_password, name='forgot_password'),

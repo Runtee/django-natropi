@@ -1,5 +1,9 @@
 from django.db import models
+import os
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
+def profile_image_path(instance, filename):
+    return os.path.join('img', filename)
 
 
 class CustomUserManager(BaseUserManager):
@@ -52,7 +56,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     portfolio = models.BigIntegerField(default=0)
     strategy = models.BigIntegerField(default=0)
     trade = models.BigIntegerField(default=0)
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(upload_to=profile_image_path)
     status = models.CharField(max_length=255, default='1')
     remember_token = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

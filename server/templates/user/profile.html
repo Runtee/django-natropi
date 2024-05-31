@@ -30,8 +30,8 @@
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    {% if user.profile.image %}
-                                        <img class="profile-user-img img-fluid img-circle" src="{{ user.profile.image.url }}" alt="User profile picture">
+                                    {% if user.image %}
+                                        <img class="profile-user-img img-fluid img-circle" src="{{ user.image.url }}" alt="User profile picture">
                                     {% else %}
                                         <!-- Provide a default placeholder image if no image is available -->
                                         <img class="profile-user-img img-fluid img-circle" src="{% static 'assets/img/logo/logo.jpg' %}" alt="User profile picture">
@@ -70,7 +70,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="dob">Date of Birth</label>
-                                                <input class="form-control" type="date" id="dob" name="dob" min="1902-01-01" max="2030-12-31" value="{{ user.profile.dob|date:'Y-m-d' }}">
+                                                <input class="form-control" type="date" id="dob" name="dob" min="1902-01-01" max="2030-12-31" value="{{ user.dob|date:'Y-m-d' }}">
 
                                             </div>
                                         </div>
@@ -79,11 +79,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="address1">Address 1</label>
-                                                <input class="form-control" id="address1" name="address1" type="text" placeholder="Address 1" value="{{ user.profile.address1 }}">
+                                                <input class="form-control" id="address1" name="address1" type="text" placeholder="Address 1" value="{{ user.address1 }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="address2">Address 2</label>
-                                                <input class="form-control" id="address2" name="address2" type="text" placeholder="Address 2"  value="{{ user.profile.address2 }}">
+                                                <input class="form-control" id="address2" name="address2" type="text" placeholder="Address 2"  value="{{ user.address2 }}">
                                             </div>
                                         </div>
                                     </li>
@@ -95,7 +95,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="state">State</label>
-                                                <input class="form-control" id="state" name="state" type="text" placeholder="State"  value="{{ user.profile.state }}">
+                                                <input class="form-control" id="state" name="state" type="text" placeholder="State"  value="{{ user.state }}">
                                             </div>
                                         </div>
                                     </li>
@@ -103,11 +103,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="city">City</label>
-                                                <input class="form-control" id="city" name="city" type="text" placeholder="City"  value="{{ user.profile.city }}">
+                                                <input class="form-control" id="city" name="city" type="text" placeholder="City"  value="{{ user.city }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="postal_code">Postal Code</label>
-                                                <input class="form-control" id="postal_code" name="postal_code" type="text" placeholder="Postal Code"  value="{{ user.profile.postal_code }}">
+                                                <input class="form-control" id="postal_code" name="postal_code" type="text" placeholder="Postal Code"  value="{{ user.postal_code }}">
                                             </div>
                                         </div>
                                     </li>
@@ -121,31 +121,31 @@
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
                                         <label for="bit_wallet">Bitcoin Wallet</label>
-                                        <input class="form-control" id="bit_wallet" name="bit_wallet" type="text" placeholder="Bitcoin Wallet"  value="{{ user.profile.bit_wallet }}">
+                                        <input class="form-control" id="bit_wallet" name="bit_wallet" type="text" placeholder="Bitcoin Wallet"  value="{{ user.bit_wallet }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="ussdc_wallet">USSDC Wallet</label>
-                                        <input class="form-control" id="ussdc_wallet" name="ussdc_wallet" type="text" placeholder="USSDC Wallet"  value="{{ user.profile.ussdc_wallet }}">
+                                        <input class="form-control" id="ussdc_wallet" name="ussdc_wallet" type="text" placeholder="USSDC Wallet"  value="{{ user.ussdc_wallet }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="paypal_address">Paypal Address</label>
-                                        <input class="form-control" id="paypal_address" name="paypal_address" type="text" placeholder="Paypal Address"  value="{{ user.profile.paypal_address }}">
+                                        <input class="form-control" id="paypal_address" name="paypal_address" type="text" placeholder="Paypal Address"  value="{{ user.paypal_address }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="bank_name">Bank Name</label>
-                                        <input class="form-control" id="bank_name" name="bank_name" type="text" placeholder="Bank Name"  value="{{ user.profile.bank_name }}">
+                                        <input class="form-control" id="bank_name" name="bank_name" type="text" placeholder="Bank Name"  value="{{ user.bank_name }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="account_no">Account Number</label>
-                                        <input class="form-control" id="account_no" name="account_no" type="text" placeholder="Account Number"  value="{{ user.profile.account_no }}">
+                                        <input class="form-control" id="account_no" name="account_no" type="text" placeholder="Account Number"  value="{{ user.account_no }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="bank_address">Bank Address</label>
-                                        <input class="form-control" id="bank_address" name="bank_address" type="text" placeholder="Bank Address"  value="{{ user.profile.bank_address }}">
+                                        <input class="form-control" id="bank_address" name="bank_address" type="text" placeholder="Bank Address"  value="{{ user.bank_address }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="sort_code">Sort Code</label>
-                                        <input class="form-control" id="sort_code" name="sort_code" type="text" placeholder="Sort Code"  value="{{ user.profile.sort_code }}">
+                                        <input class="form-control" id="sort_code" name="sort_code" type="text" placeholder="Sort Code"  value="{{ user.sort_code }}">
                                     </li>
                                 </ul>
                                 

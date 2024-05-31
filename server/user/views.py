@@ -7,50 +7,20 @@ from referral.models import Referral
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
-from .forms import ProfileForm, CustomUserForm, CustomPasswordChangeForm
-from .models import Profile
 from django.contrib import messages
 from accounts.models import CustomUser
 
 User = get_user_model()
 
-@login_required(login_url='/accounts/login')
-def user_dashboard(request):
-    user = request.user
-    transactions = Transaction.objects.filter(user=user)[:5]
-    referrals = Referral.objects.filter(user=request.user)
-    referrals_profit = referrals.aggregate(
-        total_referral_profit=Sum('referral_profit'))['total_referral_profit']
-
-    context = {
-        'user': user,
-        'transactions': transactions,
-        'referrals': referrals,
-        'referrals_profit': referrals_profit,
-    }
-    return render(request, 'user/index.html', context)
-
-def my_custom_error_view(request):
-    return render(request, 'other/error.html')
-
-def my_custom_page_not_found_view(request, exception):
-    return render(request, 'other/error.html')
-
-def my_custom_bad_request_view(request, exception):
-    return render(request, 'other/error.html')
-
-def my_custom_permission_denied_view(request, exception):
-    return render(request, 'other/error.html')
-
 @login_required
 def update_profile(request):
-    print("Inside update_profile view")  # Add this line to confirm that the view is being called
+    print("Inside update_profile view")  
 
     if request.method == 'POST':
-        print("Form submitted via POST")  # Add this line to confirm that the form is being submitted
+        print("Form submitted via POST")  
 
-        # Get or create the profile associated with the current user
-        profile, created = Profile.objects.get_or_create(user=request.user)
+        # Get the current user
+        profile = request.user
 
         # Update profile picture
         if 'image' in request.FILES:

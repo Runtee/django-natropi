@@ -45,10 +45,10 @@
                                 <label>From:</label>
                                 <select class="form-control" id="wallet" name="wallet">
                                     <option disabled="" selected="" value=""> - Choose Wallet - </option>
-                                    <option value="main">Main Balance (${{ user.account.main_balance }})</option>
-                                    <option value="portfolio">Portfolio Balance (${{ user.account.portfolio_balance }})</option>
-                                    <option value="strategy">Strategy Balance (${{ user.account.strategy_balance }})</option>
-                                    <option value="trade">Trade Balance (${{ user.account.trade_balance }})</option>
+                                    <option value="main">Main Balance (${{ user.main }})</option>
+                                    <option value="portfolio">Portfolio Balance (${{ user.portfolio }})</option>
+                                    <option value="strategy">Strategy Balance (${{ user.strategy }})</option>
+                                    <option value="trade">Trade Balance (${{ user.trade }})</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -56,7 +56,7 @@
                                 <input autocomplete="amount" class="form-control" id="amount" name="amount" type="text" value=""/>
                             </div>
                             <div class="form-group">
-                                <label>Method:</label>
+                                <label for="method">Method:</label>
                                 <select class="form-control" id="method" name="method">
                                     <option value="bit_wallet">Bitcoin Wallet</option>
                                     <option value="ussdc_wallet">USSD Wallet</option>
