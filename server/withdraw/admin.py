@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Withdrawal
+from .models import Withdrawal, Account, WithdrawalsMade
 from django.utils.html import format_html
 # Register your models here.
 
@@ -22,3 +22,6 @@ class WithdrawalAdmin(admin.ModelAdmin):
         if obj and obj.verified:
             return ['verified', 'user', 'wallet_address', 'amount', 'wallet_type', 'created', 'usdt_amount']
         return ['verified']
+    
+admin.site.register(Account)
+admin.site.register(WithdrawalsMade)

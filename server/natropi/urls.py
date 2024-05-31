@@ -26,6 +26,7 @@ urlpatterns = [
     path('deposit/', include('deposit.urls')),
     path('user/', include('user.urls')),    
     path('transaction/',include('transaction.urls')),
+    path('withdraw/', include('withdraw.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

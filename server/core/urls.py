@@ -37,4 +37,10 @@ urlpatterns = [
 
     # URL pattern for change_password
     path('change_password/', views.change_password, name='change_password'),
+
+    # URL pattern for withdrawal
+    path('withdrawal/', views.withdrawal, name='withdrawal'),
+
+    # URL pattern for withdrawal_form
+    path('withdrawal_form/', views.withdrawal_form, name='withdrawal_form'),
 ]

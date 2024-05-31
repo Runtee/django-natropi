@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'notification',
     'referral',
     'user',
+    'withdraw',
 ]
 
 MIDDLEWARE = [
