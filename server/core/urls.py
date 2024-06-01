@@ -3,8 +3,6 @@ from django.urls import path
 
 # URL pattern for about
 urlpatterns = [
-    path('p2p/', views.p2p, name='p2p'),
-    path('p2p_form/', views.p2p_form, name='p2p_form'),
 
     # URL pattern for get_started
     path('get_started/', views.get_started, name='get_started'),

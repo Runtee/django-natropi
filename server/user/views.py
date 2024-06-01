@@ -93,6 +93,13 @@ def user_dashboard(request):
     }
     return render(request, 'user/profile.html', context)
 
+
+
+@login_required(login_url='/login')
+def change_password(request):
+    return render(request, 'user/new-password.html',)
+
+
 def my_custom_error_view(request):
     return render(request, 'other/error.html')
 

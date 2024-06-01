@@ -119,3 +119,17 @@ def p2p_transfer_view(request):
     transfers = P2PTransfer.objects.filter(user=user).order_by('-date')
 
     return render(request, 'user/p2p.html', {'user': user, 'errors': errors, 'transfers': transfers})
+
+@login_required
+def transfer(request):
+    return render(request, 'user/transfer.html')
+
+@login_required
+def transfer_form(request):
+    return render(request, 'user/transfer_form.html')
+
+def p2p(request):
+    return render(request, 'user/p2p.html')
+
+def p2p_form(request):
+    return render(request, 'user/p2p-form.html')

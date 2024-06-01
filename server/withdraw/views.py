@@ -81,3 +81,10 @@ def withdraw_view(request):
         'errors': errors,
         'withdrawals': withdrawals,
     })
+
+def withdrawal(request):
+    return render(request, 'user/withdraw.html')
+
+
+def withdrawal_form(request):
+    return render(request, 'user/withdraw_form.html')
