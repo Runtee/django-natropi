@@ -1,5 +1,7 @@
 from website.models import Website
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 
 
 def about(request):
@@ -133,6 +135,7 @@ def change_password(request):
     }
     return render(request, 'user/new-password.html', context)
 
+@login_required(login_url='/login')
 def withdrawal(request):
     try:
         site = Website.objects.get(pk=1)
@@ -144,7 +147,7 @@ def withdrawal(request):
     }
     return render(request, 'user/withdraw.html', context)
 
-
+@login_required(login_url='/login')
 def withdrawal_form(request):
     try:
         site = Website.objects.get(pk=1)
@@ -156,6 +159,7 @@ def withdrawal_form(request):
     }
     return render(request, 'user/withdraw_form.html', context)
 
+@login_required(login_url='/login')
 def transfer(request):
     try:
         site = Website.objects.get(pk=1)
@@ -167,6 +171,7 @@ def transfer(request):
     }
     return render(request, 'user/transfer.html', context)
 
+@login_required(login_url='/login')
 def transfer_form(request):
     try:
         site = Website.objects.get(pk=1)
@@ -178,6 +183,7 @@ def transfer_form(request):
     }
     return render(request, 'user/transfer_form.html', context)
 
+@login_required(login_url='/login')
 def p2p(request):
     try:
         site = Website.objects.get(pk=1)
@@ -189,6 +195,7 @@ def p2p(request):
     }
     return render(request, 'user/p2p.html', context)
 
+@login_required(login_url='/login')
 def p2p_form(request):
     try:
         site = Website.objects.get(pk=1)

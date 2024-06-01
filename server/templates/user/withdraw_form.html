@@ -22,17 +22,12 @@
 </div><!-- /.container-fluid -->
 </section>
 <!-- Main content -->
-{% if errors %}
-                    <ul class="messages">
-                        {% for key, message in errors.items %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+
 <section class="content" style="color: #8e94a9;">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                
                 <form action="{% url 'withdraw_view' %}" method="post">
                     {% csrf_token %}
                     <div class="card">
@@ -40,7 +35,15 @@
                             <h3 class="card-title"></h3>
                             <h4 style="text-align:center; color:red"></h4>
                         </div>
+                        
                         <div class="card-body">
+                            {% if errors %}
+                            <ul class="messages">
+                                {% for key, message in errors.items %}
+                                    <li style='color: white;'>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                             <div class="form-group">
                                 <label>From:</label>
                                 <select class="form-control" id="wallet" name="wallet">

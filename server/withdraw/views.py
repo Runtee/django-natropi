@@ -12,7 +12,7 @@ from django.conf import settings
 
 
 
-@login_required
+@login_required(login_url='/login')
 def withdraw_view(request):
     user = request.user
     errors = {}
@@ -25,23 +25,23 @@ def withdraw_view(request):
             amount = Decimal(request.POST.get('amount'))
         except:
             errors['amount'] = 'Invalid amount entered.'
-            return render(request, 'user/withdraw.html', {
+            return render(request, 'user/withdraw_form.html', {
                 'user': user,
                 'errors': errors,
             })
 
         if method == "bit_wallet" and (not user.bit_wallet or user.bit_wallet.strip() in ['', 'None']):
-            errors['method'] = 'Bitcoin wallet does not exist.'
-            print('wallet not found')
+            errors['method'] = 'Bitcoin wallet address does not exist.'
+            return render(request, 'user/withdraw_form.html', {'errors': errors})
         elif method == "ussdc_wallet" and (not user.ussdc_wallet or user.ussdc_wallet.strip() in ['', 'None']):
-            errors['method'] = 'USSD wallet does not exist.'
-            print('wallet not found')
+            errors['method'] = 'USSD wallet address does not exist.'
+            return render(request, 'user/withdraw_form.html', {'errors': errors})
         elif method == "bank" and (not (user.bank_name and user.account_no) or user.bank_name.strip() in ['', 'None'] or user.account_no.strip() in ['', 'None']):
             errors['method'] = 'Bank details do not exist.'
-            print('wallet not found')
+            return render(request, 'user/withdraw_form.html', {'errors': errors})
         elif method not in ["bit_wallet", "ussdc_wallet", "bank"]:
             errors['method'] = 'Invalid withdrawal method selected.'
-            print('wallet not found')
+            return render(request, 'user/withdraw_form.html', {'errors': errors})
         if not errors:
             current_balance = getattr(user, wallet, Decimal('0.00'))
 
