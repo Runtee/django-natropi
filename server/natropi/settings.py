@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'referral',
     'user',
     'portfolio',
-
+    
     'withdraw',
 ]
 
