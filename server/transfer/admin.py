@@ -1,7 +1,8 @@
 from django.contrib import admin
-from transfer.models import Transfer
-# Register your models here.
+from .models import Transfer
+
 @admin.register(Transfer)
 class TransferAdmin(admin.ModelAdmin):
-    list_display = ('user','transfer_user','usdt_amount','transferred','created')
-    readonly_fields = ('user','transfer_user','usdt_amount','transferred','created',)
+    list_display = ('user', 'from_wallet', 'to_wallet', 'amount', 'date')
+    search_fields = ('user__username', 'from_wallet', 'to_wallet')
+    list_filter = ('from_wallet', 'to_wallet', 'date')

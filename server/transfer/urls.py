@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import transfer_view
 
 urlpatterns = [
-    path('', views.user_transfer, name='transfer')
+    path('transfer-form/', transfer_view, name='transfers'),
 ]

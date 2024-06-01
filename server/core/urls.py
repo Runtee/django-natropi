@@ -7,6 +7,8 @@ urlpatterns = [
     path('about/', views.about, name='about_3'),
     path('dashboard/', views.about, name='dashboard'),
     path('dashboard/', views.about, name='about'),
+    path('transfer/', views.transfer, name='transfer'),
+    path('transfer_form/', views.transfer_form, name='transfer_form'),
 
     # URL pattern for get_started
     path('get_started/', views.get_started, name='get_started'),

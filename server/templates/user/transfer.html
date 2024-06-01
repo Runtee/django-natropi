@@ -1,336 +1,22 @@
+{% extends 'user/main.html' %}
 {% load static %}
-<!DOCTYPE html>
+{% block content %}
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Natropi</title>
-<style>
-    .nav-link {
-      color: #33c92d;
-    }
-    .brand-link {
-      color: #33c92d;
-    }
 
-    .user-panel .info .d-block {
-      color: #33c92d
-    }
-
-    ol li a {
-      color: #33c92d;
-    }
-
-    nav {
-        background-color: #181824; /* Set the background color of the whole page */
-    }
-
-    .nav-icon {
-        color: #33c92d; /* Set the color for elements with the nav-icon class */
-    }
-
-    .nav-item p {
-        color: #8e94a9; /* Set the color for <p> tags inside elements with the nav-item class */
-    }
-
-    aside {
-      background-color: #181824;
-    }
-
-    .logout {
-      color: #33c92d;
-    }
-
-    .content-header h1 {
-      color: #8e94a9 !important;
-    }
-
-    section .container-fluid .info-box {
-      background-color: #181824;
-    }
-  
-    .info-box-content {
-      color:#8e94a9;
-    }
-
-    section .container-fluid .card {
-      background-color: #181824;
-    }
-
-    section .container-fluid .card .card-title {
-      color: #8e94a9;
-    }
-
-    table thead tr th{
-      color: #8e94a9;
-    }
-
-    .main-footer {
-      background-color: #181824;
-    }
-
-    .list-group li {
-      color: #8e94a9;
-      background-color: #181824;
-    }
-
-    .list-group li input {
-      background-color: #111118;
-    }
-
-    /* .list-group li:first-child {
-      display: block;
-      width: 100%;
-      height: calc(2.25rem + 2px);
-      padding: .375rem .75rem;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      color: #495057;
-      background-color: #111118;
-      background-clip: padding-box;
-      border: 1px solid #ced4da;
-      border-radius: .25rem;
-      box-shadow: inset 0 0 0 transparent;
-      transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    } */
-  
-</style>
-<!-- Google Font: Source Sans Pro -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback" rel="stylesheet"/>
-<!-- Font Awesome -->
-<link href="../../plugins/fontawesome-free/css/all.min.css" rel="stylesheet"/>
-<!-- Theme style -->
-<link href="../../dist/css/adminlte.min.css" rel="stylesheet"/>
-</head>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper">
-<!-- Navbar -->
-<nav class="main-header navbar navbar-expand">
-<!-- Left navbar links -->
-<ul class="navbar-nav">
-<li class="nav-item">
-<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-</li>
-<li class="nav-item d-none d-sm-inline-block">
-<a class="nav-link" href="{% url '../../index2'%}">Home</a>
-</li>
-<li class="nav-item d-none d-sm-inline-block">
-<a class="nav-link" href="#">Contact</a>
-</li>
-</ul>
-<!-- Right navbar links -->
-<ul class="navbar-nav ml-auto">
-<!-- Navbar Search -->
-<li class="nav-item">
-<a class="nav-link" data-widget="navbar-search" href="#" role="button">
-<i class="fas fa-search"></i>
-</a>
-<div class="navbar-search-block">
-<form class="form-inline">
-<div class="input-group input-group-sm">
-<input aria-label="Search" class="form-control form-control-navbar" placeholder="Search" type="search"/>
-<div class="input-group-append">
-<button class="btn btn-navbar" type="submit">
-<i class="fas fa-search"></i>
-</button>
-<button class="btn btn-navbar" data-widget="navbar-search" type="button">
-<i class="fas fa-times"></i>
-</button>
-</div>
-</div>
-</form>
-</div>
-</li>
-<!-- Notifications Dropdown Menu -->
-<li class="nav-item dropdown">
-<a class="nav-link" data-toggle="dropdown" href="#">
-<i class="far fa-bell"></i>
-<span class="badge badge-warning navbar-badge">15</span>
-</a>
-<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-<span class="dropdown-item dropdown-header">15 Notifications</span>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">
-<i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">
-<i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">
-<i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item dropdown-footer" href="#">See All Notifications</a>
-</div>
-</li>
-<li class="nav-item">
-<a class="nav-link" data-widget="fullscreen" href="#" role="button">
-<i class="fas fa-expand-arrows-alt"></i>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" data-slide="true" data-widget="control-sidebar" href="#" role="button">
-<i class="fas fa-th-large"></i>
-</a>
-</li>
-</ul>
-</nav>
-<!-- /.navbar -->
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar elevation-4">
-<!-- Brand Logo -->
-<a class="brand-link" href="{% url '../../index2'%}">
-<img alt="Natropi Logo" class="brand-image img-circle elevation-3" src="{% static '../../dist/img/logo.jpg'%}" style="opacity: .8"/>
-<span class="brand-text font-weight-light">Natropi</span>
-</a>
-<!-- Sidebar -->
-<div class="sidebar os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition os-host-overflow os-host-overflow-y"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px; width: 249px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible os-viewport-native-scrollbars-overlaid" style="overflow-y: scroll;"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
-<!-- Sidebar user panel (optional) -->
-<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-<div class="image">
-<img alt="User Image" class="img-circle elevation-2" src="{% static '../../dist/img/user2-160x160.jpg'%}"/>
-</div>
-<div class="info">
-<a class="d-block" href="#">Alexander Pierce</a>
-</div>
-</div>
-<!-- Sidebar Menu -->
-<nav class="mt-2">
-<ul class="nav nav-pills nav-sidebar flex-column" data-accordion="false" data-widget="treeview" role="menu">
-<!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-<li class="nav-item menu-open">
-<a class="nav-link" href="#">
-<i class="nav-icon fas fa-tachometer-alt"></i>
-<p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-</p>
-</a>
-<ul class="nav nav-treeview">
-<li class="nav-item">
-<a class="nav-link" href="{% url '../../index2'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>Dashboard</p>
-</a>
-</li>
-</ul>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/profile'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>
-                Profile
-              </p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="#">
-<i class="nav-icon fas fa-hands-helping"></i>
-<p>
-                NP
-                <i class="fas fa-angle-left right"></i>
-</p>
-</a>
-<ul class="nav nav-treeview">
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/portfolio'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>NP Portfolio</p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/strategy'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>NP Strategy</p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/auto_copy'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>Auto Copy</p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/trade_table'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>NP Trade</p>
-</a>
-</li>
-</ul>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="#">
-<i class="nav-icon fas fa-wallet"></i>
-<p>
-                Wallet
-                <i class="right fas fa-angle-left"></i>
-</p>
-</a>
-<ul class="nav nav-treeview">
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/deposit'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>Deposit</p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="#">
-<i class="far fa-circle nav-icon"></i>
-<p> Withdraw</p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/transfer'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>Transfer</p>
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="{% url '../examples/transaction'%}">
-<i class="far fa-circle nav-icon"></i>
-<p>Transaction</p>
-</a>
-</li>
-</ul>
-</li>
-<li class="nav-header">Exit</li>
-<li class="nav-item">
-<a class="nav-link" href="https://natropi.com/logout" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-<i class="nav-icon far fa-circle"></i>
-<p class="text">LogOut</p>
-</a>
-<form action="https://natropi.com/logout" class="d-none" id="logout-form" method="POST">
-<input name="_token" type="hidden" value="PTnuUXt2OYaN9gXNKivhUofv3AAhzEdpTNgOr8KO"/> </form>
-</li>
-</ul>
-</nav>
-<!-- /.sidebar-menu -->
-</div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 43.9474%; transform: translate(0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
-<!-- /.sidebar -->
-</aside>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="min-height: 97px; background-color: #111118;">
 <!-- Content Header (Page header) -->
 <section class="content-header">
-<div class="container-fluid">
-<div class="row mb-2">
+  <div class="container-fluid">
+    <div class="row mb-2">
+    <div class="col-sm-6">
+    <h1>Transfer Tables</h1>
+  </div>
 <div class="col-sm-6">
-<h1>Transfer Tables</h1>
-</div>
-<div class="col-sm-6">
-<ol class="breadcrumb float-sm-right">
-<li class="breadcrumb-item"><a href="#">Home</a></li>
-<li class="breadcrumb-item active">Transfer Tables</li>
-</ol>
+  <ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active">Transfer Tables</li>
+  </ol>
 </div>
 </div>
 </div><!-- /.container-fluid -->
@@ -342,20 +28,87 @@
 <div class="col-12">
 <div class="card" style="color: #8e94a9;">
 <div class="card-header">
-<a href="{% url '../examples/transfer_form'%}"><input class="btn btn-success btn-block" name="add" value="+NEW TRANSFER"/></a>
+<a href="{% url 'transfer_form'%}"><input class="btn btn-success btn-block" name="add" value="+NEW TRANSFER"/></a>
 </div>
 <!-- /.card-header -->
 <div class="card-body">
-<div class="dataTables_wrapper dt-bootstrap4" id="example1_wrapper"><div class="row"><div class="col-sm-12 col-md-6"><div class="dt-buttons btn-group flex-wrap"> <button aria-controls="example1" class="btn btn-secondary buttons-copy buttons-html5" tabindex2="0" type="button"><span>Copy</span></button> <button aria-controls="example1" class="btn btn-secondary buttons-csv buttons-html5" tabindex2="0" type="button"><span>CSV</span></button> <button aria-controls="example1" class="btn btn-secondary buttons-excel buttons-html5" tabindex2="0" type="button"><span>Excel</span></button> <button aria-controls="example1" class="btn btn-secondary buttons-pdf buttons-html5" tabindex2="0" type="button"><span>PDF</span></button> <button aria-controls="example1" class="btn btn-secondary buttons-print" tabindex2="0" type="button"><span>Print</span></button> <div class="btn-group"><button aria-controls="example1" aria-expanded="false" aria-haspopup="true" class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex2="0" type="button"><span>Column visibility</span></button></div> </div></div><div class="col-sm-12 col-md-6"><div class="dataTables_filter" id="example1_filter"><label>Search:<input aria-controls="example1" class="form-control form-control-sm" placeholder="" type="search"/></label></div></div></div><div class="row"><div class="col-sm-12"><table aria-describedby="example1_info" class="table table-bordered table-striped dataTable dtr-inline" id="example1" role="grid">
-<thead>
-<tr role="row"><th aria-controls="example1" aria-label="Date: activate to sort column descending" aria-sort="ascending" class="sorting sorting_asc" colspan="1" rowspan="1" tabindex2="0">Date</th><th aria-controls="example1" aria-label="Message: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex2="0">Message</th><th aria-controls="example1" aria-label="Amount(s): activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex2="0">Amount(s)</th><th aria-controls="example1" aria-label="Status: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex2="0">Status</th></tr>
-</thead>
-<tbody>
-<tr class="odd"><td class="dataTables_empty" colspan="4" valign="top">No data available in table</td></tr></tbody>
-<tfoot>
-<tr><th colspan="1" rowspan="1">Date</th><th colspan="1" rowspan="1">Message</th><th colspan="1" rowspan="1">Amount(s)</th><th colspan="1" rowspan="1">Status</th></tr>
-</tfoot>
-</table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div aria-live="polite" class="dataTables_info" id="example1_info" role="status">Showing 0 to 0 of 0 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example1_previous"><a aria-controls="example1" class="page-link" data-dt-idx="0" href="#" tabindex2="0">Previous</a></li><li class="paginate_button page-item next disabled" id="example1_next"><a aria-controls="example1" class="page-link" data-dt-idx="1" href="#" tabindex2="0">Next</a></li></ul></div></div></div></div>
+  <div class="dataTables_wrapper dt-bootstrap4" id="example1_wrapper">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div class="dt-buttons btn-group flex-wrap">
+          <button aria-controls="example1" class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" type="button"><span>Copy</span></button>
+          <button aria-controls="example1" class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" type="button"><span>CSV</span></button>
+          <button aria-controls="example1" class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" type="button"><span>Excel</span></button>
+          <button aria-controls="example1" class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" type="button"><span>PDF</span></button>
+          <button aria-controls="example1" class="btn btn-secondary buttons-print" tabindex="0" type="button"><span>Print</span></button>
+          <div class="btn-group">
+            <button aria-controls="example1" aria-expanded="false" aria-haspopup="true" class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" type="button"><span>Column visibility</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="dataTables_filter" id="example1_filter">
+          <label>Search:<input aria-controls="example1" class="form-control form-control-sm" placeholder="" type="search"/></label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <table aria-describedby="example1_info" class="table table-bordered table-striped dataTable dtr-inline" id="example1" role="grid">
+          <thead>
+            <tr role="row">
+              <th aria-controls="example1" aria-label="Date: activate to sort column descending" aria-sort="ascending" class="sorting sorting_asc" colspan="1" rowspan="1" tabindex="0">Date</th>
+              <th aria-controls="example1" aria-label="From Wallet: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">From Wallet</th>
+              <th aria-controls="example1" aria-label="To Wallet: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">To Wallet</th>
+              <th aria-controls="example1" aria-label="Amount(s): activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">Amount(s)</th>
+              <th aria-controls="example1" aria-label="Status: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transfer in transfers %}
+              <tr>
+                <td>{{ transfer.date }}</td>
+                <td>{{ transfer.from_wallet }}</td>
+                <td>{{ transfer.to_wallet }}</td>
+                <td>${{ transfer.amount }}</td>
+                <td>Completed</td>
+              </tr>
+            {% empty %}
+              <tr class="odd">
+                <td class="dataTables_empty" colspan="5" valign="top">No data available in table</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="1" rowspan="1">Date</th>
+              <th colspan="1" rowspan="1">From Wallet</th>
+              <th colspan="1" rowspan="1">To Wallet</th>
+              <th colspan="1" rowspan="1">Amount(s)</th>
+              <th colspan="1" rowspan="1">Status</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-5">
+        <div aria-live="polite" class="dataTables_info" id="example1_info" role="status">Showing {{ transfers|length }} entries</div>
+      </div>
+      <div class="col-sm-12 col-md-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+          <ul class="pagination">
+            <li class="paginate_button page-item previous disabled" id="example1_previous">
+              <a aria-controls="example1" class="page-link" data-dt-idx="0" href="#" tabindex="0">Previous</a>
+            </li>
+            <li class="paginate_button page-item next disabled" id="example1_next">
+              <a aria-controls="example1" class="page-link" data-dt-idx="1" href="#" tabindex="0">Next</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /.card-body -->
 </div>
@@ -370,26 +123,4 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<footer class="main-footer no-print" style="background-color: #181824;">
-<div class="float-right d-none d-sm-block">
-<b>Version</b> 3.2.0
-    </div>
-<strong>Copyright © 2014-2021 <a href="https://adminlte.io" style="color: #33c92d;">Natropi</a>.</strong> All rights reserved.
-  </footer>
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-<!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-</body>
-</html>
+{% endblock %}
