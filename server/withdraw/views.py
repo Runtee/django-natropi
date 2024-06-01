@@ -30,15 +30,18 @@ def withdraw_view(request):
                 'errors': errors,
             })
 
-        if method == "bit_wallet" and (not user.bit_wallet or user.bit_wallet.strip() == ''):
+        if method == "bit_wallet" and (not user.bit_wallet or user.bit_wallet.strip() in ['', 'None']):
             errors['method'] = 'Bitcoin wallet does not exist.'
-        elif method == "ussdc_wallet" and (not user.ussdc_wallet or user.ussdc_wallet.strip() == ''):
+            print('wallet not found')
+        elif method == "ussdc_wallet" and (not user.ussdc_wallet or user.ussdc_wallet.strip() in ['', 'None']):
             errors['method'] = 'USSD wallet does not exist.'
-        elif method == "bank" and (not (user.bank_name and user.account_no)):
+            print('wallet not found')
+        elif method == "bank" and (not (user.bank_name and user.account_no) or user.bank_name.strip() in ['', 'None'] or user.account_no.strip() in ['', 'None']):
             errors['method'] = 'Bank details do not exist.'
+            print('wallet not found')
         elif method not in ["bit_wallet", "ussdc_wallet", "bank"]:
             errors['method'] = 'Invalid withdrawal method selected.'
-
+            print('wallet not found')
         if not errors:
             current_balance = getattr(user, wallet, Decimal('0.00'))
 
