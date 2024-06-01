@@ -118,31 +118,21 @@ def login_view(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             
-            # Fetch the user from CustomUser model
-            try:
-                user = CustomUser.objects.get(email=email)
-            except CustomUser.DoesNotExist:
-                user = None
+            # Authenticate the user
+            user = authenticate(request, username=email, password=password)
             
             if user is not None:
-                user = authenticate(request, username=email, password=password)
-                if user is not None:
-                    print('User is not none')
-                    if user.email_verified:
-                        login(request, user)
-                        print("Successfully logged in")
-                        return render(request, 'index.html')
-                    else:
-                        # Resend activation email
-                        send_activation_email(user, request)
-                        messages.error(request, 'Your account is not activated. We have resent the activation email. Please check your inbox.')
-                        return render(request, 'login.html', {'form': form})
+                if user.email_verified:
+                    login(request, user)
+                    return redirect("/user")
                 else:
-                    print("Error: Invalid password")
-                    form.add_error(None, 'Invalid email or password')
+                    # Resend activation email
+                    send_activation_email(user, request)
+                    messages.error(request, 'Your account is not activated. We have resent the activation email. Please check your inbox.')
+                    return render(request, 'login.html', {'form': form})
             else:
-                print("Error: User does not exist")
                 form.add_error(None, 'Invalid email or password')
+                messages.error(request, 'Invalid email or password')
     else:
         form = LoginForm()
 

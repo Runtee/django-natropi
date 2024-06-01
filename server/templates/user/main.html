@@ -97,6 +97,9 @@
       margin-bottom: 20px;
   margin-top: 10px;
     }
+    .main-color{
+      color: #8e94a9
+    }
 
   
 </style>
@@ -198,8 +201,13 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
-        </div>
+          {% if user.image and user.image.url %}
+    <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
+{% else %}
+    <img src="{% static 'user/assets/dist/img/logo.jpg' %}" class="img-circle elevation-2" alt="User Image">
+{% endif %}
+
+              </div>
         <div class="info">
           <a href="#" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
         </div>
@@ -220,7 +228,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard' %}" class="nav-link">
+          <a href="{% url 'profile' %}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>
               Profile
@@ -237,27 +245,15 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/examples/portfolio.html" class="nav-link">
+              <a href="{% url 'portfolio' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>NP Portfolio</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/strategy.html" class="nav-link">
+              <a href="{% url 'port_invest_table' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>NP Strategy</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/auto_copy.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Auto Copy</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/trade_table.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>NP Trade</p>
+                <p>NP Portfolio History </p>
               </a>
             </li>
           </ul>
@@ -303,7 +299,7 @@
             </li>
           </ul>
         </li>
-                  <li class="nav-header">Exit</li>
+                  <li class="nav-header main-color">Exit</li>
         <li class="nav-item">
           <a href="https://natropi.com/logout" class="nav-link" onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">

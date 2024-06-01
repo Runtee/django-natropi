@@ -2,18 +2,6 @@ from website.models import Website
 from django.shortcuts import render
 
 
-def about(request):
-    try:
-        site = Website.objects.get(pk=1)
-    except Website.DoesNotExist:
-        site = Website.objects.create(pk=1)
-        site.save()
-    context = {
-        'site': "site",
-    }
-    return render(request, 'user/profile.html', context)
-
-
 def get_started(request):
     try:
         site = Website.objects.get(pk=1)

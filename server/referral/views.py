@@ -9,7 +9,7 @@ User = get_user_model()
 # Create your views here.
 
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_referral(request):
 
     user = request.user

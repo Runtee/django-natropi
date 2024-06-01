@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from transaction.models import Transaction
 
 # Create your views here.
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_transaction(request):    
     user=request.user
     
@@ -23,7 +23,7 @@ def user_transaction(request):
     }
     return render(request,'user/transactions.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_transaction(request):
     transactions = Transaction.objects.all()
@@ -34,7 +34,7 @@ def dashboard_transaction(request):
     }
     return render(request,'dashboard/transaction.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_transaction_completed(request):
     transactions = Transaction.objects.filter(verified=True)
@@ -45,7 +45,7 @@ def dashboard_transaction_completed(request):
     }
     return render(request,'dashboard/transaction2.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_transaction_pending(request):
     transactions = Transaction.objects.filter(verified=False)

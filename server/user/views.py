@@ -83,3 +83,24 @@ def change_password(request):
             return redirect('dashboard')  # Redirect to a success page
 
     return render(request, 'user/new-password.html', {'errors': errors})
+
+@login_required(login_url='/login')
+def user_dashboard(request):
+    user = request.user
+
+    context = {
+        'user': user,
+    }
+    return render(request, 'user/profile.html', context)
+
+def my_custom_error_view(request):
+    return render(request, 'other/error.html')
+
+def my_custom_page_not_found_view(request, exception):
+    return render(request, 'other/error.html')
+
+def my_custom_bad_request_view(request, exception):
+    return render(request, 'other/error.html')
+
+def my_custom_permission_denied_view(request, exception):
+    return render(request, 'other/error.html')

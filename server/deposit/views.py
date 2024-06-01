@@ -17,7 +17,7 @@ from notification.models import Notification
 # Create your views here.
 
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_deposit(request):
     user = request.user
     deposits = Deposit.objects.filter(user=user).order_by('-created')[:5]
@@ -31,7 +31,7 @@ def user_deposit(request):
  
     return render(request,'user/deposit.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_deposit_form(request):
     user = request.user
     numacc = Acct.objects.filter(status="1")
@@ -81,7 +81,7 @@ def verify(request,id):
             print(e)
     return redirect(request.META.get('HTTP_REFERER', '/admin'))
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_deposit(request):
     deposits = Deposit.objects.all()
@@ -91,7 +91,7 @@ def dashboard_deposit(request):
     }
     return render(request,'dashboard/deposit.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_deposit_completed(request):
     deposits = Deposit.objects.filter(verified=True)
@@ -101,7 +101,7 @@ def dashboard_deposit_completed(request):
     }
     return render(request,'dashboard/deposit3.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_deposit_pending(request):
     deposits = Deposit.objects.filter(verified=False)
@@ -111,14 +111,14 @@ def dashboard_deposit_pending(request):
     }
     return render(request,'dashboard/deposit4.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def delete_deposit(request,id):
     deposit = Deposit.objects.get(id=id)
     deposit.delete()
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_deposit_completed(request):
     user=request.user
     deposits = Deposit.objects.filter(user=user,verified=True)
@@ -129,7 +129,7 @@ def user_deposit_completed(request):
     }
     return render(request,'user/completeddeposit.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 
 def user_deposit_pending(request):
     user = request.user
