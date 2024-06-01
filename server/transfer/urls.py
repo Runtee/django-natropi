@@ -1,6 +1,7 @@
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns = [
-    path('', views.user_transfer, name='transfer')
+    path('transfer-form/', transfer_view, name='transfers'),
+    path('p2p-transfer/', p2p_transfer_view, name='transfer_success'),
 ]

@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('userprofile', '0001_initial'),
+        # ('userprofile', '0001_initial'),
     ]
 
     operations = [
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('wallet_address', models.CharField(blank=True, max_length=100, null=True)),
                 ('usdt_amount', models.DecimalField(blank=True, decimal_places=5, max_digits=20, null=True)),
                 ('verified', models.BooleanField(default=False)),
-                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='withdrawal', to='userprofile.profile')),
+                ('profile', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='withdrawal', to='user.profile')),
             ],
             options={
                 'ordering': ['-created'],

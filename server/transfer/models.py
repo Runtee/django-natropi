@@ -1,18 +1,25 @@
 from django.db import models
-from accounts.models import CustomUser as User
+from accounts.models import CustomUser
 
-# Create your models here.
 class Transfer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transfers_made')
-    transfer_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transfers_received')
-    created = models.DateTimeField(auto_now_add=True)
-    usdt_amount = models.DecimalField(max_digits=20,decimal_places=5,blank=True,null=True)
-    transferred = models.BooleanField(default=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    from_wallet = models.CharField(max_length=50)
+    to_wallet = models.CharField(max_length=50)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
     
-    class Meta:
-        ordering = ['-created']
-    
+
     def __str__(self):
-        return f'{self.user.email} transferred {self.usdt_amount} to {self.transfer_user.user.email}'
-        
+        return f"Transfer of ${self.amount} from {self.from_wallet} to {self.to_wallet} by {self.user.username} on {self.date}"
+
+class P2PTransfer(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    from_wallet = models.CharField(max_length=50)
+    to_wallet = models.CharField(max_length=50)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
+    recipient_email = models.CharField(max_length=255)
     
+
+    def __str__(self):
+        return f"Transfer of ${self.amount} from {self.from_wallet} to {self.to_wallet} by {self.user.username} on {self.date}"

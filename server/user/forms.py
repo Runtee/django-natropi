@@ -4,15 +4,12 @@ from .models import Profile
 
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = Profile
+        model = CustomUser
         fields = [
-            'image', 'dob', 'address1', 'address2', 'state', 'city',
-            'bit_wallet', 'ussdc_wallet', 'paypal_address', 'bank_name',
+            'image', 'dob', 'address1', 'address2', 'state', 'city', 
+            'bit_wallet', 'ussdc_wallet', 'paypal_address', 'bank_name', 
             'account_no', 'bank_address', 'sort_code'
         ]
-        widgets = {
-            'dob': forms.DateInput(attrs={'type': 'date'}),
-        }
 
 class CustomUserForm(forms.ModelForm):
     class Meta:

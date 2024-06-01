@@ -198,10 +198,10 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{% static 'user/assets/dist/img/user2-160x160.jpg'%}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ user.username }}</a>
+          <a href="#" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
         </div>
       </div>
 
@@ -220,7 +220,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="pages/examples/profile.html" class="nav-link">
+          <a href="{% url 'dashboard' %}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>
               Profile
@@ -278,15 +278,21 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/withdraw" class="nav-link">
+              <a href="{% url 'withdraw_view' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> Withdraw</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/transfer" class="nav-link">
+              <a href="{% url 'transfers' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Transfer</p>
+                <p>Wallet Transfer</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'transfer_success' %}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>P2P Transfer</p>
               </a>
             </li>
             <li class="nav-item">
@@ -313,6 +319,15 @@
   </div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 43.9474%; transform: translate(0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
   <!-- /.sidebar -->
 </aside>
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 {% block content %} {% endblock %}
 

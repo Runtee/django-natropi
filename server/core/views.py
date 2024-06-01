@@ -121,3 +121,81 @@ def api(request):
     }
     return render(request, 'api.html', context)
 
+
+def change_password(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/new-password.html', context)
+
+def withdrawal(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/withdraw.html', context)
+
+
+def withdrawal_form(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/withdraw_form.html', context)
+
+def transfer(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/transfer.html', context)
+
+def transfer_form(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/transfer_form.html', context)
+
+def p2p(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/p2p.html', context)
+
+def p2p_form(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/p2p-form.html', context)
