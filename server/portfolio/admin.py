@@ -8,8 +8,8 @@ class PortfolioAddAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'updated_at')
 
 class PortfolioAdmin(admin.ModelAdmin):
-    list_display = ('user', 'date', 'amount', 'portfolioadd', 'staamounttus', 'created_at', 'updated_at')
-    list_filter = ('staamounttus', 'date', 'portfolioadd')
+    list_display = ('user', 'date', 'amount', 'portfolioadd', 'status', 'created_at', 'updated_at')
+    list_filter = ('status', 'date', 'portfolioadd')
     search_fields = ('user__username', 'portfolioadd__name')
     readonly_fields = ('created_at', 'updated_at')
 

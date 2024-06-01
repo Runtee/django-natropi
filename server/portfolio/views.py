@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 from .models import Portfolio, PortfolioAdd
 from django.utils import timezone
 
@@ -39,24 +40,24 @@ def port_invest(request, id):
     if request.method == 'POST':
         amount = request.POST.get('amount')
         port_amount = request.user.portfolio
-        if port_amount > amount:
+        if port_amount > int(amount):
             message = "Successfully Added"
             user = User.objects.get(pk=request.user.id)
-            user.portfolio -= amount
+            user.portfolio -= int(amount)
             user.save()
             mydate = timezone.now()
             portfolio = Portfolio()
             portfolio.user = request.user
             portfolio.date = mydate
-            portfolio.amount = amount
+            portfolio.amount = int(amount)
             portfolio.portfolioadd_id = request.POST.get('port_id')
             portfolio.save()
             portfolio_list = Portfolio.objects.filter(user=request.user)
-            return redirect('portfolio/port_invest_table')
+            return redirect('/portfolio/port_invest_table')
         else:
             message = "Insufficient Portfolio Amount"
             portfolio_list = Portfolio.objects.filter(user=request.user)
-            return render(request, 'dash/port_invest.html', {'portfolio': portfolio_list, 'message': message})
+            return render(request, 'user/port_invest.html', {"portfolio": portfolioAdd, 'message': message})
 
     return render(request, 'user/port_invest.html',context)
 

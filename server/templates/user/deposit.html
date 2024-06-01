@@ -13,7 +13,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="/user">Home</a></li>
             <li class="breadcrumb-item active">Deposit Tables</li>
           </ol>
         </div>
@@ -28,7 +28,7 @@
         <div class="col-12">
           <div class="card" style="color: #8e94a9;">
             <div class="card-header">
-              <a href="{% url 'deposit' %}">
+              <a href="{% url 'user_deposit_form' %}">
                 <button class="btn btn-success" name="add">+ NEW DEPOSIT</button>
               </a>
             </div>
@@ -43,9 +43,6 @@
                       <button aria-controls="example1" class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" type="button"><span>Excel</span></button>
                       <button aria-controls="example1" class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" type="button"><span>PDF</span></button>
                       <button aria-controls="example1" class="btn btn-secondary buttons-print" tabindex="0" type="button"><span>Print</span></button>
-                      <div class="btn-group">
-                        <button aria-controls="example1" aria-expanded="false" aria-haspopup="true" class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" type="button"><span>Column visibility</span></button>
-                      </div>
                     </div>
                   </div>
                   <div class="col-sm-12 col-md-6">

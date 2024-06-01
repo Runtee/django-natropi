@@ -10,7 +10,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/user">Home</a></li>
                         <li class="breadcrumb-item active">Portfolio Invest Tables</li>
                     </ol>
                 </div>
@@ -27,10 +27,10 @@
                         <div class="card-header">
                             <h4 style="text-align:center; color:red">{{ message|default:'' }}</h4>
                         </div>
-                        
+                                           
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table aria-describedby="example1_info" class="table table-bordered table-striped dataTable dtr-inline" id="example1" role="grid">
+                            <table aria-describedby="example1_info" class="table table-bordered table-striped table-responsive-md dataTable dtr-inline" id="example1" role="grid">
                                 <thead>
                                     <tr>
                                         <th>Portfolio Name</th>
@@ -45,16 +45,19 @@
                                     {% if portfolio %}
                                         {% for item in portfolio %}
                                             <tr>
-                                                <td>{{ item.date }}</td>
+                                                <td>{{ item.portfolioadd.header }}</td>
+                                                <td>{{ item.created_at }}</td>
                                                 <td>${{ item.amount }}</td>
+                                                <td>{{ item.created_at }}</td>
+                                                <td>{{ item.portfolioadd.short_term }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        {% if item.status == 0 %}
+                                                        {% if item.status == '0' %}
                                                             <button type="button" class="btn btn-xs btn-warning">Pending</button>
-                                                        {% elif item.status == 1 %}
-                                                            <button type="button" class="btn btn-xs btn-success">Success</button>
-                                                        {% elif item.status == 2 %}
-                                                            <button type="button" class="btn btn-xs btn-danger">Enabled</button>
+                                                        {% elif item.status == '1' %}
+                                                            <button type="button" class="btn btn-xs btn-success">Running</button>
+                                                        {% elif item.status == '2' %}
+                                                            <button type="button" class="btn btn-xs btn-info">Completed</button>
                                                         {% endif %}
                                                     </div>
                                                 </td>
