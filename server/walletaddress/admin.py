@@ -6,3 +6,7 @@ from .models import *
 @admin.register(WalletAddress)
 class WalletAddressAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(Acct)
+class AcctAdmin(admin.ModelAdmin):
+    pass

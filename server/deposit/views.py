@@ -6,7 +6,7 @@ from accounts.models import CustomUser as User
 # from userprofile.models import Profile
 from .models import Deposit
 # from userprofile.decorators import check_profile_exists
-from walletaddress.models import WalletAddress
+from walletaddress.models import WalletAddress, Acct
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from transaction.models import Transaction
@@ -30,12 +30,21 @@ def user_deposit(request):
         'user':user, 
     }
  
+    return render(request,'user/deposit.html',context)
 
+@login_required(login_url='/accounts/login')
+def user_deposit_form(request):
+    user = request.user
+    numacc = Acct.objects.filter(status="1")
+    # form = DepositForm()
+    context = {"numacc":numacc}
+    #'amount', 'method', 'address', 'trans_hash'
     if request.method == 'POST':
-        wallet_address = request.POST['wallet_address']
+        wallet_address = request.POST['address']
         amount = request.POST['amount']
-        wallet_type = request.POST['wallet_type']
-        usdt_amount = request.POST['usdt_amount']
+        usdt_amount = request.POST['amount']
+        wallet_type = request.POST['method']
+        trans_hash = request.POST['trans_hash']
         
         print(wallet_type)
         deposit = Deposit.objects.create(user=user,amount=amount,wallet_type=wallet_type,wallet_address=wallet_address,usdt_amount=usdt_amount)
@@ -59,14 +68,6 @@ def user_deposit(request):
         messages.info(request, 'You have applied for a deposit')
         return redirect('/deposit')
         
-    return render(request,'user/deposit.html',context)
-
-@login_required(login_url='/accounts/login')
-def user_deposit_form(request):
-    wallet, _ =WalletAddress.objects.get_or_create(pk=1)
-    
-    context = {
-        'wallet':wallet,}
     return render(request,'user/deposit_form.html',context)
 
 def verify(request,id):
