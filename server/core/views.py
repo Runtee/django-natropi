@@ -177,3 +177,25 @@ def transfer_form(request):
         'site': site,
     }
     return render(request, 'user/transfer_form.html', context)
+
+def p2p(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/p2p.html', context)
+
+def p2p_form(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/p2p-form.html', context)

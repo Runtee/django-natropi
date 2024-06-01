@@ -9,6 +9,8 @@ urlpatterns = [
     path('dashboard/', views.about, name='about'),
     path('transfer/', views.transfer, name='transfer'),
     path('transfer_form/', views.transfer_form, name='transfer_form'),
+    path('p2p/', views.p2p, name='p2p'),
+    path('p2p_form/', views.p2p_form, name='p2p_form'),
 
     # URL pattern for get_started
     path('get_started/', views.get_started, name='get_started'),
