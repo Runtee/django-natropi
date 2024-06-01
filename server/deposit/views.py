@@ -3,7 +3,6 @@ from utils import  can_access_dashboard
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 from accounts.models import CustomUser as User
-# from userprofile.models import Profile
 from .models import Deposit
 # from userprofile.decorators import check_profile_exists
 from walletaddress.models import WalletAddress, Acct
