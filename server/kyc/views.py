@@ -13,7 +13,7 @@ from .forms import KycForm
 import threading
 # Create your views here.
 #make and readonly and do like deposit verify
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @check_profile_exists
 def user_kyc(request):
     user = request.user
@@ -47,7 +47,7 @@ def user_kyc(request):
     print(bool(kyc))
     return render(request, 'user/kyc.html', context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def verify(request,id):
     profile = Profile.objects.get(user=request.user)

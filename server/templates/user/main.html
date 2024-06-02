@@ -6,6 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Natropi</title>
 
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'user/assets/plugins/fontawesome-free/css/all.min.css'%}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'user/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'user/assets/dist/css/adminlte.min.css'%}">
   <style>
     .nav-link {
       color: #33c92d;
@@ -78,17 +87,22 @@
     .list-group li input {
       background-color: #111118;
     }
+    .content-wrapper {
+     margin-bottom: 10px;
+     color: #8e94a9;
+     /* min-height: 167px; */
+    background-color: #111118;
+    }
+    .content {
+      margin-bottom: 20px;
+  margin-top: 10px;
+    }
+    .main-color{
+      color: #8e94a9
+    }
 
   
 </style>
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{% static 'user/assets/plugins/fontawesome-free/css/all.min.css'%}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{% static 'user/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'user/assets/dist/css/adminlte.min.css'%}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed" style="background-color: #181824">
 <div class="wrapper">
@@ -136,25 +150,21 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">.</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <span class="dropdown-item dropdown-header">{{notifications_unread_count}} Notifications</span>
           <div class="dropdown-divider"></div>
+          {% for notification in notifications_unread %}
+
           <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+            <i class="fas fa-envelope mr-2"></i> {{ notification.description |truncatewords:6 }}
+            <span class="float-right text-muted text-sm"></span>
+            <span class="float-right text-muted text-sm">{{ notification.created }}</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
+          {% endfor %}
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
@@ -187,13 +197,13 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          {% if user.image %}
-              <img class="profile-user-img img-fluid img-circle" src="{{ user.image.url }}" alt="User profile picture">
+          {% if user.image and user.image.url %}
+              <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
           {% else %}
-    <!-- Provide a default placeholder image if no image is available -->
-              <img class="profile-user-img img-fluid img-circle" src="{% static 'assets/img/logo/logo.jpg' %}" alt="User profile picture">
+              <img src="{% static 'user/assets/dist/img/logo.jpg' %}" class="img-circle elevation-2" alt="User Image">
           {% endif %}
-        </div>
+
+              </div>
         <div class="info">
           <a href="#" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
         </div>
@@ -205,25 +215,16 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item menu-open">
-          <a href="#" class="nav-link">
+        <li class="nav-item">
+          <a href="/user" class="nav-link">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
-              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Dashboard</p>
-              </a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard' %}" class="nav-link">
+          <a href="{% url 'profile' %}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>
               Profile
@@ -248,27 +249,15 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/examples/portfolio.html" class="nav-link">
+              <a href="{% url 'portfolio' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>NP Portfolio</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/examples/strategy.html" class="nav-link">
+              <a href="{% url 'port_invest_table' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>NP Strategy</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/auto_copy.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Auto Copy</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/examples/trade_table.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>NP Trade</p>
+                <p>NP Portfolio History </p>
               </a>
             </li>
           </ul>
@@ -289,7 +278,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'withdraw_view' %}" class="nav-link">
+              <a href="{% url 'withdraw' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p> Withdraw</p>
               </a>
@@ -301,20 +290,20 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'transfer_success' %}" class="nav-link">
+              <a href="{% url 'p2p' %}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>P2P Transfer</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/transactions" class="nav-link">
+              <a href="{%url 'user_transaction'%}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Transaction</p>
               </a>
             </li>
           </ul>
         </li>
-                  <li class="nav-header">Exit</li>
+                  <li class="nav-header main-color">Exit</li>
         <li class="nav-item">
           <a href="https://natropi.com/logout" class="nav-link" onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
@@ -349,7 +338,11 @@
     <!-- Control sidebar content goes here -->
   </aside>
   <!-- /.control-sidebar -->
-
+  <script>
+    $(function () {
+      bsCustomFileInput.init();
+    });
+    </script>
   <!-- Main Footer -->
   <footer class="main-footer" style="background-color: #181824;">
     <strong>Copyright &copy; 2014-2021 <a href="/" style="color: #33c92d;">Natropi</a>.</strong>

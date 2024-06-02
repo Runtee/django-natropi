@@ -1,6 +1,5 @@
 from django import forms
 from accounts.models import CustomUser  # Import the CustomUser model
-from .models import Profile
 
 class ProfileForm(forms.ModelForm):
     class Meta:

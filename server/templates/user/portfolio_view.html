@@ -1,0 +1,95 @@
+{% extends 'user/main.html' %} {% load static %} {% block content %}
+<div class="content-wrapper" style="min-height: 167px; background-color: #111118;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+      <div class="container-fluid">
+          <div class="row mb-2">
+              <div class="col-sm-6">
+                  <h1>{{ portfolio.header }}</h1>
+              </div>
+              <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/user">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/portfolio">All Portfolios</a></li>
+                    <li class="breadcrumb-item active">Portfolio View</li>
+                  </ol>
+              </div>
+          </div>
+      </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12">
+                  <div class="card">
+                      <div class="card-header">
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+
+                          <div class="row">
+                              <div class="col-md-8">
+                                  <div class="tab-content p-4 border rounded" id="v-pills-tabContent">
+                                      <img src="{{ portfolio.image.url }}" height="auto" width="100%" alt="">
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="tab-content p-4 border rounded" id="v-pills-tabContent">
+                                      <div class="mb-3 text-xl">
+                                          {{ portfolio.header }}
+                                      </div>
+                                      <div>
+                                          <a href="{% url 'port_invest' id=portfolio.id %}" class="btn btn-success btn-block">
+                                              Invest in this portfolio
+                                          </a>
+                                      </div>
+                                      <div class="mt-3 d-flex justify-content-between w-100">
+                                          <p> Min Investment: </p> <p> {{ portfolio.min_invest }} </p>
+                                      </div>
+                                      <hr class="" style="border-color:white;">
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> Investment </p> <p> {{ portfolio.invest_time }} </p>
+                                      </div>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> Horizon </p> <p> {{ portfolio.horizon }} </p>
+                                      </div>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> {{ portfolio.term }} Term </p> <p style="color:green"> {{ portfolio.short_term }} </p>
+                                      </div>
+                                      <h2>Portfolio Assets</h2>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> Stock </p> <p> Weight </p> <p> Return </p>
+                                      </div>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> {{ portfolio.port_stock1 }} </p> <p> {{ portfolio.port_weight1 }} </p> <p style="color:green"> {{ portfolio.port_returns1 }} </p>
+                                      </div>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> {{ portfolio.port_stock2 }} </p> <p> {{ portfolio.port_weight2 }} </p> <p style="color:green"> {{ portfolio.port_returns2 }} </p>
+                                      </div>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> {{ portfolio.port_stock3 }} </p> <p> {{ portfolio.port_weight3 }} </p> <p style="color:green"> {{ portfolio.port_returns3 }} </p>
+                                      </div>
+                                      <div class="mt-2 d-flex justify-content-between w-100">
+                                          <p> {{ portfolio.port_stock4 }} </p> <p> {{ portfolio.port_weight4 }} </p> <p style="color:green"> {{ portfolio.port_returns4 }} </p>
+                                      </div>
+
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                      <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+              </div>
+              <!-- /.col -->
+          </div>
+          <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+{% endblock content %}

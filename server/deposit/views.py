@@ -3,10 +3,9 @@ from utils import  can_access_dashboard
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 from accounts.models import CustomUser as User
-# from userprofile.models import Profile
 from .models import Deposit
 # from userprofile.decorators import check_profile_exists
-from walletaddress.models import WalletAddress
+from walletaddress.models import WalletAddress, Acct
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from transaction.models import Transaction
@@ -18,7 +17,7 @@ from notification.models import Notification
 # Create your views here.
 
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_deposit(request):
     user = request.user
     deposits = Deposit.objects.filter(user=user).order_by('-created')[:5]
@@ -30,12 +29,21 @@ def user_deposit(request):
         'user':user, 
     }
  
+    return render(request,'user/deposit.html',context)
 
+@login_required(login_url='/login')
+def user_deposit_form(request):
+    user = request.user
+    numacc = Acct.objects.filter(status="1")
+    # form = DepositForm()
+    context = {"numacc":numacc}
+    #'amount', 'method', 'address', 'trans_hash'
     if request.method == 'POST':
-        wallet_address = request.POST['wallet_address']
+        wallet_address = request.POST['address']
         amount = request.POST['amount']
-        wallet_type = request.POST['wallet_type']
-        usdt_amount = request.POST['usdt_amount']
+        usdt_amount = request.POST['amount']
+        wallet_type = request.POST['method']
+        trans_hash = request.POST['trans_hash']
         
         print(wallet_type)
         deposit = Deposit.objects.create(user=user,amount=amount,wallet_type=wallet_type,wallet_address=wallet_address,usdt_amount=usdt_amount)
@@ -59,14 +67,6 @@ def user_deposit(request):
         messages.info(request, 'You have applied for a deposit')
         return redirect('/deposit')
         
-    return render(request,'user/deposit.html',context)
-
-@login_required(login_url='/accounts/login')
-def user_deposit_form(request):
-    wallet, _ =WalletAddress.objects.get_or_create(pk=1)
-    
-    context = {
-        'wallet':wallet,}
     return render(request,'user/deposit_form.html',context)
 
 def verify(request,id):
@@ -81,7 +81,7 @@ def verify(request,id):
             print(e)
     return redirect(request.META.get('HTTP_REFERER', '/admin'))
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_deposit(request):
     deposits = Deposit.objects.all()
@@ -91,7 +91,7 @@ def dashboard_deposit(request):
     }
     return render(request,'dashboard/deposit.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_deposit_completed(request):
     deposits = Deposit.objects.filter(verified=True)
@@ -101,7 +101,7 @@ def dashboard_deposit_completed(request):
     }
     return render(request,'dashboard/deposit3.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def dashboard_deposit_pending(request):
     deposits = Deposit.objects.filter(verified=False)
@@ -111,14 +111,14 @@ def dashboard_deposit_pending(request):
     }
     return render(request,'dashboard/deposit4.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 @can_access_dashboard
 def delete_deposit(request,id):
     deposit = Deposit.objects.get(id=id)
     deposit.delete()
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 def user_deposit_completed(request):
     user=request.user
     deposits = Deposit.objects.filter(user=user,verified=True)
@@ -129,7 +129,7 @@ def user_deposit_completed(request):
     }
     return render(request,'user/completeddeposit.html',context)
 
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/login')
 
 def user_deposit_pending(request):
     user = request.user

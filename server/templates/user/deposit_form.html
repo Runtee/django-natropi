@@ -1,99 +1,102 @@
 {% extends 'user/main.html' %} {% load static %} {% block content %}
 
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="min-height: 97px; background-color: #111118;">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Deposit Form</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active"><a href="{% url 'deposit' %}">Deposit History</a></li>
-                        </ol>
-                    </div>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Deposit Form</h1>
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="{% url 'deposit' %}">Deposit History</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
 
-        <!-- Main content -->
-        <section class="content" style="color: #8e94a9;">
-            <div class="container-fluid">
-                <form method="post" action="{% url 'deposit' %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="row justify-content-md-center">
-                        <!-- left column -->
-                        <div class="col-md-6">
-                            <!-- general form elements -->
-                            <div class="card card-primary">
-                                <div class="card-header" style="background-color: #33c92d;">
-                                    <h3 class="card-title"></h3>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form method="post" action="{% url 'user_deposit_form' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row justify-content-md-center">
+                    <!-- left column -->
+                    <div class="col-md-6">
+                        <!-- general form elements -->
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title"></h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="amount">Amount ($):</label>
+                                    <input id="amount" type="text" class="form-control" name="amount" required>
                                 </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-
-                                    <div class="form-group">
-                                        <label>Amount ($):</label>
-                                        <input id="amount" type="text" class="form-control {% if form.amount.errors %}is-invalid{% endif %}" name="amount" value="{{ form.amount.value }}" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Method:</label>
-                                        <select onchange="val()" class="form-control" id="method" name="method">
-                                            <option selected value="" disabled>-Choose Method-</option>
-                                            {% for account in numacc %}
-                                                <option value="{{ account.method01 }}">{{ account.method01 }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div id="addr" style="display: none;" class="form-group">
-                                        <label>Wallet Address:</label>
-                                        <input id="address" onclick="CopyFunction()" type="text" class="form-control {% if form.address.errors %}is-invalid{% endif %}" name="address" required>
-                                    </div>
-                                    <div id="hash" style="display: none;" class="form-group">
-                                        <label>Transaction Hash:</label>
-                                        <input id="trans_hash" type="text" class="form-control {% if form.trans_hash.errors %}is-invalid{% endif %}" name="trans_hash">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="method">Method:</label>
+                                    <select onchange="val()" class="form-control" id="method" name="method">
+                                        <option selected disabled>-Choose Method-</option>
+                                        {% for acc in numacc %}
+                                            <option value="{{ acc.method }}">{{ acc.method }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div id="addr" style="display: none;" class="form-group">
+                                    <label for="address">Wallet Address:</label>
+                                    <input id="address" onclick="CopyFunction()" type="text" class="form-control" name="address" required>
+                                </div>
+                                <div id="hash" style="display: none;" class="form-group">
+                                    <label for="trans_hash">Transaction Hash:</label>
+                                    <input id="trans_hash" type="text" class="form-control" name="trans_hash">
                                 </div>
                             </div>
-                            <input class="btn btn-success"  type="submit" value="COMPLETE DEPOSIT" name="ent">
                         </div>
-                        {% for account in numacc1 %}
-                            <input id="{{ account.method01 }}" name="{{ account.method01 }}" type="hidden" value="{{ account.address02 }}">
-                        {% endfor %}
+                        <input class="btn btn-success" onclick="val1()" type="submit" value="COMPLETE DEPOSIT">
                     </div>
-                </form>
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
+                    {% for acc in numacc %}
+                        <input id="{{ acc.method }}" name="{{ acc.method }}" type="hidden" value="{{ acc.address }}">
+                    {% endfor %}
+                </div>
+            </form>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
 
-    <script>
-        function val() {
-            d = document.getElementById("method").value;
-            document.getElementById("address").value = document.getElementById(d).value;
-            document.getElementById("amount").disabled = true;
-            document.getElementById("addr").style.display = "block";
-            document.getElementById("hash").style.display = "block";
-            alert(d + " to pay Amount: $" + document.getElementById("amount").value + " Click on wallet address to Copy and Continue.");
-            document.getElementById("amount").disabled = false;
-        }
+<script>
+    function val() {
+        let method = document.getElementById("method").value;
+        document.getElementById("address").value = document.getElementById(method).value;
+        document.getElementById("addr").style.display = "";
+        document.getElementById("hash").style.display = "";
+        alert(method + " to pay Amount: $" + document.getElementById("amount").value + ". Click on wallet address to Copy and Continue.");
+    }
 
-        function val1() {
-            document.getElementById("amount").disabled = false;
-        }
+    function val1() {
+        document.getElementById("amount").disabled = 0;
+    }
 
-        function CopyFunction() {
-            var copyText = document.getElementById("address");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
-            alert("Address Copied: " + copyText.value);
-        }
-    </script>
+    function CopyFunction() {
+        /* Get the text field */
+        var copyText = document.getElementById("address");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+
+        /* Alert the copied text */
+        alert("Address Copied: " + copyText.value);
+    }
+</script>
     <script>
         $(function () {
             $("#example1").DataTable({
