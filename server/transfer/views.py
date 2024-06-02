@@ -125,8 +125,7 @@ def p2p_transfer_view(request):
 
         # Send email notification
             subject = 'Transfer Successful'
-            plain_message = f"Dear {user.username},\n\nYour transfer of ${amount} from {
-                from_wallet} wallet to {recipient_email} is successful. \n\nThank you."
+            plain_message = f"Dear {user.username},\n\nYour transfer of ${amount} from {from_wallet} wallet to {recipient_email} is successful. \n\nThank you."
             html_message = None
 
             send_mail(
@@ -139,8 +138,7 @@ def p2p_transfer_view(request):
 
             # Send email notification to the recipient
             subject_recipient = 'Funds Received'
-            plain_message_recipient = f"Dear {recipient.username},\n\nYou have received ${
-                amount} in your {to_wallet} wallet from {user.email}.\n\nThank you."
+            plain_message_recipient = f"Dear {recipient.username},\n\nYou have received ${amount} in your {to_wallet} wallet from {user.email}.\n\nThank you."
             send_mail(
                 subject_recipient,
                 plain_message_recipient,
