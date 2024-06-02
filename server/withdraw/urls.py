@@ -2,5 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('withdraw-form/', views.withdraw_view, name='withdraw_view'),
+    path('', views.withdrawal, name='withdraw'),
+    path('withdrawal_form/', views.withdraw_view, name='withdrawal_form'),
+
 ]

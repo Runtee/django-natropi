@@ -53,8 +53,8 @@ def update_profile(request):
 
         # Save the updated profile
         profile.save()
-
-        return redirect('dashboard')  # Redirect to dashboard page after successful update
+        messages.success(request,"update successful")
+        return redirect('profile')  # Redirect to dashboard page after successful update
 
     # If not a POST request, render the form template
     return render(request, 'user/profile.html')
@@ -62,7 +62,6 @@ def update_profile(request):
 
 @login_required(login_url='/login')
 def change_password(request):
-    errors = {}
 
     if request.method == 'POST':
         old_password = request.POST.get('old_password')
@@ -70,19 +69,20 @@ def change_password(request):
         confirm_password = request.POST.get('confirm_password')
 
         if not request.user.check_password(old_password):
-            errors['old_password'] = 'Old password is incorrect.'
+            messages.error(request,'Old password is incorrect.')
+            return render(request, 'user/new-password.html',)
         
         if new_password != confirm_password:
-            errors['password_mismatch'] = 'New password and confirm password do not match.'
+            messages.error(request,'New password and confirm password do not match.')
+            return render(request, 'user/new-password.html',)
         
-        if not errors:
-            request.user.set_password(new_password)
-            request.user.save()
-            update_session_auth_hash(request, request.user)  # Keeps the user logged in after password change
-            messages.success(request, 'Your password has been updated successfully.')
-            return redirect('dashboard')  # Redirect to a success page
+        request.user.set_password(new_password)
+        request.user.save()
+        update_session_auth_hash(request, request.user)  # Keeps the user logged in after password change
+        messages.success(request, 'Your password has been updated successfully.')
+        return redirect('profile')  # Redirect to a success page
 
-    return render(request, 'user/new-password.html', {'errors': errors})
+    return render(request, 'user/new-password.html',)
 
 @login_required(login_url='/login')
 def user_dashboard(request):
@@ -91,13 +91,7 @@ def user_dashboard(request):
     context = {
         'user': user,
     }
-    return render(request, 'user/profile.html', context)
-
-
-
-@login_required(login_url='/login')
-def change_password(request):
-    return render(request, 'user/new-password.html',)
+    return render(request, 'user/index.html', context)
 
 
 def my_custom_error_view(request):

@@ -18,12 +18,23 @@
             </div>
         </div>
     </section>
-
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+                {{ message }}
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
     
     <section class="content">
         <div class="container-fluid">
+            
             <h4 style="text-align:center;"></h4>
-            <form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+            <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
@@ -54,11 +65,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="first_name">First Name</label>
-                                                <input class="form-control" id="first_name" name="first_name" type="text" value="{{ user.first_name }}" placeholder="First Name">
+                                                <input class="form-control bg-dark text-light" id="first_name" name="first_name" type="text" value="{{ user.first_name }}" placeholder="First Name">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="last_name">Last Name</label>
-                                                <input class="form-control" id="last_name" name="last_name" type="text" value="{{ user.last_name }}" placeholder="Last Name">
+                                                <input class="form-control bg-dark text-light" id="last_name" name="last_name" type="text" value="{{ user.last_name }}" placeholder="Last Name">
                                             </div>
                                         </div>
                                     </li>
@@ -66,11 +77,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="phone">Phone</label>
-                                                <input class="form-control" id="phone" name="phone" type="text" value="{{ user.phone }}" placeholder="Phone">
+                                                <input class="form-control bg-dark text-light" id="phone" name="phone" type="text" value="{{ user.phone }}" placeholder="Phone">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="dob">Date of Birth</label>
-                                                <input class="form-control" type="date" id="dob" name="dob" min="1902-01-01" max="2030-12-31" value="{{ user.dob|date:'Y-m-d' }}">
+                                                <input class="form-control bg-dark text-light" type="date" id="dob" name="dob" min="1902-01-01" max="2030-12-31" value="{{ user.dob|date:'Y-m-d' }}">
 
                                             </div>
                                         </div>
@@ -79,11 +90,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="address1">Address 1</label>
-                                                <input class="form-control" id="address1" name="address1" type="text" placeholder="Address 1" value="{{ user.address1 }}">
+                                                <input class="form-control bg-dark text-light" id="address1" name="address1" type="text" placeholder="Address 1" value="{{ user.address1 }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="address2">Address 2</label>
-                                                <input class="form-control" id="address2" name="address2" type="text" placeholder="Address 2"  value="{{ user.address2 }}">
+                                                <input class="form-control bg-dark text-light" id="address2" name="address2" type="text" placeholder="Address 2"  value="{{ user.address2 }}">
                                             </div>
                                         </div>
                                     </li>
@@ -91,11 +102,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="country">Country</label>
-                                                <input class="form-control" id="country" name="country" type="text" value="{{ user.country }}" placeholder="Country">
+                                                <input class="form-control bg-dark text-light" id="country" name="country" type="text" value="{{ user.country }}" placeholder="Country">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="state">State</label>
-                                                <input class="form-control" id="state" name="state" type="text" placeholder="State"  value="{{ user.state }}">
+                                                <input class="form-control bg-dark text-light" id="state" name="state" type="text" placeholder="State"  value="{{ user.state }}">
                                             </div>
                                         </div>
                                     </li>
@@ -103,11 +114,11 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="city">City</label>
-                                                <input class="form-control" id="city" name="city" type="text" placeholder="City"  value="{{ user.city }}">
+                                                <input class="form-control bg-dark text-light" id="city" name="city" type="text" placeholder="City"  value="{{ user.city }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="postal_code">Postal Code</label>
-                                                <input class="form-control" id="postal_code" name="postal_code" type="text" placeholder="Postal Code"  value="{{ user.postal_code }}">
+                                                <input class="form-control bg-dark text-light" id="postal_code" name="postal_code" type="text" placeholder="Postal Code"  value="{{ user.postal_code }}">
                                             </div>
                                         </div>
                                     </li>
@@ -121,31 +132,31 @@
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
                                         <label for="bit_wallet">Bitcoin Wallet</label>
-                                        <input class="form-control" id="bit_wallet" name="bit_wallet" type="text" placeholder="Bitcoin Wallet"  value="{{ user.bit_wallet }}">
+                                        <input class="form-control bg-dark text-light" id="bit_wallet" name="bit_wallet" type="text" placeholder="Bitcoin Wallet"  value="{{ user.bit_wallet }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="ussdc_wallet">USSDC Wallet</label>
-                                        <input class="form-control" id="ussdc_wallet" name="ussdc_wallet" type="text" placeholder="USSDC Wallet"  value="{{ user.ussdc_wallet }}">
+                                        <input class="form-control bg-dark text-light" id="ussdc_wallet" name="ussdc_wallet" type="text" placeholder="USSDC Wallet"  value="{{ user.ussdc_wallet }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="paypal_address">Paypal Address</label>
-                                        <input class="form-control" id="paypal_address" name="paypal_address" type="text" placeholder="Paypal Address"  value="{{ user.paypal_address }}">
+                                        <input class="form-control bg-dark text-light" id="paypal_address" name="paypal_address" type="text" placeholder="Paypal Address"  value="{{ user.paypal_address }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="bank_name">Bank Name</label>
-                                        <input class="form-control" id="bank_name" name="bank_name" type="text" placeholder="Bank Name"  value="{{ user.bank_name }}">
+                                        <input class="form-control bg-dark text-light" id="bank_name" name="bank_name" type="text" placeholder="Bank Name"  value="{{ user.bank_name }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="account_no">Account Number</label>
-                                        <input class="form-control" id="account_no" name="account_no" type="text" placeholder="Account Number"  value="{{ user.account_no }}">
+                                        <input class="form-control bg-dark text-light" id="account_no" name="account_no" type="text" placeholder="Account Number"  value="{{ user.account_no }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="bank_address">Bank Address</label>
-                                        <input class="form-control" id="bank_address" name="bank_address" type="text" placeholder="Bank Address"  value="{{ user.bank_address }}">
+                                        <input class="form-control bg-dark text-light" id="bank_address" name="bank_address" type="text" placeholder="Bank Address"  value="{{ user.bank_address }}">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="sort_code">Sort Code</label>
-                                        <input class="form-control" id="sort_code" name="sort_code" type="text" placeholder="Sort Code"  value="{{ user.sort_code }}">
+                                        <input class="form-control bg-dark text-light" id="sort_code" name="sort_code" type="text" placeholder="Sort Code"  value="{{ user.sort_code }}">
                                     </li>
                                 </ul>
                                 

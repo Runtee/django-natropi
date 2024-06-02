@@ -185,3 +185,13 @@ RECIPIENT_ADDRESS = 'support@skylinktrading.com'
 
 GOOGLE_TRANSLATE_LINK="https://translate.google.com/intl/en/about/website/"
 CHAT_BOT="https://translate.google.com/intl/en/about/website/"
+
+# Message tags for Bootstrap
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}

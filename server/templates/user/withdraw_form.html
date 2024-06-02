@@ -28,22 +28,16 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 
-                <form action="{% url 'withdraw_view' %}" method="post">
+                <form action="{% url 'withdrawal_form' %}" method="post">
                     {% csrf_token %}
                     <div class="card">
                         <div class="card-header" style="background-color: #33c92d;">
-                            <h3 class="card-title"></h3>
-                            <h4 style="text-align:center; color:red"></h4>
+                            {% for message in messages %}
+                            <h5 style="text-align:center; color:#000">{{ message|default:'' }}</h5>
+                            {% endfor %}                
                         </div>
                         
                         <div class="card-body">
-                            {% if errors %}
-                            <ul class="messages">
-                                {% for key, message in errors.items %}
-                                    <li style='color: white;'>{{ message }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
                             <div class="form-group">
                                 <label>From:</label>
                                 <select class="form-control" id="wallet" name="wallet">

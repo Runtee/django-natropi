@@ -14,7 +14,7 @@
 </div>
 <div class="col-sm-6">
 <ol class="breadcrumb float-sm-right">
-<li class="breadcrumb-item"><a href="{% url 'about' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
 <li class="breadcrumb-item active">P2P Transfer</li>
 </ol>
 </div>
@@ -24,13 +24,14 @@
 <!-- Main content -->
 <section class="content" style="color: #8e94a9;">
   <div class="container-fluid" style="display: flex; justify-content: center;">
-    <form action="{% url 'transfer_success' %}" enctype="multipart/form-data" method="post" style="width: 100%; max-width: 500px;">
+    <form action="{% url 'p2p_form' %}" enctype="multipart/form-data" method="post" style="width: 100%; max-width: 500px;">
         {% csrf_token %}
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="background-color: #33c92d;">
-                    <h4 style="text-align:center; color:red">{{ errors }}</h4>
-                </div>
+                    {% for message in messages %}
+                    <h5 style="text-align:center; color:#000">{{ message|default:'' }}</h5>
+                    {% endfor %}                </div>
                 <div class="card-body">
                     <div class="form-group">
                         <label>From:</label>
