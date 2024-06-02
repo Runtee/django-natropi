@@ -1,5 +1,7 @@
 from website.models import Website
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
 
 
 def get_started(request):

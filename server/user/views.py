@@ -12,7 +12,7 @@ from accounts.models import CustomUser
 
 User = get_user_model()
 
-@login_required
+@login_required(login_url='/login')
 def update_profile(request):
     print("Inside update_profile view")  
 
@@ -60,7 +60,7 @@ def update_profile(request):
     return render(request, 'user/profile.html')
 
 
-@login_required
+@login_required(login_url='/login')
 def change_password(request):
     errors = {}
 

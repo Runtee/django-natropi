@@ -4,11 +4,12 @@ from django.contrib import messages
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
 from django.conf import settings
+from django.db.models import Q
 from decimal import Decimal
 from accounts.models import CustomUser
 from .models import Transfer, P2PTransfer
 
-@login_required
+@login_required(login_url='/login')
 def transfer_view(request):
     user = request.user
     errors = {}
@@ -54,10 +55,23 @@ def transfer_view(request):
     return render(request, 'user/transfer.html', {'user': user, 'errors': errors, 'transfers': transfers})
 
 
-@login_required
+@login_required(login_url='/login')
 def p2p_transfer_view(request):
     user = request.user
     errors = {}
+
+    # Handle search query
+    query = request.GET.get('search', '')
+
+    # Filter transfers based on search query
+    transfers = P2PTransfer.objects.filter(
+        Q(user=user) & (
+            Q(from_wallet__icontains=query) |
+            Q(to_wallet__icontains=query) |
+            Q(amount__icontains=query) |
+            Q(recipient_email__icontains=query)
+        )
+    ).order_by('-date')
 
     if request.method == "POST":
         recipient_email = request.POST.get('recipient_email')
@@ -101,7 +115,7 @@ def p2p_transfer_view(request):
 
         # Send email notification
             subject = 'Transfer Successful'
-            plain_message = f"Dear {user.username},\n\nYour transfer of ${amount} from {from_wallet} wallet to {recipient_email} has is successful. \n\nThank you."
+            plain_message = f"Dear {user.username},\n\nYour transfer of ${amount} from {from_wallet} wallet to {recipient_email} is successful. \n\nThank you."
             html_message = None
 
             send_mail(
@@ -111,6 +125,17 @@ def p2p_transfer_view(request):
                 [user.email],
                 html_message=html_message,
                 )
+            
+            # Send email notification to the recipient
+            subject_recipient = 'Funds Received'
+            plain_message_recipient = f"Dear {recipient.username},\n\nYou have received ${amount} in your {to_wallet} wallet from {user.email}.\n\nThank you."
+            send_mail(
+                subject_recipient,
+                plain_message_recipient,
+                settings.DEFAULT_FROM_EMAIL,
+                [recipient.email],
+            )
+
 
             return redirect('transfer_success')
         else:
