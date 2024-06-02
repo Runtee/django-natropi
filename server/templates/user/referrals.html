@@ -1,0 +1,151 @@
+{% extends 'user/main.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="min-height: 167px; background-color: #111118;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Referral</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Referral</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid d-flex justify-content-center align-items-center">
+          <!-- Main row -->
+          <div class="row w-100">
+              <!-- Left col -->
+              <div class="col-md-8 mx-auto">
+                  <!-- MAP & BOX PANE -->
+                  <!-- /.card -->
+                  <div class="row">
+                      <div class="col-md-6">
+                          <!-- DIRECT CHAT -->
+                          <div class="card direct-chat direct-chat-warning text-white  p-4">
+                              <div class="card-header text-center">
+                                  <h3>Invite Your Friends</h3>
+                                  <p>Earn more when you refer your friends to invest with us. The reward is + $1 on your main wallet.</p>
+                                  <div class="mt-3">
+                                    <button class="btn btn-primary btn-block btn-sm" onclick="shareOnFacebook('{{ user.referral_code }}')">
+                                        <i class="fab fa-facebook-f"></i> Facebook
+                                    </button>
+                                    <button class="btn btn-success btn-block btn-sm" onclick="shareOnWhatsApp('{{ user.referral_code }}')">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </button>
+                                    <button class="btn btn-danger btn-block btn-sm" onclick="shareOnInstagram('{{ user.referral_code }}')">
+                                        <i class="fab fa-instagram"></i> Instagram
+                                    </button>
+                                    <button class="btn btn-info btn-block btn-sm" onclick="shareOnTwitter('{{ user.referral_code }}')">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </button>
+                                </div>
+                              </div>
+                              <div class="card-body p-4">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="referralCode" value="{{ user.referral_code }}" readonly>
+                                </div>
+                                <button class="btn btn-secondary btn-sm d-block w-100" onclick="copyReferralCode()">Copy Referral Code</button>
+                                <script>
+                                    function shareOnFacebook(referralCode) {
+                                        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralCode)}`;
+                                        window.open(url, '_blank');
+                                    }
+                                
+                                    function shareOnWhatsApp(referralCode) {
+                                        const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(referralCode)}`;
+                                        window.open(url, '_blank');
+                                    }
+                                
+                                    function shareOnInstagram(referralCode) {
+                                        alert('Copy the referral code and share it on Instagram.');
+                                    }
+                                
+                                    function shareOnTwitter(referralCode) {
+                                        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(referralCode)}`;
+                                        window.open(url, '_blank');
+                                    }
+                                
+                                    function copyReferralCode() {
+                                        const referralCodeInput = document.getElementById('referralCode');
+                                        referralCodeInput.select();
+                                        referralCodeInput.setSelectionRange(0, 99999); // For mobile devices
+                                        document.execCommand('copy');
+                                        alert('Referral code copied to clipboard');
+                                    }
+                                </script>
+                            </div>
+                          </div>
+                          <!--/.direct-chat -->
+                      </div>
+                      <!-- /.col -->
+  
+                      <div class="col-md-6">
+                          <!-- USERS LIST -->
+                          <div class="card justify-content-center align-items-center p-4">
+                              <div class="card-header text-center text-white">
+                                  <h4 class=" text-center text-white">Your referrals</h4>
+                                  <p>You have referred {{ user.referral_count }} users</p>
+  
+                                  
+                              </div>
+                              <!-- /.card-header -->
+                              <div class="card-body p-0 text-center">
+                                <ul class="users-list clearfix">
+                                    {% for referral in referrals %}
+                            <li class="text-center">
+                                {% if referral.image %}
+                                    <img src="{{ referral.image.url }}" alt="User Image">
+                                {% else %}
+                                    <img src="{% static 'assets/img/logo/logo.jpg' %}" alt="Default User Image">
+                                {% endif %}
+                                <a class="users-list-name text-white" href="#">{{ referral.username }}</a>
+                            </li>
+                            {% endfor %}
+                                </ul>
+                                <!-- /.users-list -->
+                            </div>
+                              <!-- /.card-body -->
+                             
+                              <!-- /.card-footer -->
+                          </div>
+                          <!--/.card -->
+                      </div>
+                      <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+  
+                  <!-- /.card -->
+              </div>
+              <!-- /.col -->
+              <!-- /.col -->
+          </div>
+          <!-- /.row -->
+      </div>
+      <!--/. container-fluid -->
+  </section>
+  
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+
+  {% endblock %}

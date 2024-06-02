@@ -53,22 +53,11 @@ def update_profile(request):
         # Save the updated profile
         profile.save()
 
-        referral_code = profile.referral_code
-        referral_count = profile.referral_count
-        referral_bonus = profile.referral_bonus
-
-        # Pass referral details to the template
-        context = {
-            'referral_code': referral_code,
-            'referral_count': referral_count,
-            'referral_bonus': referral_bonus
-        }
-
-
         return redirect('dashboard')  # Redirect to dashboard page after successful update
 
+
     # If not a POST request, render the form template
-    return render(request, 'user/profile.html', context=context)
+    return render(request, 'user/profile.html')
 
 
 @login_required(login_url='/login')

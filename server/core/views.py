@@ -206,3 +206,15 @@ def p2p_form(request):
         'site': site,
     }
     return render(request, 'user/p2p-form.html', context)
+
+@login_required(login_url='/login')
+def referral(request):
+    try:
+        site = Website.objects.get(pk=1)
+    except Website.DoesNotExist:
+        site = Website.objects.create(pk=1)
+        site.save()
+    context = {
+        'site': site,
+    }
+    return render(request, 'user/referrals.html', context)

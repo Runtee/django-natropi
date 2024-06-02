@@ -28,6 +28,7 @@ urlpatterns = [
     path('transaction/',include('transaction.urls')),
     path('withdraw/', include('withdraw.urls')),
     path('transfer/', include('transfer.urls')),
+    path('', include('referral.urls')),
 
 ]
 if settings.DEBUG:
