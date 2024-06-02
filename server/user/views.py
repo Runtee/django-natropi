@@ -3,7 +3,6 @@ from transaction.models import Transaction
 from django.contrib.auth.decorators import login_required
 from django.utils.dateparse import parse_date 
 from django.template.loader import render_to_string
-from referral.models import Referral
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
@@ -54,10 +53,22 @@ def update_profile(request):
         # Save the updated profile
         profile.save()
 
+        referral_code = profile.referral_code
+        referral_count = profile.referral_count
+        referral_bonus = profile.referral_bonus
+
+        # Pass referral details to the template
+        context = {
+            'referral_code': referral_code,
+            'referral_count': referral_count,
+            'referral_bonus': referral_bonus
+        }
+
+
         return redirect('dashboard')  # Redirect to dashboard page after successful update
 
     # If not a POST request, render the form template
-    return render(request, 'user/profile.html')
+    return render(request, 'user/profile.html', context=context)
 
 
 @login_required(login_url='/login')

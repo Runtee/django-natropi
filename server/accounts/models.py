@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 import os
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -64,6 +65,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=100, blank=True, null=True)
     referral = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='users_user')
+    referral_code = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    referral_count = models.IntegerField(default=0)
+    referral_bonus = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -75,6 +79,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    
+    def save(self, *args, **kwargs):
+        if not self.referral_code:
+            self.referral_code = str(uuid.uuid4())[:10]
+        super().save(*args, **kwargs)
 
 
 # class PasswordReset(models.Model):

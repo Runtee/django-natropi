@@ -1,7 +1,33 @@
 {% extends 'user/main.html' %}
 {% load static %}
 {% block content %}
+<style>
+.referral-code {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 20px 0;
+}
+.copy-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.copy-btn:active {
+    background-color: #ddd;
+}
 
+</style>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("referralCode");
+        navigator.clipboard.writeText(copyText.textContent).then(function() {
+            alert("Referral code copied to clipboard!");
+        }, function(err) {
+            alert("Failed to copy the referral code. Please try again.");
+        });
+    }
+</script>
 <div class="content-wrapper" style="min-height: 167px; background-color: #111118;">
     <section class="content-header">
         <div class="container-fluid">
@@ -42,7 +68,21 @@
                                 <p class="text-muted text-center">{{ user.email }}</p>
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <a href="{% url 'change_password' %}" class="btn btn-primary btn-sm btn-block">Change Password</a>
+                                                  
+        
                                 </ul>
+                                <div class="card card-outline" style="border: 1px solid white;">
+                                    <div class="card-body box-profile">
+                                        <div class="text-center" style="color: #f2f6f1;">
+                                            <h4>Referral Details</h5>
+                                            
+                                                <p><strong>Referral Code:</strong> {{ user.referral_code }}</p>
+                                                <p><strong>Number of Referrals:</strong> {{ user.referral_count }}</p>
+                                                <p><strong>Referral Bonus:</strong> ${{ user.referral_bonus }}</p>
+                                    
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
