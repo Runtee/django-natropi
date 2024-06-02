@@ -64,14 +64,14 @@ class CustomUserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': (
-            'username', 'first_name', 'last_name', 'country', 'phone', 'dob', 'image', 'referral', 'referral_code', 'referral_count', 'referral_bonus')}),
+            'username', 'first_name', 'last_name', 'country', 'phone', 'dob', 'image')}),
         (_('Location'), {'fields': ('address1', 'address2', 'city', 'state')}),
         (_('Wallets'), {'fields': ('bit_wallet', 'ussdc_wallet', 'paypal_address',
          'bank_name', 'account_no', 'bank_address', 'sort_code')}),
         (_('Balances'), {
          'fields': ('main', 'portfolio', 'strategy', 'trade')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff',
-         'is_superuser', 'groups', 'user_permissions')}),
+         'is_superuser', 'groups', 'user_permissions', 'email_verified',)}),
     )
     add_fieldsets = (
         (None, {

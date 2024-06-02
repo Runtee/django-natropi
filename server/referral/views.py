@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import Referral
 
-@login_required(login_url='/login')
+@login_required
 def user_referrals(request):
-    # Fetch referral data
-    referrals = request.user.users_user.all()
+    user = request.user
+    user_referral = Referral.objects.filter(referrer=user).first()
+    referred_users = Referral.objects.filter(referrer=user, referred_user__isnull=False)
 
-    for referral in referrals:
-        print(f"Referral: {referral.username}, Image: {referral.image.url}")
-
-    # Render the referrals template
-    return render(request, 'user/referrals.html', {'referrals': referrals})
+    context = {
+        'user': user,
+        'user_referral': user_referral,
+        'referrals': referred_users,
+        'referral_count': referred_users.count(),
+    }
+    return render(request, 'user/referrals.html', context)
