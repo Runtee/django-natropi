@@ -99,6 +99,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+CSRF_TRUSTED_ORIGINS = ['https://natropi.up.railway.app/', 'https://natropi.up.railway.app']
 
 
 # Password validation
@@ -174,12 +175,12 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'support@skylinktrading.com'
 EMAIL_HOST_PASSWORD = 'qbLm3&uv'
-DEFAULT_FROM_EMAIL = 'support@skylinktrading.com'
+DEFAULT_FROM_EMAIL = 'contact@natropi.com'
 
 # EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 # # Custom setting. To email
-RECIPIENT_ADDRESS = 'support@skylinktrading.com'
+RECIPIENT_ADDRESS = 'Tajadaryan@gmail.com'
 
 
 
