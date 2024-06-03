@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 import os
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -56,14 +57,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     portfolio = models.BigIntegerField(default=0)
     strategy = models.BigIntegerField(default=0)
     trade = models.BigIntegerField(default=0)
-    image = models.ImageField(upload_to=profile_image_path)
+    image = models.ImageField(upload_to=profile_image_path, default='assets/img/logo/logo.jpg')
     status = models.CharField(max_length=255, default='1')
     remember_token = models.CharField(max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     email_verified = models.BooleanField(default=False)
     verification_token = models.CharField(max_length=100, blank=True, null=True)
-    referral = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='users_user')
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -75,7 +75,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
-
 
 # class PasswordReset(models.Model):
 #     email = models.EmailField(db_index=True)

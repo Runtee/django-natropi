@@ -11,11 +11,13 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.db.models import F
+from referral.models import Referral
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
-from referral.models import Referral
+from decimal import Decimal
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import get_user_model
@@ -27,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 User = get_user_model()
+
 
 def register(request):
     referral_code = request.GET.get('referral_code', '')
@@ -44,11 +47,41 @@ def register(request):
             referral_code = form.cleaned_data.get('referral_code')
             if referral_code:
                 try:
-                    referred_by = CustomUser.objects.get(referral__referral_code=referral_code)
-                    Referral.objects.create(user=referred_by, referred_user=user)
-                except CustomUser.DoesNotExist:
+                    referrer_user = User.objects.get(referrals__referral_code=referral_code)
+                    referral = Referral.objects.create(
+                        referrer=referrer_user,
+                        referred_user=user,
+                        referral_code=str(uuid.uuid4())[:10]
+                    )
+
+                    # Update referrer's referral count and bonus
+                    referrer_user.referrals.update(referral_count=F('referral_count') + 1)
+                    referrer_user.referrals.update(referral_bonus=F('referral_bonus') + Decimal('10.00'))
+                    referrer_user.main += Decimal('1.00')
+                    referrer_user.save()
+                    messages.success(request, 'You have been registered successfully and the referrer has been rewarded.')
+
+                    # Send email notification to referrer
+                    subject = 'Referral Successful'
+                    plain_message = f"Dear {referrer_user.username},\n\nSomeone has registered using your referral code. You have received a bonus of 10 units and $1 has been added to your main balance.\n\nThank you."
+                    html_message = None
+
+                    send_mail(
+                        subject,
+                        strip_tags(plain_message),
+                        settings.DEFAULT_FROM_EMAIL,
+                        [referrer_user.email],
+                        html_message=html_message,
+                    )
+                except User.DoesNotExist:
                     messages.error(request, "Referral code is invalid.")
                     return render(request, 'register.html', {'form': form})
+
+            # Automatically create a Referral object for the new user
+            Referral.objects.create(
+                referrer=user,
+                referral_code=str(uuid.uuid4())[:10]
+            )
 
             # Create email subject and message
             mail_subject = 'Activate your account'

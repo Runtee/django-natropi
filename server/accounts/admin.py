@@ -71,7 +71,7 @@ class CustomUserAdmin(BaseUserAdmin):
         (_('Balances'), {
          'fields': ('main', 'portfolio', 'strategy', 'trade')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff',
-         'is_superuser', 'groups', 'user_permissions')}),
+         'is_superuser', 'groups', 'user_permissions', 'email_verified',)}),
     )
     add_fieldsets = (
         (None, {

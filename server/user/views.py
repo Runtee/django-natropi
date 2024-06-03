@@ -3,7 +3,6 @@ from transaction.models import Transaction
 from django.contrib.auth.decorators import login_required
 from django.utils.dateparse import parse_date 
 from django.template.loader import render_to_string
-from referral.models import Referral
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
@@ -55,6 +54,7 @@ def update_profile(request):
         profile.save()
         messages.success(request,"update successful")
         return redirect('profile')  # Redirect to dashboard page after successful update
+
 
     # If not a POST request, render the form template
     return render(request, 'user/profile.html')

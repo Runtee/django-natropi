@@ -188,7 +188,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar elevation-4">
   <!-- Brand Logo -->
-  <a href="/dashboard" class="brand-link">
+  <a href="{% url 'index' %}" class="brand-link">
     <img src="{% static 'user/assets/dist/img/logo.jpg'%}" alt="Natropi Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">Natropi</span>
   </a>
@@ -198,10 +198,10 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           {% if user.image and user.image.url %}
-    <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
-{% else %}
-    <img src="{% static 'user/assets/dist/img/logo.jpg' %}" class="img-circle elevation-2" alt="User Image">
-{% endif %}
+              <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
+          {% else %}
+              <img src="{% static 'user/assets/dist/img/logo.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          {% endif %}
 
               </div>
         <div class="info">
@@ -228,6 +228,14 @@
             <i class="far fa-circle nav-icon"></i>
             <p>
               Profile
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'user_referrals' %}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>
+              Referral
             </p>
           </a>
         </li>

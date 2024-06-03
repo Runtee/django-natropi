@@ -1,7 +1,33 @@
 {% extends 'user/main.html' %}
 {% load static %}
 {% block content %}
+<style>
+.referral-code {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 20px 0;
+}
+.copy-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.copy-btn:active {
+    background-color: #ddd;
+}
 
+</style>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("referralCode");
+        navigator.clipboard.writeText(copyText.textContent).then(function() {
+            alert("Referral code copied to clipboard!");
+        }, function(err) {
+            alert("Failed to copy the referral code. Please try again.");
+        });
+    }
+</script>
 <div class="content-wrapper" style="min-height: 167px; background-color: #111118;">
     <section class="content-header">
         <div class="container-fluid">
@@ -54,6 +80,7 @@
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <a href="{% url 'change_password' %}" class="btn btn-success btn-sm btn-block">Change Password</a>
                                 </ul>
+
                             </div>
                         </div>
                     </div>
