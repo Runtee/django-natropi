@@ -29,6 +29,8 @@ logger = logging.getLogger(__name__)
 User = get_user_model()
 
 def register(request):
+    referral_code = request.GET.get('referral_code', '')
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -73,7 +75,7 @@ def register(request):
             # If the form is not valid, add an error message
             messages.error(request, 'There was an error with your registration. Please check the details and try again.')
     else:
-        form = RegistrationForm()
+        form = RegistrationForm(initial={'referral_code': referral_code})
 
     return render(request, 'register.html', {'form': form})
 

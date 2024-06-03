@@ -90,6 +90,7 @@ def user_dashboard(request):
 
     context = {
         'user': user,
+        'user_referral': {"referral_code":user.username}
     }
     return render(request, 'user/index.html', context)
 

@@ -3,8 +3,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from .models import Portfolio, PortfolioAdd
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='/login')
 def portfolioAddListView(request):
     portfolioTypes = PortfolioAdd.objects.values_list(
         'type', flat=True).distinct()
@@ -21,6 +22,7 @@ def portfolioAddListView(request):
     return render(request, 'user/portfolio.html', context)
 
 
+@login_required(login_url='/login')
 def portfolioAddGetView(request, id):
 
     portfolioAdd = get_object_or_404(PortfolioAdd, id=id)
@@ -32,6 +34,7 @@ def portfolioAddGetView(request, id):
 
 
 
+@login_required(login_url='/login')
 def port_invest(request, id):
     portfolioAdd = get_object_or_404(PortfolioAdd, id=id)
 
@@ -61,6 +64,7 @@ def port_invest(request, id):
 
     return render(request, 'user/port_invest.html',context)
 
+@login_required(login_url='/login')
 def port_invest_table(request):
     portfolio = Portfolio.objects.filter(user=request.user)
     context = {"portfolio": portfolio}
