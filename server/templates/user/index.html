@@ -186,7 +186,7 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="referralCode" value="{{ request.scheme }}://{{ request.get_host }}/register/?referral_code={{ request.user.username }}" readonly>
+                        <input type="text" class="form-control" id="referralCode" value="{{ request.scheme }}://{{ request.get_host }}/register/?referral_code={{ user_referral.referral_code }}" readonly>
                     </div>
                     <button class="btn btn-secondary btn-sm d-block w-100" onclick="copyReferralCode()">Copy Referral Code</button>
                     <script>

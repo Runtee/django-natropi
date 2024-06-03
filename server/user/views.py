@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
-from accounts.models import CustomUser
+from referral.models import Referral
 
 User = get_user_model()
 
@@ -87,10 +87,11 @@ def change_password(request):
 @login_required(login_url='/login')
 def user_dashboard(request):
     user = request.user
+    user_referral = Referral.objects.filter(referrer=user).first()
 
     context = {
         'user': user,
-        'user_referral': {"referral_code":user.username}
+        'user_referral': user_referral
     }
     return render(request, 'user/index.html', context)
 
