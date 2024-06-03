@@ -21,10 +21,8 @@ from notification.models import Notification
 def user_deposit(request):
     user = request.user
     deposits = Deposit.objects.filter(user=user).order_by('-created')[:5]
-    wallet, _ =WalletAddress.objects.get_or_create(pk=1)
     
     context = {
-        'wallet':wallet,
         'deposits': deposits,
         'user':user, 
     }

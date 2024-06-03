@@ -25,3 +25,7 @@ class Acct(models.Model):
 
     def __str__(self):
         return self.method
+    
+    class Meta:
+        verbose_name = "Payment Account"
+        verbose_name_plural = "Payment Accounts"
