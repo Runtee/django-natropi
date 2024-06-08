@@ -175,7 +175,7 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'support@skylinktrading.com'
 EMAIL_HOST_PASSWORD = 'qbLm3&uv'
-DEFAULT_FROM_EMAIL = 'contact@natropi.com'
+DEFAULT_FROM_EMAIL = 'support@skylinktrading.com'
 
 # EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 

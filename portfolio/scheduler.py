@@ -1,63 +1,99 @@
-# myapp/scheduler.py
+from decimal import Decimal
 import schedule
 import time
 import threading
-from datetime import timedelta
 from django.utils import timezone
 from django.core.mail import send_mail
-from .models import Portfolio  # Replace 'myapp' with your app name
+from django.contrib.auth import get_user_model
+from .models import Portfolio
+
+User = get_user_model()
 
 def distribute_weekly_profit(investment_id):
     try:
         investment = Portfolio.objects.get(id=investment_id)
-        weekly_profit = investment.calculate_weekly_profit()
-        investment.user.main += weekly_profit
-        investment.user.trade += weekly_profit
-        investment.user.save()
-        investment.send_weekly_profit_email(weekly_profit)
+        user = investment.user  # Get the user object
+
+        print(f"Distributing weekly profit for investment ID: {investment_id}")
+        print(f"Initial user balances - Main: {user.main}, Trade: {user.trade}")
+
+        if investment.status == '1' and investment.days_passed % 7 == 0 and investment.days_passed < investment.get_horizon_days():
+            weekly_profit = investment.calculate_weekly_profit()
+            print(f"Calculated weekly profit: {weekly_profit}")
+
+            user.main += weekly_profit
+            print(f"Updated main balance: {user.main}")
+
+            user.trade += weekly_profit
+            print(f"Updated trade balance: {user.trade}")
+
+            try:
+                user.save()
+                print("User balances saved")
+            except Exception as e:
+                print(f"Error saving user balances: {str(e)}")
+
+            # Refresh the user object to ensure it's updated
+            user.refresh_from_db()
+            print(f"Refreshed user balances - Main: {user.main}, Trade: {user.trade}")
+
+            # investment.send_weekly_profit_email(weekly_profit)
+            investment.days_passed += 7
+            try:
+                investment.save()
+                print("Investment days_passed updated and saved")
+            except Exception as e:
+                print(f"Error saving investment: {str(e)}")
+
+            print("Distributed weekly profit and updated investment days_passed")
+        else:
+            print("Conditions not met for distributing weekly profit")
     except Portfolio.DoesNotExist:
-        pass
+        print(f"Portfolio with ID {investment_id} does not exist")
+    except Exception as e:
+        print(f"Error in distributing weekly profit: {str(e)}")
 
 def complete_investment(investment_id):
     try:
         investment = Portfolio.objects.get(id=investment_id)
-        total_profit = (investment.amount * investment.portfolioadd.short_term) / 100
-        remaining_profit = total_profit - (investment.get_horizon_weeks() - investment.get_remaining_weeks()) * investment.calculate_weekly_profit()
+        user = investment.user  # Get the user object
 
-        investment.user.main += remaining_profit
-        investment.user.portfolio += investment.amount
-        investment.user.trade -= total_profit
-        investment.user.save()
-        investment.send_completion_email(remaining_profit)
+        if investment.status == '1' and investment.days_passed >= investment.get_horizon_days():
+            total_profit = (Decimal(investment.amount) * Decimal(investment.portfolioadd.short_term)) / 100
+            total_weekly_profit = (investment.days_passed // 7) * investment.calculate_weekly_profit()
+            remaining_profit = total_profit - total_weekly_profit
+            
+            user.main += remaining_profit
+            user.portfolio += Decimal(investment.amount)
+            user.trade = 0  # Clear the trade balance
+            user.save()
+            # investment.send_completion_email(total_profit)
+            investment.status = '2'  # Indicate completion
+            investment.save()
+            print('Completed investment')
     except Portfolio.DoesNotExist:
         pass
+    except Exception as e:
+        print(f"Error in completing investment: {str(e)}")
 
 def schedule_weekly_profit(investment):
-    weeks = investment.get_horizon_weeks()
-    for week in range(1, weeks + 1):
-        schedule.every(week).weeks.do(distribute_weekly_profit, investment.id)
+    if investment.status == '1':
+        # Check every minute for testing
+        schedule.every(1).minutes.do(distribute_weekly_profit, investment.id)
 
 def schedule_investment_completion(investment):
-    horizon_weeks = investment.get_horizon_weeks()
-    schedule.every(horizon_weeks).weeks.do(complete_investment, investment.id)
+    if investment.status == '1':
+        # Check every minute for testing
+        schedule.every(1).minutes.do(complete_investment, investment.id)
 
 def schedule_investments():
-    now = timezone.now()
-    investments = Portfolio.objects.filter(status='1')  # Adjust the filter as needed
+    investments = Portfolio.objects.filter(status='1')
     for investment in investments:
-        weeks_since_investment = (now - investment.created_at).days // 7
-        horizon_weeks = investment.get_horizon_weeks()
-        if weeks_since_investment < horizon_weeks:
-            # Schedule remaining weekly profits
-            for week in range(weeks_since_investment + 1, horizon_weeks + 1):
-                schedule.every(week).weeks.do(distribute_weekly_profit, investment.id)
-        else:
-            # If the horizon has passed, complete the investment
-            complete_investment(investment.id)
+        schedule_weekly_profit(investment)
+        schedule_investment_completion(investment)
 
 def run_scheduler():
-    schedule.every().day.at("00:00").do(schedule_investments)  # Run scheduling every day at midnight
-
+    schedule_investments()
     while True:
         schedule.run_pending()
         time.sleep(1)

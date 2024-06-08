@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
+from django.conf import settings
 from decimal import Decimal, InvalidOperation
 from datetime import timedelta
 from django.db.models.signals import post_save
@@ -73,23 +74,34 @@ class Portfolio(models.Model):
     amount = models.BigIntegerField()
     portfolioadd = models.ForeignKey(PortfolioAdd, on_delete=models.CASCADE)
     status = models.CharField(max_length=255, default='1')
+    days_passed = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def calculate_weekly_profit(self):
-        short_term_profit = (self.amount * self.portfolioadd.short_term) / 100
+        short_term_profit = (Decimal(self.amount) * Decimal(self.portfolioadd.short_term)) / 100
         total_weeks = self.get_horizon_weeks()
         return short_term_profit / total_weeks
 
     def get_horizon_weeks(self):
         months = int(self.portfolioadd.horizon)
         return months * 4  # approximate weeks in a month
+    
+    def get_horizon_days(self):
+        weeks = int(self.portfolioadd.horizon)
+        return weeks * 7 
+    
+    def get_remaining_days(self):
+        total_days = self.get_horizon_days()
+        return total_days - self.days_passed
+    
+    
 
     def send_weekly_profit_email(self, profit):
         send_mail(
             'Weekly Investment Profit',
             f'You have earned a weekly profit of {profit}.',
-            'from@example.com',
+            settings.DEFAULT_FROM_EMAIL,  # Use the default from email from settings
             [self.user.email],
             fail_silently=False,
         )
@@ -98,7 +110,7 @@ class Portfolio(models.Model):
         send_mail(
             'Investment Completed',
             f'Your investment has completed. You earned a total profit of {profit}. Your initial investment has been refunded to your portfolio balance.',
-            'from@example.com',
+            settings.DEFAULT_FROM_EMAIL,
             [self.user.email],
             fail_silently=False,
         )
@@ -106,9 +118,5 @@ class Portfolio(models.Model):
 @receiver(post_save, sender=Portfolio)
 def create_investment(sender, instance, created, **kwargs):
     if created:
-        # instance.user.portfolio -= instance.amount
-        instance.user.save()
-        # Schedule weekly profit distribution and completion
-        from .scheduler import schedule_weekly_profit, schedule_investment_completion
-        schedule_weekly_profit(instance)
-        schedule_investment_completion(instance)
+        from .scheduler import schedule_investments
+        schedule_investments()
