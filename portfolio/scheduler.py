@@ -62,10 +62,12 @@ def complete_investment(investment_id):
             total_profit = (Decimal(investment.amount) * Decimal(investment.portfolioadd.short_term)) / 100
             total_weekly_profit = (investment.days_passed // 7) * investment.calculate_weekly_profit()
             remaining_profit = total_profit - total_weekly_profit
+
+            investment_profit = total_profit - (investment.calculate_weekly_profit() * (investment.days_passed // 7))
             
             user.main += remaining_profit
             user.portfolio += Decimal(investment.amount)
-            user.trade = 0  # Clear the trade balance
+            user.trade -= investment_profit
             user.save()
             # investment.send_completion_email(total_profit)
             investment.status = '2'  # Indicate completion
