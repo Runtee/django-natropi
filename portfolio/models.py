@@ -95,7 +95,13 @@ class Portfolio(models.Model):
         total_days = self.get_horizon_days()
         return total_days - self.days_passed
     
+    def get_maturity_date(self):
+        return self.created_at + timedelta(days=self.get_horizon_days())
     
+    
+    def get_total_profit(self):
+        total_weekly_profit = (self.days_passed // 7) * self.calculate_weekly_profit()
+        return total_weekly_profit
 
     def send_weekly_profit_email(self, profit):
         send_mail(

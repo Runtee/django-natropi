@@ -37,7 +37,7 @@ def distribute_weekly_profit(investment_id):
             user.refresh_from_db()
             print(f"Refreshed user balances - Main: {user.main}, Trade: {user.trade}")
 
-            # investment.send_weekly_profit_email(weekly_profit)
+            investment.send_weekly_profit_email(weekly_profit)
             investment.days_passed += 7
             try:
                 investment.save()
@@ -62,14 +62,14 @@ def complete_investment(investment_id):
             total_profit = (Decimal(investment.amount) * Decimal(investment.portfolioadd.short_term)) / 100
             total_weekly_profit = (investment.days_passed // 7) * investment.calculate_weekly_profit()
             remaining_profit = total_profit - total_weekly_profit
-
-            investment_profit = total_profit - (investment.calculate_weekly_profit() * (investment.days_passed // 7))
             
             user.main += remaining_profit
             user.portfolio += Decimal(investment.amount)
-            user.trade -= investment_profit
+            user.trade -= total_weekly_profit
+            if user.trade < 0:
+                user.trade = 0
             user.save()
-            # investment.send_completion_email(total_profit)
+            investment.send_completion_email(total_profit)
             investment.status = '2'  # Indicate completion
             investment.save()
             print('Completed investment')
@@ -81,12 +81,12 @@ def complete_investment(investment_id):
 def schedule_weekly_profit(investment):
     if investment.status == '1':
         # Check every minute for testing
-        schedule.every(1).minutes.do(distribute_weekly_profit, investment.id)
+        schedule.every().week.do(distribute_weekly_profit, investment.id)
 
 def schedule_investment_completion(investment):
     if investment.status == '1':
         # Check every minute for testing
-        schedule.every(1).minutes.do(complete_investment, investment.id)
+        schedule.every().day.at("00:00").do(complete_investment, investment.id)
 
 def schedule_investments():
     investments = Portfolio.objects.filter(status='1')

@@ -48,8 +48,8 @@
                                                 <td>{{ item.portfolioadd.header }}</td>
                                                 <td>{{ item.created_at }}</td>
                                                 <td>${{ item.amount }}</td>
-                                                <td>{{ item.created_at }}</td>
-                                                <td>{{ item.portfolioadd.short_term }}</td>
+                                                <td>{{ item.get_maturity_date }}</td>
+                                                <td>${{ item.get_total_profit }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
                                                         {% if item.status == '0' %}
