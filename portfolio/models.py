@@ -102,6 +102,14 @@ class Portfolio(models.Model):
     def get_total_profit(self):
         total_weekly_profit = (self.days_passed // 7) * self.calculate_weekly_profit()
         return total_weekly_profit
+    
+    def get_cumulative_profit(self):
+        total_profit = (Decimal(self.amount) * Decimal(self.portfolioadd.short_term)) / 100
+        total_weekly_profit = (self.days_passed // 7) * self.calculate_weekly_profit()
+        remaining_profit = total_profit - total_weekly_profit
+        if self.status == '2':  # Investment completed
+            return total_profit
+        return total_weekly_profit
 
     def send_weekly_profit_email(self, profit):
         send_mail(

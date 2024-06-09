@@ -24,7 +24,7 @@ def distribute_weekly_profit(investment_id):
             user.main += weekly_profit
             print(f"Updated main balance: {user.main}")
 
-            user.trade += weekly_profit
+            user.trade = max(user.trade + weekly_profit, 0)
             print(f"Updated trade balance: {user.trade}")
 
             try:
@@ -68,6 +68,7 @@ def complete_investment(investment_id):
             user.trade -= total_weekly_profit
             if user.trade < 0:
                 user.trade = 0
+
             user.save()
             investment.send_completion_email(total_profit)
             investment.status = '2'  # Indicate completion
