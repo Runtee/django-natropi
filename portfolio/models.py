@@ -111,6 +111,10 @@ class Portfolio(models.Model):
             return total_profit
         return total_weekly_profit
 
+    def get_total_profit(self):
+        total_profit = (Decimal(self.amount) * Decimal(self.portfolioadd.short_term)) / 100
+        return total_profit
+
     def send_weekly_profit_email(self, profit):
         send_mail(
             'Weekly Investment Profit',

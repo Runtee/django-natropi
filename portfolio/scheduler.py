@@ -87,7 +87,7 @@ def schedule_weekly_profit(investment):
 def schedule_investment_completion(investment):
     if investment.status == '1':
         # Check every minute for testing
-        schedule.every().day.at("00:00").do(complete_investment, investment.id)
+        schedule.every().week.do(complete_investment, investment.id)
 
 def schedule_investments():
     investments = Portfolio.objects.filter(status='1')

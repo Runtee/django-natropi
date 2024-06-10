@@ -6,6 +6,10 @@ from .models import Portfolio, PortfolioAdd
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal, InvalidOperation
+from notification.models import Notification
+from utils.util import send_email
+from website.models import Website
+import threading
 
 User = get_user_model()
 
@@ -34,7 +38,7 @@ def portfolioAddGetView(request, id):
 def port_invest(request, id):
     portfolioAdd = get_object_or_404(PortfolioAdd, id=id)
     context = {"portfolio": portfolioAdd}
-
+    website,_ = Website.objects.get_or_create(id=1)
     if request.method == 'POST':
         try:
             amount = Decimal(request.POST.get('amount'))
@@ -53,6 +57,16 @@ def port_invest(request, id):
                 amount=amount,
                 portfolioadd=portfolioAdd
             )
+            notification = Notification.objects.create(user=user, action=f'{portfolioAdd.header.capitalize()}', description=f'You have successfully applied for the {portfolioAdd.header} plan')
+            notification.save()
+            try:
+                email_subject = portfolioAdd.header
+                email_body = f"Dear {user.username},\n\nThank you for applying for the {portfolioAdd.header} plan. Your request has been received, and our team will review it promptly. We appreciate your interest in our services and look forward to serving you with the selected plan.\n\nBest regards,\nThe {(website.name).capitalize()} Team"
+                email_thread = threading.Thread(target=send_email, args=(email_subject, email_body, request.user.email))
+                email_thread.start()
+            except Exception as e:
+                print(e)
+            
 
             # Schedule the investment
             from .scheduler import schedule_weekly_profit, schedule_investment_completion

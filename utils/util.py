@@ -41,6 +41,7 @@ def send_email(subject,body,recipient):
         settings.EMAIL_HOST_USER ,
         [recipient]
     )
+    print("trying")
     email.attach_alternative(html_content, 'text/html')
     email.send(fail_silently=False)
     
