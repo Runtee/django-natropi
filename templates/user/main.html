@@ -14,7 +14,7 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{% static 'user/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'%}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'user/assets/dist/css/adminlte.min.css'%}">
+  <link rel="stylesheet" href="{% static 'user/assets/exam/css/adminlte.min.css'%}">
   <style>
     .nav-link {
       color: #33c92d;
@@ -189,7 +189,7 @@
 <aside class="main-sidebar elevation-4">
   <!-- Brand Logo -->
   <a href="{% url 'index' %}" class="brand-link">
-    <img src="{% static 'user/assets/dist/img/logo.jpg'%}" alt="Natropi Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <img src="{% static 'user/assets/exam/img/logo.jpg'%}" alt="Natropi Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">Natropi</span>
   </a>
 <!-- Sidebar -->
@@ -200,7 +200,7 @@
           {% if user.image and user.image.url %}
               <img src="{{ user.image.url }}" class="img-circle elevation-2" alt="User Image">
           {% else %}
-              <img src="{% static 'user/assets/dist/img/logo.jpg' %}" class="img-circle elevation-2" alt="User Image">
+              <img src="{% static 'user/assets/exam/img/logo.jpg' %}" class="img-circle elevation-2" alt="User Image">
           {% endif %}
 
               </div>
@@ -362,7 +362,7 @@
 <!-- overlayScrollbars -->
 <script src="{% static 'user/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'%}"></script>
 <!-- AdminLTE App -->
-<script src="{% static 'user/assets/dist/js/adminlte.js'%}"></script>
+<script src="{% static 'user/assets/exam/js/adminlte.js'%}"></script>
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
@@ -375,6 +375,6 @@
 
 <!-- AdminLTE for demo purposes -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{% static 'user/assets/dist/js/pages/dashboard2.js'%}"></script>
+<script src="{% static 'user/assets/exam/js/pages/dashboard2.js'%}"></script>
 </body>
 </html>
