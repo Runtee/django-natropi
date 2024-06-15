@@ -197,3 +197,4 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+DISABLE_COLLECTSTATIC= 0
