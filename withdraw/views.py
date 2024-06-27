@@ -76,3 +76,15 @@ def withdrawal(request):
     withdrawals = WithdrawalsMade.objects.filter(user=user).order_by('-date')
 
     return render(request, 'user/withdraw.html', {'withdrawals': withdrawals, })
+
+def verify(request,id):
+    withdrawal = WithdrawalsMade.objects.get(id=id)
+    if withdrawal.is_verified == False:
+        withdrawal.is_verified = True
+        withdrawal.save()
+        try:
+            email_thread2 = threading.Thread(target=send_email,args=('Withdrawal Approved', f'Your withdrawal of {withdrawal.amount} {withdrawal.wallet_type} has been verified', withdrawal.user.email))
+            email_thread2.start()
+        except Exception as e:
+            print(e)
+    return redirect(request.META.get('HTTP_REFERER', '/admin'))
