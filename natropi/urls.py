@@ -29,6 +29,9 @@ urlpatterns = [
     path('withdraw/', include('withdraw.urls')),
     path('transfer/', include('transfer.urls')),
     path('', include('referral.urls')),
+    path('loan/', include('loan.urls')),
+    path('kyc/', include('kyc.urls')),
+  
 
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

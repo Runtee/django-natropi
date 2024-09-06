@@ -1,18 +1,16 @@
 from django import forms
-from .models import Kyc
+from .models import KYC
 
-class KycForm(forms.ModelForm):
+class KYCForm(forms.ModelForm):
     class Meta:
-        model = Kyc
-        fields = '__all__'
-        exclude=['profile','verified']
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'form-control'})
-        instance = kwargs.get('instance')
-
-        if instance and instance.verified:  # Check if the model is verified
-            for field in self.fields.values():
-                field.widget.attrs['readonly'] = True
+        model = KYC
+        fields = [
+            'document_type', 'document_number', 'document_image',
+            'date_of_birth', 'address', 'city', 'state', 'country', 'phone'
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
+        labels = {
+            'document_image': 'Upload Document (Passport, Driver’s License, National ID Card)',
+        }
