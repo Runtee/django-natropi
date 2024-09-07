@@ -1,0 +1,67 @@
+{% extends 'user/main.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="background-color: #111118;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Apply for {{ loan_term.term_name }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/user">Home</a></li>
+                        <li class="breadcrumb-item active">Loan Application</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container">
+            <!-- Card for Loan Details -->
+            <div class="card mb-4" style="background-color: #181824;">
+                <div class="card-header">
+                    <h5 class="text-white">Loan Details</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group text-dark">
+                        <li class="list-group-item"><strong>Interest Rate:</strong> {{ loan_term.interest_rate_min }}% - {{ loan_term.interest_rate_max }}% per annum</li>
+                        <li class="list-group-item"><strong>Repayment Term:</strong> {{ loan_term.repayment_term_min }} to {{ loan_term.repayment_term_max }} months</li>
+                        <li class="list-group-item"><strong>Origination Fee:</strong> {{ loan_term.origination_fee_min }}% - {{ loan_term.origination_fee_max }}% of loan amount</li>
+                        <li class="list-group-item"><strong>Late Payment Fee:</strong> {{ loan_term.late_payment_fee_percentage }}% or ${{ loan_term.late_payment_fee_fixed }}</li>
+                        <li class="list-group-item"><strong>Collateral:</strong> {% if loan_term.collateral_required %}Required{% else %}None{% endif %}</li>
+                        <li class="list-group-item"><strong>Credit Score Requirement:</strong> {{ loan_term.credit_score_min }} or above</li>
+                        <li class="list-group-item"><strong>Income Requirement:</strong> Personal: ${{ loan_term.income_requirement_personal }} / Business: ${{ loan_term.income_requirement_business }}</li>
+                        <li class="list-group-item"><strong>Loanable Amount Range:</strong> ${{ loan_term.min_amount }} and above</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card for Loan Application Form -->
+            <div class="card" style="background-color: #181824;">
+                <div class="card-header">
+                    <h5 class="text-white">Apply for This Loan</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-white">You're applying for {{ loan_term.term_name }}. Please review the details above and enter your desired loan amount below:</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="loan_amount" class="text-white">Loan Amount (between ${{ loan_term.min_amount }} and above:</label>
+                            <input type="number" name="loan_amount" id="loan_amount" class="form-control" required min="{{ loan_term.min_amount }}" max="{{ loan_term.max_amount }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-apply">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
