@@ -1,5 +1,7 @@
 from django.db import models
 from accounts.models import CustomUser as User
+from datetime import datetime, timedelta
+
 
 
 class LoanTerm(models.Model):
@@ -49,3 +51,29 @@ class Upfront(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.amount} - {self.method}"
+    
+
+class Loan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='loans')
+    amount_requested = models.DecimalField(max_digits=10, decimal_places=2)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    repayment_term_months = models.IntegerField()
+    applied_date = models.DateField(default=datetime.now)
+    upfronts = models.ManyToManyField('Upfront', related_name='loans', blank=True)
+
+    @property
+    def upfront_payment(self):
+        return sum(upfront.amount for upfront in self.upfronts.all())
+
+    @property
+    def remaining_balance(self):
+        return self.amount_requested - self.upfront_payment - self.amount_paid
+
+    @property
+    def remaining_months(self):
+        end_date = self.applied_date + timedelta(days=self.repayment_term_months * 30)
+        remaining_days = (end_date - datetime.now().date()).days
+        return max(0, remaining_days // 30)
+
+    def __str__(self):
+        return f'Loan for {self.user.username} - Amount Requested: {self.amount_requested}'

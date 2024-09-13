@@ -9,7 +9,9 @@ from kyc.models import KYC
 from deposit.models import Deposit
 from django.urls import reverse
 from decimal import Decimal
-from .models import LoanTerm, Upfront 
+from .models import LoanTerm, Upfront, Loan 
+from django.utils import timezone
+from datetime import timedelta
 
 
 def loan_term_list(request):
@@ -152,7 +154,7 @@ def user_upfront_form(request, pk):
             transaction_hash=trans_hash,
         )
         messages.success(request, 'Upfront payment submitted successfully!')
-        return redirect('upfront_history')
+        return redirect(reverse('loan_dashboard'))
 
     else:
         # Use the loan term ID (pk) to find the loan term, not by user
@@ -169,10 +171,45 @@ def user_upfront_form(request, pk):
         return render(request, 'user/upfront.html', context)
 
 
+def get_user_loan(user):
+    try:
+        return Loan.objects.get(user=user)
+    except Loan.DoesNotExist:
+        return None
+
+def get_user_transactions(user):
+    
+    return Upfront.objects.filter(user=user)
+
 @login_required
-def upfront_history(request):
-    """
-    View to display the user's upfront payment history.
-    """
-    upfront_payments = Upfront.objects.filter(user=request.user)
-    return render(request, 'user/upfront_history.html', {'upfront_payments': upfront_payments})
+def loan_dashboard(request):
+    # Fetch user loan details from the database
+    user_loan = get_user_loan(request.user)
+    if user_loan:
+        loan_balance = user_loan.amount_requested
+        upfront_payment = user_loan.upfront_payment
+        total_paid = user_loan.amount_paid
+        remaining_balance = loan_balance - upfront_payment - total_paid
+        
+        # Calculate remaining months
+        end_date = user_loan.applied_date + timedelta(days=user_loan.repayment_term_months * 30)
+        remaining_days = (end_date - timezone.now().date()).days
+        remaining_months = max(0, remaining_days // 30)
+        
+        context = {
+            'loan_balance': loan_balance,
+            'total_paid': total_paid,
+            'remaining_balance': remaining_balance,
+            'remaining_months': remaining_months,
+            'transactions': get_user_transactions(request.user),
+        }
+    else:
+        context = {
+            'loan_balance': 0,
+            'total_paid': 0,
+            'remaining_balance': 0,
+            'remaining_months': 0,
+            'transactions': [],
+        }
+    
+    return render(request, 'user/loan_dashboard.html', context)
