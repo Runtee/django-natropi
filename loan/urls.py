@@ -8,4 +8,7 @@ urlpatterns = [
     path('filter-by-credit-score/', views.filter_by_credit_score, name='filter_by_credit_score'),
     path('loan/apply-term1/<int:pk>/', views.apply_term1, name='apply_term'),
     path('loan/apply-term2/<int:pk>/', views.apply_term2, name='apply_term2'),
+    path('upfront/<int:pk>/', views.user_upfront_form, name='user_upfront_form'),
+    path('upfront/history/', views.upfront_history, name='upfront_history'),
+
 ]

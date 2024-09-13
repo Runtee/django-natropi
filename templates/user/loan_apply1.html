@@ -60,8 +60,25 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </section>
+            
+         <!-- After Submission -->
+         {% if deposit_amount %}
+         <div class="card mt-4" style="background-color: #181824;">
+             <div class="card-header">
+                 <h5 class="text-white">Deposit Required</h5>
+             </div>
+             <div class="card-body">
+                 <p class="text-white">To complete your application, a deposit of 3% of your loan amount is required.</p>
+                 <ul class="list-group text-dark">
+                     <li class="list-group-item">Loan Amount: ${{ loan_amount }}</li>
+                     <li class="list-group-item">Deposit Amount: ${{ deposit_amount }}</li>
+                 </ul>
+                 <a href="{% url 'user_upfront_form' pk %}?loan_amount={{ loan_amount }}" class="btn btn-success">Make Deposit</a>
+                </div>
+         </div>
+         {% endif %}
+     </div>
+ </section>
 </div>
 
 {% endblock %}

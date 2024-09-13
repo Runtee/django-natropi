@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Deposit Form</h1>
+                    <h1>Upfront Payment Form</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active"><a href="{% url 'deposit' %}">Deposit History</a></li>
+                        <li class="breadcrumb-item active"><a href="{% url 'upfront_history' %}">Upfront History</a></li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <form method="post" action="{% url 'user_deposit_form' %}" enctype="multipart/form-data">
+            <form method="post" action="{% url 'user_upfront_form' pk %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row justify-content-md-center">
                     <!-- left column -->
@@ -34,15 +34,16 @@
                                 <h3 class="card-title"></h3>
                             </div>
                             <div class="card-body">
-                                <!-- Amount Field with Placeholder as 3% of Loan Amount -->
+                                <!-- Amount Field with 3% of Loan Amount Hardcoded -->
                                 <div class="form-group">
-                                    <label for="amount">Amount ($):</label>
-                                    <input id="amount" type="text" class="form-control" name="amount" required placeholder="{{ deposit_amount }}">
+                                    <label for="amount">Upfront Amount ($):</label>
+                                    <input id="amount" type="text" class="form-control" name="amount" required 
+                                           value="{{ upfront_amount }}" placeholder="{{ upfront_amount }}" readonly>
                                 </div>
 
                                 <!-- Method Field -->
                                 <div class="form-group">
-                                    <label for="method">Method:</label>
+                                    <label for="method">Payment Method:</label>
                                     <select onchange="val()" class="form-control" id="method" name="method">
                                         <option selected disabled>-Choose Method-</option>
                                         {% for acc in numacc %}
@@ -64,8 +65,10 @@
                                 </div>
                             </div>
                         </div>
-                        <input class="btn btn-success" onclick="val1()" type="submit" value="COMPLETE DEPOSIT">
+                        <input class="btn btn-success" onclick="val1()" type="submit" value="COMPLETE PAYMENT">
                     </div>
+
+                    <!-- Hidden input fields for payment methods -->
                     {% for acc in numacc %}
                         <input id="{{ acc.method }}" name="{{ acc.method }}" type="hidden" value="{{ acc.address }}">
                     {% endfor %}
