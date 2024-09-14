@@ -23,7 +23,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <form method="post" action="{% url 'user_upfront_form' pk %}" enctype="multipart/form-data">
+            <form method="post" action="{% url 'user_upfront_form' loan_application.pk %}"  enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row justify-content-md-center">
                     <!-- left column -->

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from walletaddress.models import Acct
-from .models import LoanTerm
+from .models import LoanApplication, LoanTerm
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ from django.urls import reverse
 from decimal import Decimal
 from .models import LoanTerm, Upfront, Loan 
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 def loan_term_list(request):
@@ -82,6 +82,15 @@ def apply_term1(request, pk):
     if request.method == 'POST':
         loan_amount = float(request.POST.get('loan_amount'))
         deposit_amount = loan_amount * 0.03  # 3% deposit
+
+        # Create and save the loan application
+        loan_application = LoanApplication.objects.create(
+            user=request.user,
+            loan_term=loan_term,
+            loan_amount=loan_amount,
+            
+        )
+
         
         # Pass the deposit amount and loan amount to the template
         context = {
@@ -89,9 +98,22 @@ def apply_term1(request, pk):
             'loan_amount': loan_amount,
             'deposit_amount': deposit_amount
         }
-        return redirect(f'{reverse("user_upfront_form", args=[pk])}?loan_amount={loan_amount}')
-
+        messages.success(request, 'Your loan application has been submitted successfully and is pending approval.')
+        return redirect('loan_status', pk=loan_application.pk)
     return render(request, 'user/loan_apply1.html', {'loan_term': loan_term})
+
+
+
+@login_required
+def loan_status(request, pk):
+    loan_application = get_object_or_404(LoanApplication, user=request.user, pk=pk)
+    
+    if loan_application.status == 'approved':
+        # Redirect to the next page, i.e., upfront payment form page
+        return redirect('user_upfront_form', pk=loan_application.pk)
+    
+    return render(request, 'user/loan_status.html', {'loan_application': loan_application})
+
 
 
 @login_required
@@ -111,30 +133,42 @@ def apply_term2(request, pk):
 
     if not has_deposit:
         messages.error(request, 'You need to make a deposit to apply for a loan.')
-        return redirect('deposit_form')  # Redirect to a page where users can make a deposit
+        return redirect('deposit_form')
 
     if request.method == 'POST':
         loan_amount = float(request.POST.get('loan_amount'))
         deposit_amount = loan_amount * 0.03  # 3% deposit
-        
-        # Pass the deposit amount and loan amount to the template
-        return redirect(f'{reverse("user_upfront_form", args=[pk])}?loan_amount={loan_amount}')
+
+        # Create and save the loan application
+        loan_application = LoanApplication.objects.create(
+            user=request.user,
+            loan_term=loan_term,
+            loan_amount=loan_amount,
+           
+        )
+
+        messages.success(request, 'Your loan application has been submitted successfully and is pending approval.')
+        return redirect('loan_status', pk=loan_application.pk)
 
     return render(request, 'user/loan_apply2.html', {'loan_term': loan_term})
-
-
 
 
 @login_required
 def user_upfront_form(request, pk):
     """
-    View for handling the upfront payment form.
+    View for handling the upfront payment form and loan creation.
     """
+    # Fetch the loan application using the primary key (pk)
+    loan_application = get_object_or_404(LoanApplication, pk=pk, user=request.user)
+    loan_amount_requested = loan_application.loan_amount  # Retrieve the loan amount from LoanApplication
+
     if request.method == 'POST':
-        # Retrieve data from form
-        amount = Decimal(request.POST.get('amount'))
-        method = request.POST.get('method')
-        trans_hash = request.POST.get('trans_hash')
+        try:
+            method = request.POST.get('method')
+            trans_hash = request.POST.get('trans_hash')
+        except (TypeError, ValueError):
+            messages.error(request, 'Invalid input.')
+            return redirect('loan_dashboard')
 
         # Validate KYC
         try:
@@ -146,70 +180,82 @@ def user_upfront_form(request, pk):
             messages.error(request, 'Please complete the KYC process before applying.')
             return redirect('submit_kyc')
 
+        # Calculate upfront payment (3% of the loan amount from LoanApplication)
+        upfront_amount = loan_amount_requested * Decimal('0.03')
+
         # Save the upfront payment in the database
         upfront = Upfront.objects.create(
             user=request.user,
-            amount=amount,
+            amount=upfront_amount,
             method=method,
             transaction_hash=trans_hash,
+            loan_amount_requested=loan_amount_requested  # Save the loan amount
         )
-        messages.success(request, 'Upfront payment submitted successfully!')
-        return redirect(reverse('loan_dashboard'))
+
+        # Check if a loan already exists for this user
+        try:
+            loan = Loan.objects.get(user=request.user)
+        except Loan.DoesNotExist:
+            # If no loan exists, create a new one for the user
+            loan_term = loan_application.loan_term.repayment_term_min  # Use loan term from loan application
+
+            loan = Loan.objects.create(
+                user=request.user,
+                amount_requested=loan_amount_requested,
+                amount_paid=upfront_amount,  # Set initial payment
+                repayment_term_months=loan_term,
+                applied_date=datetime.now().date()
+            )
+
+        # Associate the upfront payment with the loan
+        loan.upfronts.add(upfront)
+        loan.amount_paid += upfront_amount  # Update the loan's paid amount
+        loan.save()
+
+        messages.success(request, 'Upfront payment submitted and loan created/updated successfully!')
+        return redirect('loan_dashboard')
 
     else:
-        # Use the loan term ID (pk) to find the loan term, not by user
-        loan_amount = Decimal(request.GET.get('loan_amount', '0'))  # Retrieve loan_amount from query parameters
-        upfront_amount = Decimal('0.03') * loan_amount 
+        # Fetch the loan term information for display if needed
+        upfront_amount = loan_amount_requested * Decimal('0.03')  # Calculate upfront amount (3% of loan)
 
-        numacc = Acct.objects.filter(status="1")
+        numacc = Acct.objects.filter(status="1")  # Fetch account status or other needed data
 
         context = {
             'upfront_amount': upfront_amount,
             'numacc': numacc,
-            'pk': pk,
+            'loan_application': loan_application,  # Pass loan application to the template if needed
         }
         return render(request, 'user/upfront.html', context)
 
 
-def get_user_loan(user):
-    try:
-        return Loan.objects.get(user=user)
-    except Loan.DoesNotExist:
-        return None
 
-def get_user_transactions(user):
-    
-    return Upfront.objects.filter(user=user)
+
+
+
 
 @login_required
 def loan_dashboard(request):
-    # Fetch user loan details from the database
-    user_loan = get_user_loan(request.user)
-    if user_loan:
-        loan_balance = user_loan.amount_requested
-        upfront_payment = user_loan.upfront_payment
-        total_paid = user_loan.amount_paid
-        remaining_balance = loan_balance - upfront_payment - total_paid
+    try:
+        # Fetch the loan data for the logged-in user
+        loan = Loan.objects.get(user=request.user)
         
-        # Calculate remaining months
-        end_date = user_loan.applied_date + timedelta(days=user_loan.repayment_term_months * 30)
-        remaining_days = (end_date - timezone.now().date()).days
-        remaining_months = max(0, remaining_days // 30)
-        
-        context = {
-            'loan_balance': loan_balance,
-            'total_paid': total_paid,
-            'remaining_balance': remaining_balance,
-            'remaining_months': remaining_months,
-            'transactions': get_user_transactions(request.user),
-        }
-    else:
-        context = {
-            'loan_balance': 0,
-            'total_paid': 0,
-            'remaining_balance': 0,
-            'remaining_months': 0,
-            'transactions': [],
-        }
-    
+        # Calculate the remaining balance and months
+        loan_balance = loan.amount_requested - loan.amount_paid
+        remaining_months = loan.repayment_term_months  # Assuming this counts down monthly (adjust as needed)
+        total_paid = loan.amount_paid  # Total paid so far
+
+    except Loan.DoesNotExist:
+        loan = None
+        loan_balance = 0
+        remaining_months = 0
+        total_paid = 0
+
+    context = {
+        'loan_balance': loan_balance,
+        'remaining_months': remaining_months,
+        'total_paid': total_paid,
+        'loan': loan,
+    }
+
     return render(request, 'user/loan_dashboard.html', context)

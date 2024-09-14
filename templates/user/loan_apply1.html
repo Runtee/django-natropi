@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/user">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'loan_dashboard' %}">Loan Dashboard</a></li>
                         <li class="breadcrumb-item active">Loan Application</li>
                     </ol>
                 </div>
@@ -73,7 +73,7 @@
                      <li class="list-group-item">Loan Amount: ${{ loan_amount }}</li>
                      <li class="list-group-item">Deposit Amount: ${{ deposit_amount }}</li>
                  </ul>
-                 <a href="{% url 'user_upfront_form' pk %}?loan_amount={{ loan_amount }}" class="btn btn-success">Make Deposit</a>
+                 <a href="{% url 'loan_status' %}" class="btn btn-success">Make Deposit</a>
                 </div>
          </div>
          {% endif %}
