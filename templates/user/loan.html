@@ -86,7 +86,16 @@
                         <div class="card text-dark h-100">
                             <div class="card-header text-center">
                                 <h3>Loan {{ loan_term.term_name }}</h3>
-                                <p>For loan amounts from ${{ loan_term.min_amount }} and above</p>
+                                <p>
+                                    {% if loan_term.term_name == 'Term 1' %}
+                                        For loan amounts from ${{ loan_term.min_amount }} to ${{ loan_term.max_amount }}
+                                    {% elif loan_term.term_name == 'Term 2' %}
+                                        For loan amounts from ${{ loan_term.min_amount }} and above
+                                    {% else %}
+                                        For loan amounts from ${{ loan_term.min_amount }}
+                                    {% endif %}
+                                </p>
+                                
                             </div>
                             <div class="card-body" style="background-color: #181824;">
                                 <ul class="list-group text-dark">

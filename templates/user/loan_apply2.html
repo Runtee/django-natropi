@@ -1,4 +1,4 @@
-{% extends 'user/main.html' %}
+{% comment %} {% extends 'user/main.html' %}
 {% load static %}
 {% block content %}
 
@@ -53,7 +53,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="loan_amount" class="text-white">Loan Amount (between ${{ loan_term.min_amount }} and above:</label>
+                            <label for="loan_amount" class="text-white">Loan Amount (between ${{ loan_term.min_amount }} and above:)</label>
                             <input type="number" name="loan_amount" id="loan_amount" class="form-control" required min="{{ loan_term.min_amount }}" max="{{ loan_term.max_amount }}">
                         </div>
                         <button type="submit" class="btn btn-primary btn-apply">Submit Application</button>
@@ -80,4 +80,4 @@
  </section>
 </div>
 
-{% endblock %}
+{% endblock %} {% endcomment %}
