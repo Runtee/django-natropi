@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
-urlpatterns = [
-        path('',views.user_kyc, name='user_kyc'),
-        path('verify/<int:id>', views.verify, name="verify_transaction")
 
+urlpatterns = [
+    path('submit/', views.submit_kyc, name='submit_kyc'),  # URL for submitting KYC
+    path('status/', views.kyc_status, name='kyc_status'),  # URL for viewing KYC status
 ]

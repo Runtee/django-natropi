@@ -52,8 +52,9 @@ INSTALLED_APPS = [
     'referral',
     'user',
     'portfolio',
-    
+    'loan',
     'withdraw',
+    'kyc',
 ]
 
 MIDDLEWARE = [

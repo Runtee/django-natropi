@@ -1,0 +1,16 @@
+{% extends 'user/main.html' %}
+{% block content %}
+<div class="container">
+    <h2>KYC Status</h2>
+    {% if kyc %}
+        {% if kyc.verified %}
+            <p>KYC Status: Verified</p>
+        {% else %}
+            <p>KYC Status: Pending</p>
+        {% endif %}
+        <p>Submitted At: {{ kyc.submitted_at }}</p>
+    {% else %}
+        <p>No KYC submitted yet. <a href="{% url 'submit_kyc' %}">Submit KYC</a></p>
+    {% endif %}
+</div>
+{% endblock %}
