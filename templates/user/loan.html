@@ -48,122 +48,126 @@
     }
     .content-header h1 {
         font-size: 2rem;
-        {% comment %} color: #fff; {% endcomment %}
-    }
-    .breadcrumb-item a {
-        {% comment %} color: #fff; {% endcomment %}
-    }
-    .breadcrumb-item.active {
-        {% comment %} color: #ccc; {% endcomment %}
     }
 </style>
 
 <!-- Content Wrapper -->
 <div class="content-wrapper" style="background-color: #111118;">
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Welcome to Our Loan Options</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/user">Home</a></li>
-                    <li class="breadcrumb-item active">Loan Terms</li>
-                </ol>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Welcome to Our Loan Options</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'loan_dashboard' %}">Loan Dashboard</a></li>
+                        <li class="breadcrumb-item active">Loan Terms</li>
+                    </ol>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Main content -->
-<section class="content">
-    <div class="container">
-        <h5 class="text-white text-center mb-4">At Natropi, we offer flexible and tailored loan solutions to meet your financial needs. Whether you're seeking personal or business financing, we've got you covered with two primary loan categories based on the loan amount and eligibility criteria.</h5>
-        
-        <div class="row">
-            <!-- Loan Term 1 -->
-            <div class="col-md-6 mb-4">
-                <div class="card text-dark  h-100">
-                    <div class="card-header text-center">
-                        <h3>Loan Term 1</h3>
-                        <p>For loan amounts from $50,000 to $500,000</p>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container">
+            <h5 class="text-white text-center mb-4">
+                At Natropi, we offer flexible and tailored loan solutions to meet your financial needs.
+                Whether you're seeking personal or business financing, we've got you covered with two primary
+                loan categories based on the loan amount and eligibility criteria.
+            </h5>
+
+            <div class="row">
+                <!-- Loop through each loan term -->
+                {% for loan_term in loan_terms %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card text-dark h-100">
+                            <div class="card-header text-center">
+                                <h3>Loan {{ loan_term.term_name }}</h3>
+                                <p>
+                                    {% if loan_term.term_name == 'Term 1' %}
+                                        For loan amounts from ${{ loan_term.min_amount }} to ${{ loan_term.max_amount }}
+                                    {% elif loan_term.term_name == 'Term 2' %}
+                                        For loan amounts from ${{ loan_term.min_amount }} and above
+                                    {% else %}
+                                        For loan amounts from ${{ loan_term.min_amount }}
+                                    {% endif %}
+                                </p>
+                                
+                            </div>
+                            <div class="card-body" style="background-color: #181824;">
+                                <ul class="list-group text-dark">
+                                    <li class="list-group-item">
+                                        <strong>Interest Rate:</strong> {{ loan_term.interest_rate_min }}% - {{ loan_term.interest_rate_max }}% per annum
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Repayment Term:</strong> {{ loan_term.repayment_term_min }} to {{ loan_term.repayment_term_max }} months
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Repayment Frequency:</strong> {{ loan_term.repayment_frequency }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Origination Fee:</strong> {{ loan_term.origination_fee_min }}% - {{ loan_term.origination_fee_max }}% of loan amount
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Late Payment Fee:</strong> {{ loan_term.late_payment_fee_percentage }}% of outstanding balance or ${{ loan_term.late_payment_fee_fixed }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Prepayment Penalty:</strong> {{ loan_term.prepayment_penalty }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Default Interest Rate:</strong> {{ loan_term.default_interest_rate }}%
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Collateral:</strong> {% if loan_term.collateral_required %}Required{% else %}None{% endif %}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Credit Score Requirement:</strong> {{ loan_term.credit_score_min }} or above
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Income Requirement:</strong> Personal: ${{ loan_term.income_requirement_personal }} / Business: ${{ loan_term.income_requirement_business }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Debt-to-Income Ratio:</strong> {{ loan_term.debt_to_income_ratio_max }}% or less 
+                                    </li>
+                                </ul>
+                                <div class="text-center mt-4">
+                                    <!-- Link to apply for this loan term using its pk -->
+                                    <a href="{% url 'apply_term' loan_term.pk %}" class="btn btn-primary btn-apply">
+                                        Apply Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body" style="background-color: #181824;">
-                        <ul class="list-group text-dark">
-                            <li class="list-group-item"><strong>Interest Rate:</strong> 5.99% - 6.99% per annum</li>
-                            <li class="list-group-item"><strong>Repayment Term:</strong> 12 to 60 months</li>
-                            <li class="list-group-item"><strong>Repayment Frequency:</strong> Monthly</li>
-                            <li class="list-group-item"><strong>Origination Fee:</strong> 2% - 5% of loan amount, paid upfront</li>
-                            <li class="list-group-item"><strong>Late Payment Fee:</strong> 2% of outstanding balance or $225, whichever is greater</li>
-                            <li class="list-group-item"><strong>Prepayment Penalty:</strong> None</li>
-                            <li class="list-group-item"><strong>Default Interest Rate:</strong> 18% per annum</li>
-                            <li class="list-group-item"><strong>Collateral:</strong> None (unsecured loan)</li>
-                            <li class="list-group-item"><strong>Credit Score Requirement:</strong> 600 or above</li>
-                            <li class="list-group-item"><strong>Income Requirement:</strong> $100,000 per annum (personal) or $250,000 (business)</li>
-                            <li class="list-group-item"><strong>Debt-to-Income Ratio:</strong> 40% or less</li>
-                        </ul>
-                        <div class="text-center mt-4">
-                            <a href="/apply" class="btn btn-primary btn-apply">Apply Now</a>
+                {% endfor %}
+            </div>
+
+            <!-- How to Apply Section -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card text-dark" style="background-color: #181824;">
+                        <div class="card-header text-center">
+                            <h3>How to Apply for a Loan</h3>
+                        </div>
+                        <div class="card-body" style="color: #fff;">
+                            <p>To get started with your loan application:</p>
+                            <ol>
+                                <li>Ensure that you have made a <strong>deposit</strong> to the app prior to applying.</li>
+                                <li>Fill out our loan application form and submit the required documentation.</li>
+                                <li>We will evaluate your application and determine the best terms for you.</li>
+                                <li>Upon approval, you will receive your loan, and repayment will begin based on the agreed terms.</li>
+                            </ol>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Loan Term 2 -->
-            <div class="col-md-6 mb-4">
-                <div class="card text-dark bg-light h-100">
-                    <div class="card-header text-center" >
-                        <h3>Loan Term 2</h3>
-                        <p>For loan amounts of $1,000,000 or more</p>
-                    </div>
-                    <div class="card-body" style="background-color: #181824;">
-                        <ul class="list-group text-dark">
-                            <li class="list-group-item"><strong>Interest Rate:</strong> 3.99% - 4.99% per annum</li>
-                            <li class="list-group-item"><strong>Repayment Term:</strong> 24 to 84 months</li>
-                            <li class="list-group-item"><strong>Repayment Frequency:</strong> Monthly</li>
-                            <li class="list-group-item"><strong>Origination Fee:</strong> 1.5% - 3% of loan amount, paid upfront</li>
-                            <li class="list-group-item"><strong>Late Payment Fee:</strong> 1.5% of outstanding balance or $550, whichever is greater</li>
-                            <li class="list-group-item"><strong>Prepayment Penalty:</strong> None</li>
-                            <li class="list-group-item"><strong>Default Interest Rate:</strong> 15% per annum</li>
-                            <li class="list-group-item"><strong>Collateral:</strong> May require collateral (case-by-case)</li>
-                            <li class="list-group-item"><strong>Credit Score Requirement:</strong> 650 or above</li>
-                            <li class="list-group-item"><strong>Income Requirement:</strong> $500,000 per annum (personal) or $1,000,000 (business)</li>
-                            <li class="list-group-item"><strong>Debt-to-Income Ratio:</strong> 30% or less</li>
-                        </ul>
-                        <div class="text-center mt-4">
-                            <a href="/apply" class="btn btn-primary btn-apply">Apply Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-
-        <!-- How to Apply Section -->
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <div class="card text-dark" style="background-color: #181824;">
-                    <div class="card-header text-center">
-                        <h3>How to Apply for a Loan</h3>
-                    </div>
-                    <div class="card-body"  style="color: #fff;">
-                        <p>To get started with your loan application:</p>
-                        <ol>
-                            <li>Ensure that you have made a <strong>deposit</strong> to the app prior to applying.</li>
-                            <li>Fill out our loan application form and submit the required documentation.</li>
-                            <li>We will evaluate your application and determine the best terms for you.</li>
-                            <li>Upon approval, you will receive your loan, and repayment will begin based on the agreed terms.</li>
-                        </ol>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /.content -->
+    </section>
+    <!-- /.content -->
 </div>
 
 {% endblock %}
-

@@ -1,0 +1,47 @@
+{% extends 'user/main.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="background-color: #111118;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Loan Application Status</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'loan_dashboard' %}">Loan Dashboard</a></li>
+                        <li class="breadcrumb-item active">Loan Status</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container">
+            <!-- Card for Loan Status -->
+            <div class="card mb-4" style="background-color: #181824;">
+                <div class="card-header">
+                    <h5 class="text-white">Loan Application Status</h5>
+                </div>
+                <div class="card-body">
+                    {% if loan_application.status == 'pending' %}
+                    <p class="text-warning">Your loan application is currently pending. Please wait for approval before proceeding with the upfront payment.</p>
+                    {% elif loan_application.status == 'approved' %}
+                    <p class="text-success">Congratulations! Your loan application has been approved. You can now proceed with the upfront payment.</p>
+                    <a href="{% url 'user_upfront_form' loan_application.pk %}" class="btn btn-success">Proceed to Upfront Payment</a>
+                    {% else %}
+                    <p class="text-danger">Unfortunately, your loan application has been rejected.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

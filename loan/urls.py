@@ -6,4 +6,10 @@ urlpatterns = [
     path('loan-terms/<int:pk>/', views.loan_term_detail, name='loan_term_detail'),
     path('filter-by-amount/', views.filter_by_amount, name='filter_by_amount'),
     path('filter-by-credit-score/', views.filter_by_credit_score, name='filter_by_credit_score'),
+    path('loan/apply-term1/<int:pk>/', views.apply_term1, name='apply_term'),
+    path('loan/apply-term2/<int:pk>/', views.apply_term2, name='apply_term2'),
+    path('upfront/<int:pk>/', views.user_upfront_form, name='user_upfront_form'),
+    path('loan-dashboard/', views.loan_dashboard, name='loan_dashboard'),
+    path('loan/status/<int:pk>/', views.loan_status, name='loan_status'),
+
 ]

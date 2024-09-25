@@ -6,6 +6,7 @@ from .models import KYC
 
 @login_required
 def submit_kyc(request):
+    kyc = None 
     try:
         kyc = KYC.objects.get(user=request.user)
         form = KYCForm(instance=kyc)
@@ -21,6 +22,8 @@ def submit_kyc(request):
         if form.is_valid():
             kyc = form.save(commit=False)
             kyc.user = request.user
+            kyc.status = 'pending'  # When a user submits, status is set to "Pending"
+            kyc.rejection_reason = ''
             kyc.save()
             messages.success(request, 'KYC submitted successfully.')
             return redirect('kyc_status')
@@ -35,3 +38,23 @@ def kyc_status(request):
         kyc = None
 
     return render(request, 'user/kyc_status.html', {'kyc': kyc})
+
+
+@login_required
+def admin_review_kyc(request, kyc_id):
+    kyc = KYC.objects.get(id=kyc_id)
+
+    if request.method == 'POST':
+        if 'approve' in request.POST:
+            kyc.status = 'approved'
+            kyc.rejection_reason = None  # Clear rejection reason
+            messages.success(request, 'KYC approved successfully.')
+        elif 'reject' in request.POST:
+            kyc.status = 'rejected'
+            kyc.rejection_reason = request.POST.get('rejection_reason', 'No reason provided.')
+            messages.error(request, 'KYC rejected with reason: ' + kyc.rejection_reason)
+        
+        kyc.save()
+        return redirect('admin_kyc_review')
+
+    return render(request, 'admin/review_kyc.html', {'kyc': kyc})

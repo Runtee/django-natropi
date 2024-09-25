@@ -1,0 +1,60 @@
+{% extends 'user/main.html' %}
+{% block content %}
+<div class="content-wrapper" style="background-color: #111118;">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>KYC Status</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/user">Home</a></li>
+                        <li class="breadcrumb-item active">KYC Status</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            {% if kyc %}
+            <div class="card">
+                <div class="card-body">
+                    <h3>Your KYC Status: 
+                        {% if kyc.status == 'pending' %}
+                            <span class="badge badge-warning">Pending</span>
+                        {% elif kyc.status == 'verified' %}
+                            <span class="badge badge-success">Verified</span>
+                        {% elif kyc.status == 'rejected' %}
+                            <span class="badge badge-danger">Rejected</span>
+                        {% endif %}
+                    </h3>
+
+                    <p><strong>Document Type:</strong> {{ kyc.document_type }}</p>
+                    <p><strong>Document Number:</strong> {{ kyc.document_number }}</p>
+                    <p><strong>Submission Date:</strong> {{ kyc.submitted_at }}</p>
+
+                    {% if kyc.status == 'rejected' %}
+                    <div class="alert alert-danger mt-3">
+                        <strong>Rejection Reason:</strong> {{ kyc.rejection_reason }}
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a href="{% url 'submit_kyc' %}" class="btn btn-success">Resubmit KYC</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                You have not submitted your KYC yet.
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <a href="{% url 'submit_kyc' %}" class="btn btn-primary">Submit KYC</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

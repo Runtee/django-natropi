@@ -54,7 +54,10 @@ INSTALLED_APPS = [
     'portfolio',
     'loan',
     'withdraw',
+    'crispy_bootstrap4', 
     'kyc',
+    'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -199,3 +202,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 # DISABLE_COLLECTSTATIC= 0
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
