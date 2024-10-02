@@ -13,6 +13,7 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
     path('reset/<uidb64>/<token>/', views.custom_password_reset_confirm, name='password_reset_confirm'),
 
+    path('logout/', views.Logout.as_view(), name='logout')
 
 ]
     

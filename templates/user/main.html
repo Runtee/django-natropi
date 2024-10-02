@@ -249,6 +249,29 @@
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Loans
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{%url 'loan_term_list'%}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Loan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{%url 'loan_dashboard'%}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Loan Dashboard</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
             <i class="nav-icon fas fa-hands-helping"></i>
             <p>
               NP
@@ -309,26 +332,22 @@
                 <p>Transaction</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{%url 'loan_term_list'%}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Loan</p>
-              </a>
-            </li>
           </ul>
         </li>
                   <li class="nav-header main-color">Exit</li>
         <li class="nav-item">
-          <a href="https://natropi.com/logout" class="nav-link" onclick="event.preventDefault();
+          <a href="{% url 'logout'%}" class="nav-link" onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
             <i class="nav-icon far fa-circle "></i>
             <p class="text">LogOut</p>
           </a>
-          <form id="logout-form" action="https://natropi.com/logout" method="POST" class="d-none">
-                                      <input type="hidden" name="_token" value="PTnuUXt2OYaN9gXNKivhUofv3AAhzEdpTNgOr8KO">                                    </form>
+        
         </li>
       </ul>
     </nav>
+    <form id="logout-form" action="{% url 'logout'%}" method="POST" class="d-none">
+      {% csrf_token %}
+                                <input type="hidden" name="_token" value="PTnuUXt2OYaN9gXNKivhUofv3AAhzEdpTNgOr8KO">                                    </form>
     <!-- /.sidebar-menu -->
   </div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 43.9474%; transform: translate(0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
   <!-- /.sidebar -->

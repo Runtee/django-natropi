@@ -38,74 +38,92 @@
                 <div class="row">
                   <div class="col-sm-12 col-md-6">
                     <div class="dt-buttons btn-group flex-wrap">
-                      <button aria-controls="example1" class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" type="button"><span>Copy</span></button>
-                      <button aria-controls="example1" class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" type="button"><span>CSV</span></button>
-                      <button aria-controls="example1" class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" type="button"><span>Excel</span></button>
-                      <button aria-controls="example1" class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" type="button"><span>PDF</span></button>
-                      <button aria-controls="example1" class="btn btn-secondary buttons-print" tabindex="0" type="button"><span>Print</span></button>
+                      <button aria-controls="example1" class="btn btn-secondary buttons-copy buttons-html5" tabindex="0"
+                        type="button"><span>Copy</span></button>
+                      <button aria-controls="example1" class="btn btn-secondary buttons-csv buttons-html5" tabindex="0"
+                        type="button"><span>CSV</span></button>
+                      <button aria-controls="example1" class="btn btn-secondary buttons-excel buttons-html5"
+                        tabindex="0" type="button"><span>Excel</span></button>
+                      <button aria-controls="example1" class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0"
+                        type="button"><span>PDF</span></button>
+                      <button aria-controls="example1" class="btn btn-secondary buttons-print" tabindex="0"
+                        type="button"><span>Print</span></button>
                     </div>
                   </div>
                   <div class="col-sm-12 col-md-6">
                     <div class="dataTables_filter" id="example1_filter">
-                      <label>Search:<input aria-controls="example1" class="form-control form-control-sm" placeholder="" type="search" /></label>
+                      <label>Search:<input aria-controls="example1" class="form-control form-control-sm" placeholder=""
+                          type="search" /></label>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    <table aria-describedby="example1_info" class="table table-bordered table-striped dataTable dtr-inline" id="example1" role="grid">
-                      <thead>
-                        <tr role="row">
-                          <th aria-controls="example1" aria-label="Date: activate to sort column descending" aria-sort="ascending" class="sorting sorting_asc" colspan="1" rowspan="1" tabindex="0">Date</th>
-                          <th aria-controls="example1" aria-label="Message: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">Message</th>
-                          <th aria-controls="example1" aria-label="Amount(s): activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">Amount(s)</th>
-                          <th aria-controls="example1" aria-label="Status: activate to sort column ascending" class="sorting" colspan="1" rowspan="1" tabindex="0">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% if deposits %}
+                    <!-- <div class="card-body table-responsive "> -->
+                      <table aria-describedby="example1_info" class="table table-bordered table-striped table-responsive-md dataTable dtr-inline" id="example1" role="grid">
+
+                        <thead>
+                          <tr role="row">
+                            <th aria-controls="example1" aria-label="Date: activate to sort column descending"
+                              aria-sort="ascending" class="sorting sorting_asc" colspan="1" rowspan="1" tabindex="0">
+                              Date
+                            </th>
+                            <th aria-controls="example1" aria-label="Message: activate to sort column ascending"
+                              class="sorting" colspan="1" rowspan="1" tabindex="0">Message</th>
+                            <th aria-controls="example1" aria-label="Amount(s): activate to sort column ascending"
+                              class="sorting" colspan="1" rowspan="1" tabindex="0">Amount(s)</th>
+                            <th aria-controls="example1" aria-label="Status: activate to sort column ascending"
+                              class="sorting" colspan="1" rowspan="1" tabindex="0">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% if deposits %}
                           {% for deposit in deposits %}
-                            <tr class="odd">
-                              <td class="dtr-control sorting_1" tabindex="0">{{ deposit.created }}</td>
-                              <td>{{ deposit.amount }} {{ deposit.wallet_type }} was sent to {{ deposit.wallet_address }}</td>
-                              <td>{{ deposit.USDT }}</td>
-                              <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                  {% if deposit.verified %}
-                                  <button type="button" class="btn btn-xs btn-success">Success</button>
-                                  {% else %}
-                                  <button type="button" class="btn btn-xs btn-warning">Pending</button>
-                                  {% endif %}
-                                </div>
-                              </td>
-                            </tr>
+                          <tr class="odd">
+                            <td class="dtr-control sorting_1" tabindex="0">{{ deposit.created }}</td>
+                            <td>{{ deposit.amount }} {{ deposit.wallet_type }} was sent to {{ deposit.wallet_address }}
+                            </td>
+                            <td>{{ deposit.usdt_amount }}</td>
+                            <td>
+                              <div class="btn-group" role="group" aria-label="Basic example">
+                                {% if deposit.verified %}
+                                <button type="button" class="btn btn-xs btn-success">Success</button>
+                                {% else %}
+                                <button type="button" class="btn btn-xs btn-warning">Pending</button>
+                                {% endif %}
+                              </div>
+                            </td>
+                          </tr>
                           {% endfor %}
-                        {% else %}
+                          {% else %}
                           <tr class="odd">
                             <td class="dataTables_empty" colspan="4" valign="top">No data available in table</td>
                           </tr>
-                        {% endif %}
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <th colspan="1" rowspan="1">Date</th>
-                          <th colspan="1" rowspan="1">Message</th>
-                          <th colspan="1" rowspan="1">Amount(s)</th>
-                          <th colspan="1" rowspan="1">Status</th>
-                        </tr>
-                      </tfoot>
-                    </table>
+                          {% endif %}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="1" rowspan="1">Date</th>
+                            <th colspan="1" rowspan="1">Message</th>
+                            <th colspan="1" rowspan="1">Amount(s)</th>
+                            <th colspan="1" rowspan="1">Status</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    <!-- </div> -->
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-12 col-md-5">
-                    <div aria-live="polite" class="dataTables_info" id="example1_info" role="status">Showing 0 to 0 of 0 entries</div>
+                    <div aria-live="polite" class="dataTables_info" id="example1_info" role="status">Showing 0 to 0 of 0
+                      entries</div>
                   </div>
                   <div class="col-sm-12 col-md-7">
                     <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
                       <ul class="pagination">
                         <li class="paginate_button page-item previous disabled" id="example1_previous">
-                          <a aria-controls="example1" class="page-link" data-dt-idx="0" href="#" tabindex="0">Previous</a>
+                          <a aria-controls="example1" class="page-link" data-dt-idx="0" href="#"
+                            tabindex="0">Previous</a>
                         </li>
                         <li class="paginate_button page-item next disabled" id="example1_next">
                           <a aria-controls="example1" class="page-link" data-dt-idx="1" href="#" tabindex="0">Next</a>

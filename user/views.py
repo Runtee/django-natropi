@@ -84,14 +84,24 @@ def change_password(request):
 
     return render(request, 'user/new-password.html',)
 
+import uuid
+
 @login_required(login_url='/login')
 def user_dashboard(request):
     user = request.user
     user_referral = Referral.objects.filter(referrer=user).first()
+    transactions = Transaction.objects.filter(user= user)
 
+    if not user_referral:
+        user_referral = Referral.objects.create(
+                referrer=user,
+                referral_code=str(uuid.uuid4())[:8]
+            )
+    print(transactions)
     context = {
         'user': user,
-        'user_referral': user_referral
+        'user_referral': user_referral,
+        'transactions':transactions
     }
     return render(request, 'user/index.html', context)
 

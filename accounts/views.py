@@ -166,8 +166,8 @@ def login_view(request):
                     messages.error(request, 'Your account is not activated. We have resent the activation email. Please check your inbox.')
                     return render(request, 'login.html', {'form': form})
             else:
-                form.add_error(None, 'Invalid email or password')
-                messages.error(request, 'Invalid email or password')
+                form.add_error(None, 'Having trouble logging in?. We recently upgraded our system. Please reset your password for enhanced security')
+                messages.error(request, "Having trouble logging in?. We recently upgraded our system. Please reset your password for enhanced security")
     else:
         form = LoginForm()
 
@@ -232,3 +232,11 @@ def custom_password_reset_confirm(request, uidb64, token):
 
     return render(request, 'other/password_reset_confirm.html', {'form': form})
 
+
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
+
+
+class Logout(LogoutView):
+    template_name = 'other/logout.html'
+    next_page = reverse_lazy('login')

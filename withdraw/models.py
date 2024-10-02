@@ -1,15 +1,17 @@
 from django.db import models
 from accounts.models import CustomUser
+import threading
+from utils import send_email
 
 # Create your models here.    
 
 class WithdrawalsMade(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    wallet_type = models.CharField(max_length=50)
+    wallet_type = models.CharField(max_length=50, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    method = models.CharField(max_length=50)
-    date = models.DateTimeField(auto_now_add=True)
-    message = models.CharField(max_length=255)
+    method = models.CharField(max_length=50, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
+    message = models.CharField(max_length=255, null=True)
     is_verified = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):

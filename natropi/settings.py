@@ -116,6 +116,19 @@ DATABASES = {
     "default": dj_database_url.config(default='postgresql://postgres:xstrUmYfgwJAcnFDKALJoevrbYzrpOGn@postgres.railway.internal:5432/railway', conn_max_age=1800),
 }
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DBNAME_DEV'),
+#         'USER': env('DATABASE_USER'),
+#         'HOST': env('DATABASE_HOST'),
+#         'PORT': env('DATABASE_PORT'),
+#         'PASSWORD' : env('DATABASE_PASSWORD')
+#     }
+# }
+
+
 CSRF_TRUSTED_ORIGINS = ['https://natropi.up.railway.app/', 'https://natropi.up.railway.app']
 
 

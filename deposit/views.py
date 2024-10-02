@@ -46,15 +46,14 @@ def user_deposit_form(request):
         print(wallet_type)
         deposit = Deposit.objects.create(user=user,amount=amount,wallet_type=wallet_type,wallet_address=wallet_address,usdt_amount=usdt_amount)
         deposit.save()
-        print(deposit.wallet_type)
-        action = f'Your deposit of {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address} is pending'
+        action = f'Your deposit of {deposit.amount} USD into {deposit.wallet_address} is pending'
         notification = Notification.objects.create(user=user, action='Deposit Pending', description=action)
         notification.save()
         transaction = Transaction.objects.create(user=user, transaction_type='deposit', usdt_amount=usdt_amount, description=action)
         transaction.save()
         website = Website.objects.get(pk=1)
         try:
-            email_thread = threading.Thread(target=send_email,args=('Deposit Requested',f'{user.username} has deposited {deposit.amount} {deposit.wallet_type} into {deposit.wallet_address}', settings.RECIPIENT_ADDRESS)        )
+            email_thread = threading.Thread(target=send_email,args=('Deposit Requested',f'{user.username} has deposited {deposit.amount} USD into {deposit.wallet_type} {deposit.wallet_address}', settings.RECIPIENT_ADDRESS)        )
             email_subject = "Deposit Requested"
             email_body = f"Dear {request.user.username},\n\nWe acknowledge your deposit request of {amount} {wallet_type} into the wallet address {wallet_address}. Please note that your request is currently pending processing. Our team will review and complete the deposit as soon as possible.\n\nThank you for choosing {(website.name).capitalize()}.\n\nBest regards,\nThe {(website.name).capitalize()} Team"
             email_thread2 = threading.Thread(target=send_email, args=(email_subject, email_body, request.user.email))

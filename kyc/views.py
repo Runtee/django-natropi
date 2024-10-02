@@ -27,8 +27,10 @@ def submit_kyc(request):
             kyc.save()
             messages.success(request, 'KYC submitted successfully.')
             return redirect('kyc_status')
-
-    return render(request, 'user/kyc.html', {'form': form})
+    if kyc:
+        if kyc.status == 'pending' or kyc.status == 'verified':
+            return redirect('kyc_status')
+    return render(request, 'user/kyc.html', {'form': form, 'kyc': kyc})
 
 @login_required
 def kyc_status(request):

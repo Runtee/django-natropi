@@ -32,7 +32,8 @@
                           <div class="row">
                               <div class="col-md-8">
                                   <div class="tab-content p-4 border rounded" id="v-pills-tabContent">
-                                      <img src="{{ portfolio.image.url }}" height="auto" width="100%" alt="">
+                                      <img src="{% if portfolio.image %}{{ portfolio.image.url }}{% else %}{% static 'assets/default-image.jpg' %}{% endif %}"
+                                      height="auto" width="100%" alt="">
                                   </div>
                               </div>
                               <div class="col-md-4">

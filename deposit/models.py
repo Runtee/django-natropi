@@ -19,10 +19,10 @@ class Deposit(models.Model):
         
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='deposits')
     created = models.DateTimeField(auto_now_add=True)
-    amount = models.DecimalField(max_digits=20,decimal_places=5,blank=True,null=True)
-    wallet_type  = models.CharField(choices=WALLETTYPECHOICES,max_length=10,blank=True,null=True)
+    amount = models.DecimalField(max_digits=20,decimal_places=2,blank=True,null=True)
+    wallet_type  = models.CharField(choices=WALLETTYPECHOICES,max_length=100,blank=True,null=True)
     wallet_address = models.CharField(max_length=100,blank=True,null=True)
-    usdt_amount = models.DecimalField(max_digits=20,decimal_places=5,blank=True,null=True)
+    usdt_amount = models.DecimalField(max_digits=20,decimal_places=2,blank=True,null=True)
     verified = models.BooleanField(default=False)
     
     class Meta:
@@ -35,11 +35,11 @@ class Deposit(models.Model):
         if self.verified == True:
             self.user.main +=  float(self.usdt_amount)
             action = f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified'
-            self.user.notification_set.create(user=self.user,action='Verified',description=f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} have been verified')
+            self.user.notification_set.create(user=self.user,action='Verified',description=f'Your deposit of {self.amount} USD into {self.wallet_address} have been verified')
             self.user.transaction_set.create(user=self.user, transaction_type='deposit', usdt_amount=self.usdt_amount, description=action,verified=True)
             self.user.save()
             try:
-                email_thread = threading.Thread(target=send_email,args=('Deposit Verified',f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} has been verified',self.user.email))
+                email_thread = threading.Thread(target=send_email,args=('Deposit Verified',f'Your deposit of {self.amount} USD into {self.wallet_address} has been verified',self.user.email))
                 email_thread.start()
             except Exception as e:
                 print(e)

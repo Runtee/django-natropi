@@ -14,7 +14,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/user">Home</a></li>
-            <li class="breadcrumb-item active"><a href="https://natropi.com/port_add">All Port</a></li>
+            <li class="breadcrumb-item active"><a href="/port_add">All Port</a></li>
           </ol>
         </div>
       </div>
@@ -27,33 +27,34 @@
         <div class="col-md-2" style="color:#8e94a9">
           <div aria-orientation="vertical" class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
             {% for type in types %}
-              <a aria-controls="v-pills-{{ type }}" 
-                 {% if forloop.first %} aria-selected="true" class="nav-link active" {% else %} aria-selected="false" class="nav-link" {% endif %}
-                 data-toggle="pill" href="#v-pills-{{ type }}" id="v-pills-{{ type }}-tab" role="tab">
-                 {{ type }}
-              </a>
+            <a aria-controls="v-pills-{{ type }}" {% if forloop.first %} aria-selected="true" class="nav-link active" {%
+              else %} a {% endif %} aria-selected="false" class="nav-link" data-toggle="pill" href="#v-pills-{{ type }}"
+              id="v-pills-{{ type }}-tab" role="tab">
+              {{ type }}
+
+            </a>
             {% endfor %}
           </div>
-          
+
         </div>
         <div class="col-md-10">
           <div class="tab-content p-4 border rounded" id="v-pills-tabContent">
             {% for type, items in typeitem.items %}
             <!-- First Division Conservative -->
 
-            <div aria-labelledby="v-pills-{{ type }}-tab" {% if forloop.first %} class="tab-pane fade show active"
-            {% else %} class="tab-pane fade" {% endif %} id="v-pills-{{ type }}"
-              role="tabpanel">
+            <div aria-labelledby="v-pills-{{ type }}-tab" {% if forloop.first %} class="tab-pane fade show active" {%
+              else %} n {% endif %} class="tab-pane fade" id="v-pills-{{ type }}" role="tabpanel">
               {% for item in items %}
-              {% if item.term == 'short' %}
+
+              {% if item.term|lower == 'short' %}
               <h2>Short Term</h2>
               <div class="row">
                 <div class="col-md-4">
-                  <!-- -->
+
                   <div class="border">
                     <div>
-                      <img alt="" height="auto" src="{{ item.image.url }}"
-                        width="100%" />
+                      <img alt="" height="auto" width="100%"
+                        src="{% if item.image %}{{ item.image.url }}{% else %}{% static 'assets/default-image.jpg' %}{% endif %}">
                     </div>
                     <div class="px-4 py-2 font-bold">
                       {{ item.header }}
@@ -67,19 +68,17 @@
                       <h7 style="color:green">{{ item.short_term }}%</h7>
                     </div>
                   </div>
-                  <!-- -->
                 </div>
               </div>
               {% endif %}
-              {% if item.term == 'middle' %}
+              {% if item.term|lower == 'middle' %}
               <h2>Middle Term</h2>
               <div class="row">
                 <div class="col-md-4">
                   <!-- -->
                   <div class="border">
                     <div>
-                      <img alt="" height="auto" src="{{ item.image.url }}"
-                        width="100%" />
+                      <img alt="" height="auto" src="{{ item.image.url }}" width="100%" />
                     </div>
                     <div class="px-4 py-2 font-bold">
                       {{ item.header }}
@@ -95,38 +94,16 @@
                   </div>
                   <!-- -->
                 </div>
-                <div class="col-md-4">
-                  <!-- -->
-                  <div class="border">
-                    <div>
-                      <img alt="" height="auto" src="{% static 'images/portfolio/image/1638111163.jpeg'%}"
-                        width="100%" />
-                    </div>
-                    <div class="px-4 py-2 font-bold">
-                      Information Technology
-                    </div>
-                    <div class="flex items-center justify-between px-4 pb-4">
-                      <a class="px-4 py-1 text-sm border rounded hover:bg-blue-600 hover:text-white"
-                        href="{% url 'user_dashboard'%}" style="color:green">
-                        View
-                      </a>
-                           
-                      <h7 style="color:green">33.62%</h7>
-                    </div>
-                  </div>
-                  <!-- -->
-                </div>
               </div>
               {% endif %}
-              {% if item.term == 'long' %}
+              {% if item.term|lower == 'long' %}
               <h2>Long Term</h2>
               <div class="row">
                 <div class="col-md-4">
                   <!-- -->
                   <div class="border">
                     <div>
-                      <img alt="" height="auto" src="{{ item.image.url }}"
-                        width="100%" />
+                      <img alt="" height="auto" src="{{ item.image.url }}" width="100%" />
                     </div>
                     <div class="px-4 py-2 font-bold">
                       {{ item.header }}

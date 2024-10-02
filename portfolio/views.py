@@ -15,11 +15,12 @@ User = get_user_model()
 
 @login_required(login_url='/login')
 def portfolioAddListView(request):
-    portfolioTypes = PortfolioAdd.objects.values_list('type', flat=True).distinct()
+    portfolioTypes = PortfolioAdd.objects.values_list('type', flat=True).distinct().order_by('type')
 
     typeitem = {}
     for type in portfolioTypes:
-        typeitem[type] = list(PortfolioAdd.objects.filter(type=type))
+        # typeitem[type] = list(PortfolioAdd.objects.filter(type=type)).sort('term')
+        typeitem[type] = list(PortfolioAdd.objects.filter(type=type).order_by('term'))
 
     context = {
         'types': list(portfolioTypes),
