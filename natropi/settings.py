@@ -200,12 +200,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #i installed django_smtp_ssl to use 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_HOST = 'smtppro.zoho.com'
+EMAIL_HOST = 'mail.privateemail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'support@skylinktrading.com'
-EMAIL_HOST_PASSWORD = 'qbLm3&uv'
-DEFAULT_FROM_EMAIL = 'support@skylinktrading.com'
+EMAIL_HOST_USER = 'support@natropi.com'
+EMAIL_HOST_PASSWORD = 'Clara1995unn_cheap_support'
+DEFAULT_FROM_EMAIL = 'support@natropi.com'
 
 # EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
