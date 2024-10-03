@@ -129,7 +129,7 @@ DATABASES = {
 # }
 
 
-CSRF_TRUSTED_ORIGINS = ['https://natropi.up.railway.app/', 'https://natropi.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://natropi.up.railway.app/', 'https://natropi.up.railway.app', 'https://natropi.com', 'https://natropi.com/', 'https://www.natropi.com/','https://www.natropi.com']
 
 
 # Password validation
