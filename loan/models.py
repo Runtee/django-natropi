@@ -13,7 +13,7 @@ class LoanTerm(models.Model):
     term_name = models.CharField(max_length=50, choices=TERM_CHOICES)
 
     min_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    max_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    max_amount = models.DecimalField(max_digits=20, decimal_places=2)
 
     interest_rate_min = models.DecimalField(max_digits=5, decimal_places=2)
     interest_rate_max = models.DecimalField(max_digits=5, decimal_places=2)

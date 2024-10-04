@@ -121,7 +121,7 @@
                                         <strong>Default Interest Rate:</strong> {{ loan_term.default_interest_rate }}%
                                     </li>
                                     <li class="list-group-item">
-                                        <strong>Collateral:</strong> {% if loan_term.collateral_required %}Required{% else %}None{% endif %}
+                                        <strong>Collateral:</strong> {% if loan_term.collateral_required %}May require collateral (case-by-case basis){% else %}None{% endif %}
                                     </li>
                                     <li class="list-group-item">
                                         <strong>Credit Score Requirement:</strong> {{ loan_term.credit_score_min }} or above
