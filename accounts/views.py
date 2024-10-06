@@ -37,45 +37,67 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data.get('email')
+
+            # Check if a user with this email already exists
+            if User.objects.filter(email__icontains=email).exists():
+                messages.error(request, 'A user with this email already exists. Please log in or use a different email.')
+                return render(request, 'register.html', {'form': form})
+
+            # Save the new user with a hashed password
             user = form.save(commit=False)
             user.password = make_password(form.cleaned_data['password'])
             user.save()
 
-            # Get the current site
+            # Get the current site for email links
             current_site = get_current_site(request)
 
             referral_code = form.cleaned_data.get('referral_code')
             if referral_code:
                 try:
+                    # Assuming Referral model has a 'referral_code' field and 'referrer' ForeignKey to User
                     referrer_user = User.objects.get(referrals__referral_code=referral_code)
+                    
+                    # Create a new Referral object for the referred user
                     referral = Referral.objects.create(
                         referrer=referrer_user,
                         referred_user=user,
                         referral_code=str(uuid.uuid4())[:10]
                     )
 
-                    # Update referrer's referral count and bonus
-                    referrer_user.referrals.update(referral_count=F('referral_count') + 1)
-                    referrer_user.referrals.update(referral_bonus=F('referral_bonus') + Decimal('10.00'))
-                    referrer_user.main += Decimal('1.00')
-                    referrer_user.save()
+                    # Atomically update referrer's referral count and bonus
+                    User.objects.filter(pk=referrer_user.pk).update(
+                        referral_count=F('referral_count') + 1,
+                        referral_bonus=F('referral_bonus') + Decimal('10.00'),
+                        main=F('main') + Decimal('1.00')
+                    )
+
                     messages.success(request, 'You have been registered successfully and the referrer has been rewarded.')
 
                     # Send email notification to referrer
                     subject = 'Referral Successful'
-                    plain_message = f"Dear {referrer_user.username},\n\nSomeone has registered using your referral code. You have received a bonus of 10 units and $1 has been added to your main balance.\n\nThank you."
-                    html_message = None
-
+                    plain_message = (
+                        f"Dear {referrer_user.username},\n\n"
+                        f"Someone has registered using your referral code. "
+                        f"You have received a bonus once the user deposits.\n\n"
+                        "Thank you."
+                    )
                     send_mail(
                         subject,
                         strip_tags(plain_message),
                         settings.DEFAULT_FROM_EMAIL,
                         [referrer_user.email],
-                        html_message=html_message,
+                        fail_silently=False,
                     )
                 except User.DoesNotExist:
-                    messages.error(request, "Referral code is invalid.")
-                    return render(request, 'register.html', {'form': form})
+                    pass
+                    # messages.error(request, "Referral code is invalid.")
+                    # # Optionally, you can delete the newly created user if referral code is invalid
+                    # user.delete()
+                    # return render(request, 'register.html', {'form': form})
+
+            else:
+                messages.info(request, 'You have been registered successfully.')
 
             # Automatically create a Referral object for the new user
             Referral.objects.create(
@@ -83,23 +105,24 @@ def register(request):
                 referral_code=str(uuid.uuid4())[:10]
             )
 
-            # Create email subject and message
+            # Create email subject and message for account activation
             mail_subject = 'Activate your account'
             token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
             html_message = render_to_string('other/verification_email.html', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'uid': uid,
                 'token': token,
             })
             plain_message = strip_tags(html_message)
             from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = form.cleaned_data.get('email')
+            to_email = email
 
-            # Send the email
-            email = EmailMultiAlternatives(mail_subject, plain_message, from_email, [to_email])
-            email.attach_alternative(html_message, "text/html")
-            email.send()
+            # Send the activation email
+            email_message = EmailMultiAlternatives(mail_subject, plain_message, from_email, [to_email])
+            email_message.attach_alternative(html_message, "text/html")
+            email_message.send(fail_silently=False)
 
             messages.success(request, 'Verification email sent. Please check your inbox.')
 
