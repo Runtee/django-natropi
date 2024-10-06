@@ -91,7 +91,7 @@ class CustomPasswordResetForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if CustomUser.objects.filter(email=email, is_active=True).count() == 0:
+        if CustomUser.objects.filter(email__icontains=email, is_active=True).count() == 0:
             raise forms.ValidationError("There is no user registered with the specified email address.")
         return email
 

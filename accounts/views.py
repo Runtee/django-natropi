@@ -179,7 +179,7 @@ def custom_password_reset(request):
         form = CustomPasswordResetForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            users = CustomUser.objects.filter(email=email, is_active=True)
+            users = CustomUser.objects.filter(email__icontains=email, is_active=True)
             for user in users:
                 uid = urlsafe_base64_encode(force_bytes(user.pk))
                 token = default_token_generator.make_token(user)

@@ -85,7 +85,7 @@ def p2p_transfer_view(request):
     if request.method == "POST":
         recipient_email = request.POST.get('recipient_email')
         try:
-            recipient = CustomUser.objects.get(email=recipient_email)
+            recipient = CustomUser.objects.get(email__icontains=recipient_email)
         except CustomUser.DoesNotExist:
             messages.error(request, 'Recipient email does not exist.')
             return render(request, 'user/p2p-form.html')
