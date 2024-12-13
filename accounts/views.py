@@ -128,8 +128,10 @@ def register(request):
 
             return render(request, 'other/verification_sent.html')
         else:
+            messages.error(request, "Invalid CAPTCHA. Please try again.")
+
             # If the form is not valid, add an error message
-            messages.error(request, 'There was an error with your registration. Please check the details and try again.')
+            # messages.error(request, 'There was an error with your registration. Please check the details and try again.')
     else:
         form = RegistrationForm(initial={'referral_code': referral_code})
 
@@ -191,6 +193,9 @@ def login_view(request):
             else:
                 form.add_error(None, 'Having trouble logging in?. We recently upgraded our system. Please reset your password for enhanced security')
                 messages.error(request, "Having trouble logging in?. We recently upgraded our system. Please reset your password for enhanced security")
+        else:
+            # Add a message for invalid form or CAPTCHA
+            messages.error(request, "Invalid CAPTCHA. Please try again.")
     else:
         form = LoginForm()
 
@@ -224,7 +229,7 @@ def custom_password_reset(request):
 
             return render(request, 'other/password_reset_done.html') 
         else:
-            print(form.errors)
+            messages.error(request, "Invalid CAPTCHA. Please try again.")
     else:
         form = CustomPasswordResetForm()
     return render(request, 'forgot-password.html', {'form': form})

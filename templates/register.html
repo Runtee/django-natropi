@@ -316,6 +316,7 @@
                                     {{ form.referral_code.errors }}
                                     {{ form.referral_code }}
                                 </div>
+                                
 
                                 <div class="box-forgot-pass">
                                     <label>
@@ -323,6 +324,9 @@
                                         <span>{{ form.terms }} I have read and agree to the Terms &amp; Conditions and
                                             the Privacy Policy of this website.</span>
                                     </label>
+                                </div>
+                                <div class="form-group">
+                                    {{ form.captcha }}
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-login" type="submit" value="Sign up now" />

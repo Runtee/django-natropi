@@ -2,7 +2,8 @@ from django import forms
 from .models import CustomUser
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django import forms
-
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 
 class RegistrationForm(forms.ModelForm):
@@ -15,6 +16,7 @@ class RegistrationForm(forms.ModelForm):
                 'placeholder': 'Referral Code'
             }), required=False)
     terms = forms.BooleanField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
 
     class Meta:
         model = CustomUser
@@ -77,6 +79,7 @@ class LoginForm(forms.Form):
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={
         'class': 'cb-remember',
     }))
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
 
 
 class CustomPasswordResetForm(forms.Form):
@@ -88,6 +91,7 @@ class CustomPasswordResetForm(forms.Form):
             'type': 'email',
         })
     )
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox, required=True)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

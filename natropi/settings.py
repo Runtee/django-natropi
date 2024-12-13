@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4', 
     'kyc',
     'crispy_forms',
+    'django_recaptcha'
 
 ]
 
@@ -230,3 +231,7 @@ MESSAGE_TAGS = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# Recaptcha Settings
+RECAPTCHA_PUBLIC_KEY = '6Ld0WZoqAAAAAIFVbhR1oKNWvf88GhkPEGpl-iMk'
+RECAPTCHA_PRIVATE_KEY = '6Ld0WZoqAAAAAPlBWjfJnpXAnkXXXytlPjiIW_OP'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
