@@ -35,7 +35,7 @@ def withdraw_view(request):
             messages.error(request,'USSD wallet address does not exist.')
             return render(request, 'user/withdraw_form.html')
         elif method == "bank" and (not (user.bank_name and user.account_no) or user.bank_name.strip() in ['', 'None'] or user.account_no.strip() in ['', 'None']):
-            messages('Bank details do not exist.')
+            messages.error('Bank details do not exist.')
             return render(request, 'user/withdraw_form.html')
         elif method not in ["bit_wallet", "ussdc_wallet", "bank"]:
             messages.error(request,'Invalid withdrawal method selected.')
