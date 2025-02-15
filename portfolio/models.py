@@ -78,6 +78,9 @@ class Portfolio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def calculate_weekly_profit(self):
         short_term_profit = (Decimal(self.amount) * Decimal(self.portfolioadd.short_term)) / 100
         total_weeks = self.get_horizon_weeks()
