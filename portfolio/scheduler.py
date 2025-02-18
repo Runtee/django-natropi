@@ -17,7 +17,7 @@ def distribute_weekly_profit(investment_id):
         print(f"Distributing weekly profit for investment ID: {investment_id}")
         print(f"Initial user balances - Main: {user.main}, Trade: {user.trade}")
 
-        if investment.status == '1' and investment.days_passed % 7 == 0 and investment.days_passed < investment.get_horizon_days():
+        if investment.status == '1' and investment.days_passed % 7 == 0 and (investment.days_passed < investment.get_horizon_days()):
             weekly_profit = investment.calculate_weekly_profit()
             print(f"Calculated weekly profit: {weekly_profit}")
 

@@ -6,6 +6,10 @@ from decimal import Decimal, InvalidOperation
 from datetime import timedelta
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from utils.util import send_email
+
+import threading
+
 
 User = get_user_model()
 
@@ -119,22 +123,33 @@ class Portfolio(models.Model):
         return total_profit
 
     def send_weekly_profit_email(self, profit):
-        send_mail(
-            'Weekly Investment Profit',
-            f'You have earned a weekly profit of {profit}.',
-            settings.DEFAULT_FROM_EMAIL,  # Use the default from email from settings
-            [self.user.email],
-            fail_silently=False,
-        )
+        try:
+            email_subject = 'Weekly Investment Profit Notification'
+            email_body = (
+                f"Dear {self.user.username},\n\n"
+                f"We are pleased to inform you that you have earned a weekly profit of {profit}.\n\n"
+                "Best regards,\n"
+                "The Natropi Team"
+            )
+            email_thread = threading.Thread(target=send_email, args=(email_subject, email_body, self.user.email))
+            email_thread.start()
+        except Exception as e:
+            print('Error in send_weekly_profit_email:', e)
 
     def send_completion_email(self, profit):
-        send_mail(
-            'Investment Completed',
-            f'Your investment has completed. You earned a total profit of {profit}. Your initial investment has been refunded to your portfolio balance.',
-            settings.DEFAULT_FROM_EMAIL,
-            [self.user.email],
-            fail_silently=False,
-        )
+        try:
+            email_subject = 'Investment Completion Notification'
+            email_body = (
+                f"Dear {self.user.username},\n\n"
+                f"Your investment has reached its maturity. You have earned a total profit of {profit}. "
+                "Your initial investment has been refunded to your portfolio balance.\n\n"
+                "Best regards,\n"
+                "The Natropi Team"
+            )
+            email_thread = threading.Thread(target=send_email, args=(email_subject, email_body, self.user.email))
+            email_thread.start()
+        except Exception as e:
+            print('Error in send_completion_email:', e)
 
 @receiver(post_save, sender=Portfolio)
 def create_investment(sender, instance, created, **kwargs):
