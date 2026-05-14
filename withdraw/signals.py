@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import send_mail
 from django.conf import settings
+from utils.util import send_email
 from .models import WithdrawalsMade
 
 @receiver(post_save, sender=WithdrawalsMade)
@@ -23,10 +23,4 @@ def send_withdrawal_verified_email(sender, instance, created, **kwargs):
         Best regards,
         Natropi
         """
-        send_mail(
-            subject,
-            message,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-        )
+        send_email(subject, message, user.email)

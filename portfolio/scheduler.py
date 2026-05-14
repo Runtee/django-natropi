@@ -3,7 +3,6 @@ import schedule
 import time
 import threading
 from django.utils import timezone
-from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
 from .models import Portfolio
 

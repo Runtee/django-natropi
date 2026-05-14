@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.html import strip_tags
-from django.core.mail import send_mail
 from django.conf import settings
 from django.db.models import Q
 from decimal import Decimal
 from accounts.models import CustomUser
 from .models import Transfer, P2PTransfer
+from utils.util import send_email
 
 
 @login_required(login_url='/login')
@@ -128,23 +128,12 @@ def p2p_transfer_view(request):
             plain_message = f"Dear {user.username},\n\nYour transfer of ${amount} from {from_wallet} wallet to {recipient_email} is successful. \n\nThank you."
             html_message = None
 
-            send_mail(
-                subject,
-                strip_tags(plain_message),
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                html_message=html_message,
-            )
+            send_email(subject, plain_message, user.email)
 
             # Send email notification to the recipient
             subject_recipient = 'Funds Received'
             plain_message_recipient = f"Dear {recipient.username},\n\nYou have received ${amount} in your {to_wallet} wallet from {user.email}.\n\nThank you."
-            send_mail(
-                subject_recipient,
-                plain_message_recipient,
-                settings.DEFAULT_FROM_EMAIL,
-                [recipient.email],
-            )
+            send_email(subject_recipient, plain_message_recipient, recipient.email)
 
             return redirect('p2p')
         else:

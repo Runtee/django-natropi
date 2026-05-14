@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from decimal import Decimal
 from django.conf import settings
-from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 import threading
@@ -58,13 +57,7 @@ def withdraw_view(request):
             subject = 'Withdrawal Request Received'
             plain_message = f"Dear {user.username},\n\nYour withdrawal of ${withdrawal.amount} via {withdrawal.wallet_type} Wallet has been received and is pending processing.\n\nThank you."
             html_message = None
-            send_mail(
-                subject,
-                strip_tags(plain_message),
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                html_message=html_message,
-            )
+            send_email(subject, plain_message, user.email)
             redirect('withdraw')
         else:
             messages.error(request,f"Amount greater than {wallet} balance.")

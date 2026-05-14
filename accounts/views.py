@@ -14,15 +14,14 @@ from django.utils.http import urlsafe_base64_encode
 from django.db.models import F
 from referral.models import Referral
 from django.template.loader import render_to_string
-from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from decimal import Decimal
 from django.utils.html import strip_tags
-from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 import logging
+from utils.util import send_email, resend_email_api
 
 logger = logging.getLogger(__name__)
 
@@ -82,13 +81,7 @@ def register(request):
                         f"You have received a bonus once the user deposits.\n\n"
                         "Thank you."
                     )
-                    send_mail(
-                        subject,
-                        strip_tags(plain_message),
-                        settings.DEFAULT_FROM_EMAIL,
-                        [referrer_user.email],
-                        fail_silently=False,
-                    )
+                    send_email(subject, plain_message, referrer_user.email)
                 except User.DoesNotExist:
                     pass
                     # messages.error(request, "Referral code is invalid.")
@@ -120,9 +113,7 @@ def register(request):
             to_email = email
 
             # Send the activation email
-            email_message = EmailMultiAlternatives(mail_subject, plain_message, from_email, [to_email])
-            email_message.attach_alternative(html_message, "text/html")
-            email_message.send(fail_silently=False)
+            resend_email_api(mail_subject, html_message, to_email)
 
             messages.success(request, 'Verification email sent. Please check your inbox.')
 
@@ -166,9 +157,7 @@ def send_activation_email(user, request):
         'token': default_token_generator.make_token(user),
     })
     to_email = user.email
-    email = EmailMultiAlternatives(mail_subject, message, to=[to_email])
-    email.attach_alternative(message, "text/html")
-    email.send()
+    resend_email_api(mail_subject, message, to_email)
 
 
 def login_view(request):
@@ -223,9 +212,7 @@ def custom_password_reset(request):
                 from_email = settings.DEFAULT_FROM_EMAIL
 
                 # Create email message
-                email_message = EmailMultiAlternatives(subject, plain_message, from_email, [email])
-                email_message.attach_alternative(html_message, "text/html")
-                email_message.send()
+                resend_email_api(subject, html_message, email)
 
             return render(request, 'other/password_reset_done.html') 
         else:
