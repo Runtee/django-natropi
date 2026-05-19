@@ -23,6 +23,10 @@ def transfer_view(request):
             messages.error(request, 'Invalid amount entered.')
             return render(request, 'user/transfer_form.html',)
 
+        if amount <= 0:
+            messages.error(request, 'Amount must be greater than zero.')
+            return render(request, 'user/transfer_form.html',)
+
         # Ensure wallets are different
         if from_wallet == to_wallet:
             messages.error(
@@ -70,7 +74,7 @@ def p2p(request):
     user = request.user
 
     transfers = P2PTransfer.objects.filter(
-        Q(user=user) | Q(recipient_email__icontains=user.email)
+        Q(user=user) | Q(recipient_email__iexact=user.email)
 
     ).order_by('-date')
 
@@ -85,7 +89,7 @@ def p2p_transfer_view(request):
     if request.method == "POST":
         recipient_email = request.POST.get('recipient_email')
         try:
-            recipient = CustomUser.objects.get(email__icontains=recipient_email)
+            recipient = CustomUser.objects.get(email__iexact=recipient_email)
         except CustomUser.DoesNotExist:
             messages.error(request, 'Recipient email does not exist.')
             return render(request, 'user/p2p-form.html')

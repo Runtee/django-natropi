@@ -27,6 +27,12 @@ def withdraw_view(request):
                 'user': user,
             })
 
+        if amount <= 0:
+            messages.error(request, 'Amount must be greater than zero.')
+            return render(request, 'user/withdraw_form.html', {
+                'user': user,
+            })
+
         if method == "bit_wallet" and (not user.bit_wallet or user.bit_wallet.strip() in ['', 'None']):
             messages.error(request,'Bitcoin wallet address does not exist.')
             return render(request, 'user/withdraw_form.html')
@@ -58,7 +64,7 @@ def withdraw_view(request):
             plain_message = f"Dear {user.username},\n\nYour withdrawal of ${withdrawal.amount} via {withdrawal.wallet_type} Wallet has been received and is pending processing.\n\nThank you."
             html_message = None
             send_email(subject, plain_message, user.email)
-            redirect('withdraw')
+            return redirect('withdraw')
         else:
             messages.error(request,f"Amount greater than {wallet} balance.")
             return render(request, 'user/withdraw_form.html')

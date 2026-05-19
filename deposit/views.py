@@ -42,6 +42,15 @@ def user_deposit_form(request):
         usdt_amount = request.POST['amount']
         wallet_type = request.POST['method']
         trans_hash = request.POST['trans_hash']
+
+        try:
+            amount_val = float(amount)
+            if amount_val <= 0:
+                messages.error(request, 'Deposit amount must be greater than zero.')
+                return render(request, 'user/deposit_form.html', context)
+        except ValueError:
+            messages.error(request, 'Invalid deposit amount.')
+            return render(request, 'user/deposit_form.html', context)
         
         print(wallet_type)
         deposit = Deposit.objects.create(user=user,amount=amount,wallet_type=wallet_type,wallet_address=wallet_address,usdt_amount=usdt_amount)

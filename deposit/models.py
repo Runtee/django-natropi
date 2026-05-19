@@ -32,7 +32,16 @@ class Deposit(models.Model):
         return f'{self.user.email} deposited {self.usdt_amount} in {self.wallet_address}'
     
     def save(self, *args, **kwargs):
-        if self.verified == True:
+        is_newly_verified = False
+        if self.verified:
+            if not self.pk:
+                is_newly_verified = True
+            else:
+                old_instance = Deposit.objects.get(pk=self.pk)
+                if not old_instance.verified:
+                    is_newly_verified = True
+                    
+        if is_newly_verified:
             self.user.main +=  float(self.usdt_amount)
             action = f'Your deposit of {self.amount} {self.wallet_type} into {self.wallet_address} is verified'
             self.user.notification_set.create(user=self.user,action='Verified',description=f'Your deposit of {self.amount} USD into {self.wallet_address} have been verified')

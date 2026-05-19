@@ -39,7 +39,7 @@ def register(request):
             email = form.cleaned_data.get('email')
 
             # Check if a user with this email already exists
-            if User.objects.filter(email__icontains=email).exists():
+            if User.objects.filter(email__iexact=email).exists():
                 messages.error(request, 'A user with this email already exists. Please log in or use a different email.')
                 return render(request, 'register.html', {'form': form})
 
@@ -65,10 +65,13 @@ def register(request):
                     )
 
                     # Atomically update referrer's referral count and bonus
-                    User.objects.filter(pk=referrer_user.pk).update(
+                    Referral.objects.filter(referral_code=referral_code).update(
                         referral_count=F('referral_count') + 1,
-                        referral_bonus=F('referral_bonus') + Decimal('10.00'),
-                        main=F('main') + Decimal('1.00')
+                        referral_bonus=F('referral_bonus') + Decimal('10.00')
+                    )
+                    
+                    User.objects.filter(pk=referrer_user.pk).update(
+                        main=F('main') + 1
                     )
 
                     messages.success(request, 'You have been registered successfully and the referrer has been rewarded.')
@@ -196,7 +199,7 @@ def custom_password_reset(request):
         form = CustomPasswordResetForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            users = CustomUser.objects.filter(email__icontains=email, is_active=True)
+            users = CustomUser.objects.filter(email__iexact=email, is_active=True)
             for user in users:
                 uid = urlsafe_base64_encode(force_bytes(user.pk))
                 token = default_token_generator.make_token(user)
